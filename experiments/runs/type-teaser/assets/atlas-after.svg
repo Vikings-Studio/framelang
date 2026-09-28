@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" rx="32" fill="#101827"/>
+  <rect x="24" y="24" width="1152" height="712" rx="24" fill="#F6F7FB"/>
+  <rect x="24" y="24" width="1152" height="82" rx="24" fill="#FFFFFF"/>
+  <circle cx="72" cy="65" r="14" fill="#6D5EF7"/>
+  <text x="104" y="76" font-family="Arial,sans-serif" font-weight="700" font-size="30" fill="#141827">Atlas</text>
+  <rect x="56" y="142" width="240" height="550" rx="18" fill="#EDEFF5"/>
+  <rect x="330" y="142" width="814" height="550" rx="18" fill="#FFFFFF" stroke="#DADFEA" stroke-width="3"/>
+  <text x="370" y="205" font-family="Arial,sans-serif" font-weight="700" font-size="36" fill="#1D2433">Campaign workspace</text>
+  <rect x="370" y="258" width="710" height="118" rx="15" fill="#E6E3FF"/>
+  <rect x="370" y="398" width="710" height="118" rx="15" fill="#DFF7EE"/>
+  <rect x="370" y="538" width="710" height="118" rx="15" fill="#FFF0D9"/>
+  <text x="401" y="329" font-family="Arial,sans-serif" font-weight="700" font-size="32" fill="#30246B">Plan approved</text>
+  <text x="401" y="469" font-family="Arial,sans-serif" font-weight="700" font-size="32" fill="#156445">Assets assembled</text>
+  <text x="401" y="609" font-family="Arial,sans-serif" font-weight="700" font-size="32" fill="#77501F">Ready to publish</text>
+</svg>

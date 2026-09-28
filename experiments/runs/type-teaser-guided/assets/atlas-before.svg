@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" rx="32" fill="#101827"/>
+  <rect x="24" y="24" width="1152" height="712" rx="24" fill="#F6F7FB"/>
+  <rect x="24" y="24" width="1152" height="82" rx="24" fill="#FFFFFF"/>
+  <circle cx="72" cy="65" r="14" fill="#6D5EF7"/>
+  <text x="104" y="76" font-family="Arial,sans-serif" font-weight="700" font-size="30" fill="#141827">Atlas</text>
+  <rect x="56" y="142" width="240" height="550" rx="18" fill="#EDEFF5"/>
+  <rect x="330" y="142" width="814" height="550" rx="18" fill="#FFFFFF" stroke="#DADFEA" stroke-width="3"/>
+  <text x="370" y="205" font-family="Arial,sans-serif" font-weight="700" font-size="36" fill="#1D2433">Campaign workspace</text>
+  <rect x="370" y="248" width="730" height="4" rx="2" fill="#E2E5EE"/>
+  <rect x="370" y="290" width="690" height="80" rx="12" fill="#F1F2F6"/>
+  <rect x="370" y="390" width="690" height="80" rx="12" fill="#F1F2F6"/>
+  <rect x="370" y="490" width="690" height="80" rx="12" fill="#F1F2F6"/>
+  <text x="370" y="630" font-family="Arial,sans-serif" font-size="28" fill="#737C91">No timeline yet</text>
+</svg>
