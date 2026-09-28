@@ -11,6 +11,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const rawRoot = process.argv[2];
 if (!rawRoot) throw new Error('usage: node evaluate.mjs <isolated-raw-output-directory>');
 const models = JSON.parse(await readFile(path.join(here, 'models.json'), 'utf8'));
+const only = new Set(process.argv.slice(3));
 const cli = path.join(repo, 'src/cli.mjs');
 const hf = require.resolve('hyperframes/bin/hyperframes.mjs');
 const gsap = require.resolve('gsap/dist/gsap.min.js');
@@ -41,6 +42,7 @@ function safeHtml(html) {
 
 const rows = [];
 for (const model of models) {
+  if (only.size && !only.has(model.id)) continue;
   const row = { id: model.id, name: model.label, license: model.license, source: model.source };
   for (const [arm, field] of [['with-framework', 'withFramework'], ['without-framework', 'withoutFramework']]) {
     const sourceDir = path.join(rawRoot, model.id);
@@ -119,4 +121,4 @@ for (const model of models) {
   }
   rows.push(row);
 }
-await writeFile(path.join(here, 'results.json'), `${JSON.stringify(rows, null, 2)}\n`);
+if (!only.size) await writeFile(path.join(here, 'results.json'), `${JSON.stringify(rows, null, 2)}\n`);
