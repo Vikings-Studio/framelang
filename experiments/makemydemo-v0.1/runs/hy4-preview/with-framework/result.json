@@ -1,0 +1,36 @@
+{
+  "status": "Rendered",
+  "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+  "video": "runs/hy4-preview/with-framework/compiled/landscape-1920x1080/video.mp4",
+  "tokens": {
+    "total": 3752,
+    "input": 2705,
+    "output": 855,
+    "reasoning": 192,
+    "cache": {
+      "write": 0,
+      "read": 0
+    }
+  },
+  "cost": 0.004874517,
+  "formatViolation": false,
+  "portraitVideo": "runs/hy4-preview/with-framework/compiled/portrait-1080x1920/video.mp4",
+  "frameAudit": {
+    "sampleSeconds": [
+      2,
+      6
+    ],
+    "minBrightPixels": 1000,
+    "brightPixelCounts": {
+      "landscape": {
+        "2": 46745,
+        "6": 46300
+      },
+      "portrait": {
+        "2": 35977,
+        "6": 35392
+      }
+    }
+  },
+  "visualGate": "sampled_visible"
+}

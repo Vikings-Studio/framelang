@@ -1,0 +1,21 @@
+{
+  "id": "hy4-preview",
+  "model": "opencode-go/hy4-preview",
+  "arm": "without-framework",
+  "code": 0,
+  "durationMs": 78247,
+  "outputBytes": 6910,
+  "tokens": {
+    "total": 6549,
+    "input": 476,
+    "output": 2493,
+    "reasoning": 1468,
+    "cache": {
+      "write": 0,
+      "read": 2112
+    }
+  },
+  "cost": 0.010392149,
+  "sessionID": "ses_f17172ecfffeUdFiaRYuelLoIW",
+  "timedOut": false
+}

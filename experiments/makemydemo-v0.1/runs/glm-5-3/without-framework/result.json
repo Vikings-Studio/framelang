@@ -1,0 +1,7 @@
+{
+  "status": "Harness deadline",
+  "detail": "No answer before the 240-second harness deadline; inspect the OpenCode event and stderr records.",
+  "tokens": null,
+  "cost": null,
+  "formatViolation": false
+}

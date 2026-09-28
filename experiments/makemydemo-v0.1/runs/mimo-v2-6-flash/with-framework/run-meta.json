@@ -1,0 +1,21 @@
+{
+  "id": "mimo-v2-6-flash",
+  "model": "opencode-go/mimo-v2.6-flash",
+  "arm": "with-framework",
+  "code": 0,
+  "durationMs": 20184,
+  "outputBytes": 1785,
+  "tokens": {
+    "total": 3487,
+    "input": 10,
+    "output": 560,
+    "reasoning": 229,
+    "cache": {
+      "write": 0,
+      "read": 2688
+    }
+  },
+  "cost": 0.0002298464,
+  "sessionID": "ses_f17212b32ffePAtk6xFW7VY8IT",
+  "timedOut": false
+}

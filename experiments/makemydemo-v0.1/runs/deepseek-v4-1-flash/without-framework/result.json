@@ -1,0 +1,30 @@
+{
+  "status": "Rendered",
+  "detail": "First response passed sampled HyperFrames checks and rendered in landscape.",
+  "video": "runs/deepseek-v4-1-flash/without-framework/scene/video.mp4",
+  "tokens": {
+    "total": 5047,
+    "input": 598,
+    "output": 1101,
+    "reasoning": 1300,
+    "cache": {
+      "write": 0,
+      "read": 2048
+    }
+  },
+  "cost": 0.001536444,
+  "frameAudit": {
+    "sampleSeconds": [
+      2,
+      6
+    ],
+    "minBrightPixels": 1000,
+    "brightPixelCounts": {
+      "landscape": {
+        "2": 97297,
+        "6": 79859
+      }
+    }
+  },
+  "visualGate": "sampled_visible"
+}

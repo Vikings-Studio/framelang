@@ -1,0 +1,36 @@
+{
+  "status": "Rendered",
+  "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+  "video": "runs/glm-5-3/with-framework/compiled/landscape-1920x1080/video.mp4",
+  "tokens": {
+    "total": 3291,
+    "input": 2642,
+    "output": 527,
+    "reasoning": 112,
+    "cache": {
+      "write": 0,
+      "read": 10
+    }
+  },
+  "cost": 0.006513,
+  "formatViolation": false,
+  "portraitVideo": "runs/glm-5-3/with-framework/compiled/portrait-1080x1920/video.mp4",
+  "frameAudit": {
+    "sampleSeconds": [
+      2,
+      6
+    ],
+    "minBrightPixels": 1000,
+    "brightPixelCounts": {
+      "landscape": {
+        "2": 53836,
+        "6": 66157
+      },
+      "portrait": {
+        "2": 40736,
+        "6": 48373
+      }
+    }
+  },
+  "visualGate": "sampled_visible"
+}

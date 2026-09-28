@@ -1,0 +1,327 @@
+[
+  {
+    "id": "deepseek-v4-1-flash",
+    "name": "DeepSeek V4.1 Flash",
+    "license": "MIT",
+    "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+    "opencode": "opencode-go/deepseek-v4.1-flash",
+    "withFramework": {
+      "status": "Rendered",
+      "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+      "video": "runs/deepseek-v4-1-flash/with-framework/compiled/landscape-1920x1080/video.mp4",
+      "tokens": {
+        "total": 3885,
+        "input": 765,
+        "output": 577,
+        "reasoning": 495,
+        "cache": {
+          "write": 0,
+          "read": 2048
+        }
+      },
+      "cost": 0.000764094,
+      "portraitVideo": "runs/deepseek-v4-1-flash/with-framework/compiled/portrait-1080x1920/video.mp4",
+      "frameAudit": {
+        "sampleSeconds": [
+          2,
+          6
+        ],
+        "minBrightPixels": 1000,
+        "brightPixelCounts": {
+          "landscape": {
+            "2": 64711,
+            "6": 64560
+          },
+          "portrait": {
+            "2": 48393,
+            "6": 48398
+          }
+        }
+      },
+      "visualGate": "sampled_visible"
+    },
+    "withoutFramework": {
+      "status": "Rendered",
+      "detail": "First response passed sampled HyperFrames checks and rendered in landscape.",
+      "video": "runs/deepseek-v4-1-flash/without-framework/scene/video.mp4",
+      "tokens": {
+        "total": 5047,
+        "input": 598,
+        "output": 1101,
+        "reasoning": 1300,
+        "cache": {
+          "write": 0,
+          "read": 2048
+        }
+      },
+      "cost": 0.001536444,
+      "frameAudit": {
+        "sampleSeconds": [
+          2,
+          6
+        ],
+        "minBrightPixels": 1000,
+        "brightPixelCounts": {
+          "landscape": {
+            "2": 97297,
+            "6": 79859
+          }
+        }
+      },
+      "visualGate": "sampled_visible"
+    }
+  },
+  {
+    "id": "glm-5-2",
+    "name": "GLM 5.2",
+    "license": "MIT",
+    "source": "https://huggingface.co/zai-org/GLM-5.2",
+    "opencode": "opencode-go/glm-5.2",
+    "withFramework": {
+      "status": "Rendered",
+      "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+      "video": "runs/glm-5-2/with-framework/compiled/landscape-1920x1080/video.mp4",
+      "tokens": {
+        "total": 3400,
+        "input": 2642,
+        "output": 531,
+        "reasoning": 217,
+        "cache": {
+          "write": 0,
+          "read": 10
+        }
+      },
+      "cost": 0.0069926,
+      "portraitVideo": "runs/glm-5-2/with-framework/compiled/portrait-1080x1920/video.mp4",
+      "frameAudit": {
+        "sampleSeconds": [
+          2,
+          6
+        ],
+        "minBrightPixels": 1000,
+        "brightPixelCounts": {
+          "landscape": {
+            "2": 53836,
+            "6": 72186
+          },
+          "portrait": {
+            "2": 40736,
+            "6": 54825
+          }
+        }
+      },
+      "visualGate": "sampled_visible"
+    },
+    "withoutFramework": {
+      "status": "No response",
+      "detail": "OpenCode emitted no answer; inspect the OpenCode event and stderr records.",
+      "tokens": {
+        "total": 6461,
+        "input": 3901,
+        "output": 11,
+        "reasoning": 0,
+        "cache": {
+          "write": 0,
+          "read": 2549
+        }
+      },
+      "cost": 0.00617254
+    }
+  },
+  {
+    "id": "glm-5-3",
+    "name": "GLM 5.3",
+    "license": "GLM-5.3 custom",
+    "source": "https://huggingface.co/zai-org/GLM-5.3",
+    "opencode": "opencode-go/glm-5.3",
+    "withFramework": {
+      "status": "Rendered",
+      "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+      "video": "runs/glm-5-3/with-framework/compiled/landscape-1920x1080/video.mp4",
+      "tokens": {
+        "total": 3291,
+        "input": 2642,
+        "output": 527,
+        "reasoning": 112,
+        "cache": {
+          "write": 0,
+          "read": 10
+        }
+      },
+      "cost": 0.006513,
+      "formatViolation": false,
+      "portraitVideo": "runs/glm-5-3/with-framework/compiled/portrait-1080x1920/video.mp4",
+      "frameAudit": {
+        "sampleSeconds": [
+          2,
+          6
+        ],
+        "minBrightPixels": 1000,
+        "brightPixelCounts": {
+          "landscape": {
+            "2": 53836,
+            "6": 66157
+          },
+          "portrait": {
+            "2": 40736,
+            "6": 48373
+          }
+        }
+      },
+      "visualGate": "sampled_visible"
+    },
+    "withoutFramework": {
+      "status": "Harness deadline",
+      "detail": "No answer before the 240-second harness deadline; inspect the OpenCode event and stderr records.",
+      "tokens": null,
+      "cost": null,
+      "formatViolation": false
+    }
+  },
+  {
+    "id": "mimo-v2-6-flash",
+    "name": "MiMo V2.6 Flash",
+    "license": "MIT",
+    "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL",
+    "opencode": "opencode-go/mimo-v2.6-flash",
+    "withFramework": {
+      "status": "Rendered",
+      "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+      "video": "runs/mimo-v2-6-flash/with-framework/compiled/landscape-1920x1080/video.mp4",
+      "tokens": {
+        "total": 3487,
+        "input": 10,
+        "output": 560,
+        "reasoning": 229,
+        "cache": {
+          "write": 0,
+          "read": 2688
+        }
+      },
+      "cost": 0.0002298464,
+      "portraitVideo": "runs/mimo-v2-6-flash/with-framework/compiled/portrait-1080x1920/video.mp4",
+      "frameAudit": {
+        "sampleSeconds": [
+          2,
+          6
+        ],
+        "minBrightPixels": 1000,
+        "brightPixelCounts": {
+          "landscape": {
+            "2": 36371,
+            "6": 35784
+          },
+          "portrait": {
+            "2": 28215,
+            "6": 27595
+          }
+        }
+      },
+      "visualGate": "sampled_visible"
+    },
+    "withoutFramework": {
+      "status": "Rendered",
+      "detail": "First response passed sampled HyperFrames checks and rendered in landscape.",
+      "video": "runs/mimo-v2-6-flash/without-framework/scene/video.mp4",
+      "tokens": {
+        "total": 5784,
+        "input": 35,
+        "output": 3071,
+        "reasoning": 118,
+        "cache": {
+          "write": 0,
+          "read": 2560
+        }
+      },
+      "cost": 0.000904988,
+      "frameAudit": {
+        "sampleSeconds": [
+          2,
+          6
+        ],
+        "minBrightPixels": 1000,
+        "brightPixelCounts": {
+          "landscape": {
+            "2": 200628,
+            "6": 190646
+          }
+        }
+      },
+      "visualGate": "sampled_visible"
+    }
+  },
+  {
+    "id": "hy4-preview",
+    "name": "Tencent Hy4 Preview",
+    "license": "Apache-2.0",
+    "source": "https://huggingface.co/tencent/Hy4-preview",
+    "opencode": "opencode-go/hy4-preview",
+    "withFramework": {
+      "status": "Rendered",
+      "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+      "video": "runs/hy4-preview/with-framework/compiled/landscape-1920x1080/video.mp4",
+      "tokens": {
+        "total": 3752,
+        "input": 2705,
+        "output": 855,
+        "reasoning": 192,
+        "cache": {
+          "write": 0,
+          "read": 0
+        }
+      },
+      "cost": 0.004874517,
+      "formatViolation": false,
+      "portraitVideo": "runs/hy4-preview/with-framework/compiled/portrait-1080x1920/video.mp4",
+      "frameAudit": {
+        "sampleSeconds": [
+          2,
+          6
+        ],
+        "minBrightPixels": 1000,
+        "brightPixelCounts": {
+          "landscape": {
+            "2": 46745,
+            "6": 46300
+          },
+          "portrait": {
+            "2": 35977,
+            "6": 35392
+          }
+        }
+      },
+      "visualGate": "sampled_visible"
+    },
+    "withoutFramework": {
+      "status": "Rendered",
+      "detail": "First response passed sampled HyperFrames checks and rendered in landscape.",
+      "video": "runs/hy4-preview/without-framework/scene/video.mp4",
+      "tokens": {
+        "total": 6549,
+        "input": 476,
+        "output": 2493,
+        "reasoning": 1468,
+        "cache": {
+          "write": 0,
+          "read": 2112
+        }
+      },
+      "cost": 0.010392149,
+      "formatViolation": false,
+      "frameAudit": {
+        "sampleSeconds": [
+          2,
+          6
+        ],
+        "minBrightPixels": 1000,
+        "brightPixelCounts": {
+          "landscape": {
+            "2": 101257,
+            "6": 112806
+          }
+        }
+      },
+      "visualGate": "sampled_visible"
+    }
+  }
+]

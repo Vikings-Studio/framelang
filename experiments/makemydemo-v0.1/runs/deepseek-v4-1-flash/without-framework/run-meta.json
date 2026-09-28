@@ -1,0 +1,21 @@
+{
+  "id": "deepseek-v4-1-flash",
+  "model": "opencode-go/deepseek-v4.1-flash",
+  "arm": "without-framework",
+  "code": 0,
+  "durationMs": 22303,
+  "outputBytes": 3112,
+  "tokens": {
+    "total": 5047,
+    "input": 598,
+    "output": 1101,
+    "reasoning": 1300,
+    "cache": {
+      "write": 0,
+      "read": 2048
+    }
+  },
+  "cost": 0.001536444,
+  "sessionID": "ses_f17275b62ffeKtPNlN52xbushX",
+  "timedOut": false
+}

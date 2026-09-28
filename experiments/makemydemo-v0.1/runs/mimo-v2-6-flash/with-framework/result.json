@@ -1,0 +1,35 @@
+{
+  "status": "Rendered",
+  "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+  "video": "runs/mimo-v2-6-flash/with-framework/compiled/landscape-1920x1080/video.mp4",
+  "tokens": {
+    "total": 3487,
+    "input": 10,
+    "output": 560,
+    "reasoning": 229,
+    "cache": {
+      "write": 0,
+      "read": 2688
+    }
+  },
+  "cost": 0.0002298464,
+  "portraitVideo": "runs/mimo-v2-6-flash/with-framework/compiled/portrait-1080x1920/video.mp4",
+  "frameAudit": {
+    "sampleSeconds": [
+      2,
+      6
+    ],
+    "minBrightPixels": 1000,
+    "brightPixelCounts": {
+      "landscape": {
+        "2": 36371,
+        "6": 35784
+      },
+      "portrait": {
+        "2": 28215,
+        "6": 27595
+      }
+    }
+  },
+  "visualGate": "sampled_visible"
+}

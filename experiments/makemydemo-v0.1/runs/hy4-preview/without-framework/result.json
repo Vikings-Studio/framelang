@@ -1,0 +1,31 @@
+{
+  "status": "Rendered",
+  "detail": "First response passed sampled HyperFrames checks and rendered in landscape.",
+  "video": "runs/hy4-preview/without-framework/scene/video.mp4",
+  "tokens": {
+    "total": 6549,
+    "input": 476,
+    "output": 2493,
+    "reasoning": 1468,
+    "cache": {
+      "write": 0,
+      "read": 2112
+    }
+  },
+  "cost": 0.010392149,
+  "formatViolation": false,
+  "frameAudit": {
+    "sampleSeconds": [
+      2,
+      6
+    ],
+    "minBrightPixels": 1000,
+    "brightPixelCounts": {
+      "landscape": {
+        "2": 101257,
+        "6": 112806
+      }
+    }
+  },
+  "visualGate": "sampled_visible"
+}

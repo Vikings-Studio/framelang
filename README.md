@@ -50,13 +50,16 @@ artifact.
 
 ## One-shot evaluation
 
-See [the protocol](experiments/PROTOCOL.md) and the
-[first pilot results](experiments/ATLAS_PILOT_RESULTS.md). Each OpenCode attempt starts from a
+See [the protocol](experiments/PROTOCOL.md), the
+[first pilot results](experiments/ATLAS_PILOT_RESULTS.md), and the
+[MakeMyDemo five-model comparison](experiments/makemydemo-v0.1/RESULTS.md). Each OpenCode attempt starts from a
 frozen brief and a fresh output directory. One response is scored before any
 model repair. Preferred admitted videos, degraded output, typed failures,
 quality-gate failures, and infrastructure failures have separate counts. The
-included trial artifacts are pilot observations, not a statistical claim. A
-five-model MakeMyDemo comparison is the next v0.1 experiment.
+included trial artifacts are pilot observations, not a statistical claim. The
+MakeMyDemo comparison records raw responses, check and render logs, token counts,
+and the admitted videos. GLM 5.3 is open-weight under its own custom license;
+the other four selected releases have MIT or Apache-2.0 weight licenses.
 
 ## Naming
 

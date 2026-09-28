@@ -1,0 +1,15 @@
+{
+  "status": "No response",
+  "detail": "OpenCode emitted no answer; inspect the OpenCode event and stderr records.",
+  "tokens": {
+    "total": 6461,
+    "input": 3901,
+    "output": 11,
+    "reasoning": 0,
+    "cache": {
+      "write": 0,
+      "read": 2549
+    }
+  },
+  "cost": 0.00617254
+}

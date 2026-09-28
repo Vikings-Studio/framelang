@@ -1,0 +1,327 @@
+{
+  "language": "framelang/v1",
+  "pilot": true,
+  "inputHash": "sha256:8aa12e944354320878170ccfd17188c68433e22c48dfa31c60ea76de45f9ad8f",
+  "bundleRefs": {
+    "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+    "assetsRef": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "outputs": {
+    "landscape-1920x1080": {
+      "directory": "landscape-1920x1080",
+      "htmlHash": "sha256:7d7a12ff59cac3430d21efe7df76406888bc2785d9fb37227d1c7850e8c8a0ec",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      }
+    },
+    "portrait-1080x1920": {
+      "directory": "portrait-1080x1920",
+      "htmlHash": "sha256:642ee42b43109061109db292fe44bd64ff1a3c2dfb328a56300f5ccec39e604c",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      }
+    }
+  },
+  "checked": true,
+  "degraded": false,
+  "checks": {
+    "landscape-1920x1080": {
+      "ok": true,
+      "exitCode": 0,
+      "layoutRan": true,
+      "hardWarnings": [],
+      "report": {
+        "ok": true,
+        "strict": false,
+        "lint": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 2,
+          "infoCount": 0,
+          "findings": [
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"fl-s1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#fl-s1",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/makemydemo-v0.1/runs/glm-5-3/with-framework/compiled/landscape-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"fl-s1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"fl-s2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#fl-s2",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/makemydemo-v0.1/runs/glm-5-3/with-framework/compiled/landscape-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"fl-s2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            }
+          ],
+          "filesScanned": 1
+        },
+        "runtime": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": []
+        },
+        "layout": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "duration": 8,
+          "samples": [
+            0.267,
+            0.333,
+            0.625,
+            0.8,
+            0.917,
+            1.333,
+            1.867,
+            2.4,
+            2.625,
+            2.933,
+            3.467,
+            4,
+            4.333,
+            4.533,
+            4.625,
+            4.917,
+            5.067,
+            5.6,
+            6.133,
+            6.459,
+            6.667,
+            7.2,
+            7.733,
+            8
+          ],
+          "transitionSamples": [
+            0.333,
+            0.625,
+            0.917,
+            2.625,
+            4.333,
+            4.625,
+            4.917,
+            6.459,
+            8
+          ],
+          "transitionSamplesDropped": 0,
+          "tolerance": 2,
+          "totalIssueCount": 0,
+          "truncated": false
+        },
+        "motion": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "enabled": false,
+          "samples": 0
+        },
+        "contrast": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "enabled": true,
+          "samples": [
+            0.267,
+            1.333,
+            4,
+            5.6,
+            8
+          ],
+          "checked": 8,
+          "passed": 8
+        },
+        "hdr": {
+          "autoPromotion": null,
+          "inspection": "available"
+        },
+        "snapshots": {
+          "enabled": false,
+          "files": [],
+          "times": [],
+          "findingFiles": []
+        },
+        "_meta": {
+          "version": "0.8.82",
+          "latestVersion": "0.8.82",
+          "updateAvailable": false
+        }
+      }
+    },
+    "portrait-1080x1920": {
+      "ok": true,
+      "exitCode": 0,
+      "layoutRan": true,
+      "hardWarnings": [],
+      "report": {
+        "ok": true,
+        "strict": false,
+        "lint": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 2,
+          "infoCount": 0,
+          "findings": [
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"fl-s1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#fl-s1",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/makemydemo-v0.1/runs/glm-5-3/with-framework/compiled/portrait-1080x1920/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"fl-s1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"fl-s2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#fl-s2",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/makemydemo-v0.1/runs/glm-5-3/with-framework/compiled/portrait-1080x1920/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"fl-s2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            }
+          ],
+          "filesScanned": 1
+        },
+        "runtime": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": []
+        },
+        "layout": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "duration": 8,
+          "samples": [
+            0.267,
+            0.333,
+            0.625,
+            0.8,
+            0.917,
+            1.333,
+            1.867,
+            2.4,
+            2.625,
+            2.933,
+            3.467,
+            4,
+            4.333,
+            4.533,
+            4.625,
+            4.917,
+            5.067,
+            5.6,
+            6.133,
+            6.459,
+            6.667,
+            7.2,
+            7.733,
+            8
+          ],
+          "transitionSamples": [
+            0.333,
+            0.625,
+            0.917,
+            2.625,
+            4.333,
+            4.625,
+            4.917,
+            6.459,
+            8
+          ],
+          "transitionSamplesDropped": 0,
+          "tolerance": 2,
+          "totalIssueCount": 0,
+          "truncated": false
+        },
+        "motion": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "enabled": false,
+          "samples": 0
+        },
+        "contrast": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "enabled": true,
+          "samples": [
+            0.267,
+            1.333,
+            4,
+            5.6,
+            8
+          ],
+          "checked": 8,
+          "passed": 8
+        },
+        "hdr": {
+          "autoPromotion": null,
+          "inspection": "available"
+        },
+        "snapshots": {
+          "enabled": false,
+          "files": [],
+          "times": [],
+          "findingFiles": []
+        },
+        "_meta": {
+          "version": "0.8.82",
+          "latestVersion": "0.8.82",
+          "updateAvailable": false
+        }
+      }
+    }
+  }
+}

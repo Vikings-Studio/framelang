@@ -1,0 +1,21 @@
+{
+  "id": "glm-5-3",
+  "model": "opencode-go/glm-5.3",
+  "arm": "with-framework",
+  "code": 0,
+  "durationMs": 19521,
+  "outputBytes": 1813,
+  "tokens": {
+    "total": 3291,
+    "input": 2642,
+    "output": 527,
+    "reasoning": 112,
+    "cache": {
+      "write": 0,
+      "read": 10
+    }
+  },
+  "cost": 0.006513,
+  "sessionID": "ses_f170f793affebsvhLzCcB1ufao",
+  "timedOut": false
+}

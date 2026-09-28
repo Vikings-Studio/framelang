@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>MakeMyDemo.com — Teaser</title>
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('assets/Inter.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #09090B;
+    color: #FAFAFA;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #root {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #09090B;
+    color: #FAFAFA;
+  }
+
+  .clip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #09090B;
+  }
+
+  .safe {
+    position: absolute;
+    left: 120px;
+    right: 120px;
+    top: 96px;
+    bottom: 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(250,250,250,0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(250,250,250,0.045) 1px, transparent 1px);
+    background-size: 120px 120px;
+    pointer-events: none;
+  }
+
+  .glow {
+    position: absolute;
+    width: 1100px;
+    height: 1100px;
+    border-radius: 50%;
+    filter: blur(0px);
+    background: radial-gradient(circle, rgba(223,225,4,0.10) 0%, rgba(223,225,4,0.03) 45%, rgba(9,9,11,0) 70%);
+    pointer-events: none;
+  }
+
+  .glow-a { top: -320px; right: -260px; }
+  .glow-b { bottom: -360px; left: -300px; }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #DFE104;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow .tick {
+    width: 96px;
+    height: 6px;
+    background: #DFE104;
+    display: block;
+  }
+
+  .headline {
+    font-size: 104px;
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #FAFAFA;
+    max-width: 1560px;
+    margin: 0;
+  }
+
+  .headline .accent {
+    color: #DFE104;
+  }
+
+  .sub {
+    margin-top: 44px;
+    font-size: 34px;
+    line-height: 1.35;
+    font-weight: 400;
+    color: rgba(250,250,250,0.72);
+    max-width: 1240px;
+  }
+
+  .rule {
+    margin-top: 64px;
+    height: 4px;
+    width: 100%;
+    background: rgba(250,250,250,0.14);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rule span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: #DFE104;
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .brand {
+    position: absolute;
+    left: 120px;
+    bottom: 96px;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(250,250,250,0.55);
+  }
+
+  .brand b {
+    color: #FAFAFA;
+    font-weight: 800;
+  }
+
+  .step {
+    position: absolute;
+    right: 120px;
+    bottom: 96px;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(250,250,250,0.55);
+  }
+</style>
+</head>
+<body>
+  <div id="root"
+       data-composition-id="main"
+       data-start="0"
+       data-width="1920"
+       data-height="1080"
+       data-fps="24"
+       data-duration="8.000000">
+
+    <section class="clip" id="s1" data-start="0" data-duration="3.958333" data-track-index="0">
+      <div class="grid"></div>
+      <div class="glow glow-a"></div>
+      <div class="safe">
+        <div class="eyebrow" id="s1-eyebrow"><span class="tick"></span><span>URL in &nbsp;/&nbsp; video out</span></div>
+        <h1 class="headline" id="s1-headline" style="opacity:0">Paste a public product URL.<br />Get a <span class="accent">video first cut</span>.</h1>
+        <p class="sub" id="s1-sub">MakeMyDemo.com turns one link into a first cut you can shape.</p>
+        <div class="rule"><span id="s1-rule"></span></div>
+      </div>
+      <div class="brand"><b>MakeMyDemo.com</b></div>
+      <div class="step">01 &nbsp;/&nbsp; 02</div>
+    </section>
+
+    <section class="clip" id="s2" data-start="4.000000" data-duration="4.000000" data-track-index="1">
+      <div class="grid"></div>
+      <div class="glow glow-b"></div>
+      <div class="safe">
+        <div class="eyebrow" id="s2-eyebrow"><span class="tick"></span><span>Review &nbsp;/&nbsp; export</span></div>
+        <h1 class="headline" id="s2-headline" style="opacity:0">AI-written script, product visuals, music.<br />Export an <span class="accent">MP4</span>.</h1>
+        <p class="sub" id="s2-sub">Review the cut, then take it with you.</p>
+        <div class="rule"><span id="s2-rule"></span></div>
+      </div>
+      <div class="brand"><b>MakeMyDemo.com</b></div>
+      <div class="step">02 &nbsp;/&nbsp; 02</div>
+    </section>
+
+  </div>
+
+  <script src="assets/gsap.min.js"></script>
+  <script>
+    (function () {
+      window.__timelines = window.__timelines || {};
+
+      var s1 = document.getElementById('s1');
+      var s2 = document.getElementById('s2');
+      var h1 = document.getElementById('s1-headline');
+      var h2 = document.getElementById('s2-headline');
+      var e1 = document.getElementById('s1-eyebrow');
+      var e2 = document.getElementById('s2-eyebrow');
+      var b1 = document.getElementById('s1-sub');
+      var b2 = document.getElementById('s2-sub');
+      var r1 = document.getElementById('s1-rule');
+      var r2 = document.getElementById('s2-rule');
+
+      gsap.set([s1, s2], { opacity: 0 });
+      gsap.set([h1, h2], { opacity: 0, y: 72 });
+      gsap.set([e1, e2], { opacity: 0, x: -40 });
+      gsap.set([b1, b2], { opacity: 0, y: 32 });
+      gsap.set([r1, r2], { scaleX: 0, transformOrigin: 'left center' });
+
+      var tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+
+      tl.set(s1, { opacity: 1 }, 0)
+        .set(s2, { opacity: 0 }, 0)
+
+        .to(e1, { opacity: 1, x: 0, duration: 0.5 }, 0.05)
+        .to(h1, { opacity: 1, y: 0, duration: 0.9 }, 0.333333)
+        .to(b1, { opacity: 1, y: 0, duration: 0.7 }, 0.75)
+        .to(r1, { scaleX: 1, duration: 1.6, ease: 'power2.inOut' }, 0.55)
+        .to(s1, { opacity: 0, duration: 0.358333, ease: 'power2.in' }, 3.6)
+
+        .set(s1, { opacity: 0 }, 4.0)
+        .set(s2, { opacity: 1 }, 4.0)
+        .to(e2, { opacity: 1, x: 0, duration: 0.5 }, 4.05)
+        .to(h2, { opacity: 1, y: 0, duration: 0.9 }, 4.333333)
+        .to(b2, { opacity: 1, y: 0, duration: 0.7 }, 4.75)
+        .to(r2, { scaleX: 1, duration: 1.6, ease: 'power2.inOut' }, 4.55)
+        .to(s2, { opacity: 0, duration: 0.4, ease: 'power2.in' }, 7.6)
+
+        .set({}, { x: 0 }, 8);
+
+      tl.time(0);
+
+      window.__timelines['main'] = tl;
+      window.__seek = function (t) { tl.time(Math.min(Math.max(t, 0), tl.duration())); };
+      window.__renderReady = true;
+    })();
+  </script>
+</body>
+</html>

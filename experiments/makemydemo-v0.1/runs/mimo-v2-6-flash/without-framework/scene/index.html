@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1920, initial-scale=1" />
+<title>MakeMyDemo.com Teaser</title>
+<style>
+  @font-face {
+    font-family: "InterLocal";
+    src: url("assets/Inter.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    background: #09090B;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: "InterLocal", "Helvetica Neue", Arial, sans-serif;
+    color: #FAFAFA;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  #root {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    background: #09090B;
+    overflow: hidden;
+  }
+
+  .section {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    background: #09090B;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 160px 200px;
+  }
+
+  .grain {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(180deg, rgba(223,225,4,0.05) 0%, rgba(9,9,11,0) 45%),
+      linear-gradient(0deg, rgba(250,250,250,0.04) 0%, rgba(9,9,11,0) 40%);
+    pointer-events: none;
+  }
+
+  .rule {
+    position: absolute;
+    left: 200px;
+    right: 200px;
+    height: 2px;
+    background: rgba(250,250,250,0.14);
+  }
+  .rule.top { top: 96px; }
+  .rule.bottom { bottom: 96px; }
+
+  .accent-bar {
+    position: absolute;
+    left: 200px;
+    bottom: 96px;
+    height: 10px;
+    width: 420px;
+    background: #DFE104;
+    transform-origin: left center;
+  }
+
+  .content { position: relative; z-index: 3; width: 100%; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: #DFE104;
+    margin-bottom: 56px;
+  }
+
+  .eyebrow .dot {
+    width: 20px;
+    height: 20px;
+    background: #DFE104;
+    display: inline-block;
+    flex: none;
+  }
+
+  .headline {
+    font-size: 168px;
+    line-height: 0.94;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    color: #FAFAFA;
+    max-width: 1520px;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .headline .hl {
+    color: #DFE104;
+    display: inline-block;
+  }
+
+  .subline {
+    margin-top: 64px;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: rgba(250,250,250,0.72);
+    max-width: 1400px;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .ticker {
+    position: absolute;
+    right: 200px;
+    top: 96px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(250,250,250,0.55);
+    z-index: 3;
+  }
+
+  .block {
+    display: inline-block;
+    background: #DFE104;
+    color: #09090B;
+    padding: 6px 26px 14px;
+    margin-top: 8px;
+  }
+
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+    margin-top: 72px;
+    flex-wrap: wrap;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .chip {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #FAFAFA;
+    border: 3px solid rgba(250,250,250,0.35);
+    padding: 22px 44px;
+    background: rgba(250,250,250,0.04);
+  }
+
+  .chip.accent {
+    background: #DFE104;
+    color: #09090B;
+    border-color: #DFE104;
+  }
+
+  .arrow {
+    font-size: 52px;
+    font-weight: 700;
+    color: #DFE104;
+    line-height: 1;
+  }
+
+  .glow {
+    position: absolute;
+    width: 1100px;
+    height: 1100px;
+    right: -320px;
+    top: -380px;
+    background: radial-gradient(circle at center, rgba(223,225,4,0.16) 0%, rgba(223,225,4,0) 62%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(90deg, rgba(250,250,250,0.045) 1px, rgba(250,250,250,0) 1px);
+    background-size: 160px 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .footer-mark {
+    position: absolute;
+    left: 200px;
+    bottom: 128px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(250,250,250,0.6);
+    z-index: 3;
+  }
+</style>
+</head>
+<body>
+
+<div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-fps="24" data-duration="8.000000">
+
+  <section id="s1" class="section" data-start="0" data-duration="3.958333" data-track-index="0">
+    <div class="grid-lines"></div>
+    <div class="glow"></div>
+    <div class="rule top"></div>
+    <div class="ticker">01 / Concept</div>
+    <div class="content">
+      <div class="eyebrow" id="s1-eyebrow"><span class="dot"></span>MakeMyDemo.com</div>
+      <h1 class="headline" id="s1-headline" style="opacity:0">Paste a product URL.<br />Get a <span class="hl">video first cut.</span></h1>
+      <p class="subline" id="s1-sub" style="opacity:0">One public link in. One demo video out.</p>
+    </div>
+    <div class="accent-bar" id="s1-bar"></div>
+    <div class="grain"></div>
+  </section>
+
+  <section id="s2" class="section" data-start="4.000000" data-duration="4.000000" data-track-index="1">
+    <div class="grid-lines"></div>
+    <div class="glow" style="left:-320px; right:auto; top:auto; bottom:-380px;"></div>
+    <div class="rule bottom"></div>
+    <div class="ticker">02 / Outcome</div>
+    <div class="content">
+      <div class="eyebrow" id="s2-eyebrow"><span class="dot"></span>Script &middot; Visuals &middot; Music</div>
+      <h1 class="headline" id="s2-headline" style="opacity:0">Review the cut,<br />export the <span class="hl">MP4.</span></h1>
+      <div class="flow" id="s2-flow">
+        <span class="chip">AI-written script</span>
+        <span class="arrow">+</span>
+        <span class="chip">Product visuals</span>
+        <span class="arrow">+</span>
+        <span class="chip">Music</span>
+        <span class="arrow">&rarr;</span>
+        <span class="chip accent">MP4</span>
+      </div>
+    </div>
+    <div class="footer-mark">MakeMyDemo.com</div>
+    <div class="grain"></div>
+  </section>
+
+</div>
+
+<script src="assets/gsap.min.js"></script>
+<script>
+  window.__timelines = window.__timelines || {};
+
+  gsap.set(["#s1-eyebrow", "#s1-headline", "#s1-sub", "#s2-eyebrow", "#s2-headline", "#s2-flow"], {
+    opacity: 0
+  });
+  gsap.set("#s1-headline", { opacity: 0, y: 90 });
+  gsap.set("#s2-headline", { opacity: 0, y: 90 });
+  gsap.set("#s1-bar", { scaleX: 0 });
+
+  var tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+
+  tl.fromTo("#s1-eyebrow",
+    { opacity: 0, x: -60 },
+    { opacity: 1, x: 0, duration: 0.5 },
+    0.12
+  );
+
+  tl.to("#s1-headline",
+    { opacity: 1, y: 0, duration: 0.95, ease: "expo.out" },
+    0.333333
+  );
+
+  tl.to("#s1-bar",
+    { scaleX: 1, duration: 1.1, ease: "power4.inOut" },
+    0.5
+  );
+
+  tl.fromTo("#s1-sub",
+    { opacity: 0, y: 48 },
+    { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+    0.95
+  );
+
+  tl.to("#s1-headline",
+    { y: -34, duration: 2.6, ease: "none" },
+    1.15
+  );
+
+  tl.to("#s1-sub",
+    { opacity: 0, y: -30, duration: 0.5, ease: "power2.in" },
+    3.3
+  );
+
+  tl.fromTo("#s2-eyebrow",
+    { opacity: 0, x: -60 },
+    { opacity: 1, x: 0, duration: 0.5 },
+    4.1
+  );
+
+  tl.to("#s2-headline",
+    { opacity: 1, y: 0, duration: 0.95, ease: "expo.out" },
+    4.333333
+  );
+
+  tl.fromTo("#s2-flow .chip",
+    { opacity: 0, y: 56 },
+    { opacity: 1, y: 0, duration: 0.55, stagger: 0.11, ease: "power3.out" },
+    4.95
+  );
+
+  tl.fromTo("#s2-flow .arrow",
+    { opacity: 0, scale: 0.4 },
+    { opacity: 1, scale: 1, duration: 0.4, stagger: 0.11, ease: "back.out(2)" },
+    5.05
+  );
+
+  tl.to("#s2-flow",
+    { opacity: 1, duration: 0.01 },
+    4.9
+  );
+
+  tl.to("#s2-headline",
+    { y: -26, duration: 2.4, ease: "none" },
+    5.4
+  );
+
+  tl.set({}, {}, 8.0);
+
+  window.__timelines["main"] = tl;
+  window.__renderReady = true;
+</script>
+</body>
+</html>

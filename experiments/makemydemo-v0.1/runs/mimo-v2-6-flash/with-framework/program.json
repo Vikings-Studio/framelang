@@ -1,0 +1,143 @@
+{
+  "language": "framelang/v1",
+  "fps": 24,
+  "profiles": [
+    "landscape-1920x1080",
+    "portrait-1080x1920"
+  ],
+  "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+  "assetsRef": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "seed": 47,
+  "scenes": [
+    {
+      "id": "s1",
+      "role": "hook",
+      "blueprint": "type-reveal/v1",
+      "durationFrames": 96,
+      "essential": [
+        "headline"
+      ],
+      "content": [
+        {
+          "id": "eyebrow",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "label",
+          "language": "en",
+          "text": "MakeMyDemo.com",
+          "fit": "wrapThenShrink"
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "importance": "essential",
+          "role": "headline",
+          "language": "en",
+          "text": "Paste a product URL",
+          "fit": "wrapThenShrink"
+        }
+      ],
+      "layouts": {
+        "default": {
+          "type": "stack",
+          "direction": "column",
+          "gap": "comfortable",
+          "children": [
+            "eyebrow",
+            "headline"
+          ]
+        }
+      },
+      "initialState": "opening",
+      "resolvedState": "resolved",
+      "states": [
+        {
+          "id": "opening",
+          "visible": [
+            "eyebrow"
+          ]
+        },
+        {
+          "id": "resolved",
+          "visible": [
+            "eyebrow",
+            "headline"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "atFrame": 8,
+          "durationFrames": 14,
+          "effect": "appear",
+          "target": "headline"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "role": "benefit_highlight",
+      "blueprint": "type-reveal/v1",
+      "durationFrames": 96,
+      "essential": [
+        "headline"
+      ],
+      "content": [
+        {
+          "id": "eyebrow",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "label",
+          "language": "en",
+          "text": "First cut to export",
+          "fit": "wrapThenShrink"
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "importance": "essential",
+          "role": "headline",
+          "language": "en",
+          "text": "Script, visuals, music",
+          "fit": "wrapThenShrink"
+        }
+      ],
+      "layouts": {
+        "default": {
+          "type": "stack",
+          "direction": "column",
+          "gap": "comfortable",
+          "children": [
+            "eyebrow",
+            "headline"
+          ]
+        }
+      },
+      "initialState": "opening",
+      "resolvedState": "resolved",
+      "states": [
+        {
+          "id": "opening",
+          "visible": [
+            "eyebrow"
+          ]
+        },
+        {
+          "id": "resolved",
+          "visible": [
+            "eyebrow",
+            "headline"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "atFrame": 8,
+          "durationFrames": 14,
+          "effect": "appear",
+          "target": "headline"
+        }
+      ]
+    }
+  ]
+}

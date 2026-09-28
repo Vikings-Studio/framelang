@@ -1,0 +1,22 @@
+{
+  "deepseek-v4-1-flash": {
+    "withFramework": "Reviewer: clean landscape and portrait reflow, but small centered headlines, sparse opening, long static holds, and no script/visuals/music bridge.",
+    "withoutFramework": "Reviewer: stronger left-aligned hierarchy and yellow emphasis; script, visuals, and music are explicit. Opening remains sparse and holds are long."
+  },
+  "glm-5-2": {
+    "withFramework": "Reviewer: both profiles fit without clipping, but the two text cards are sparse and static. ‘Get a video’ is broader than the brief’s ‘video first cut’.",
+    "withoutFramework": "No visual comparison is possible because OpenCode emitted no visible response."
+  },
+  "mimo-v2-6-flash": {
+    "withFramework": "Reviewer: both profiles fit, but the sparse copy largely omits review and export and has little motion.",
+    "withoutFramework": "Reviewer: stronger typography and a staged script + visuals + music to MP4 diagram. Small diagram labels need a closer read."
+  },
+  "hy4-preview": {
+    "withFramework": "Reviewer: landscape and portrait fit cleanly, but the typography is small and pacing sparse. It adds an unsupported ‘in seconds’ speed claim and omits the public URL detail.",
+    "withoutFramework": "Reviewer: stronger hierarchy and clearer product chain, with accurate public URL and first-cut wording. Small explanatory copy may be difficult on mobile."
+  },
+  "glm-5-3": {
+    "withFramework": "Reviewer: both landscape and portrait fit cleanly with no blank tail, but tiny opening text, long static holds, and large unused space weaken the teaser. Copy covers the flow yet omits the public-URL and video-first-cut precision.",
+    "withoutFramework": "No visual comparison is possible because OpenCode emitted no response before the 240-second harness deadline."
+  }
+}

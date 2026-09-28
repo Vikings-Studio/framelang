@@ -1,7 +1,37 @@
 [
-  {"id":"deepseek-v4-1-flash","label":"DeepSeek V4.1 Flash","opencode":"opencode-go/deepseek-v4.1-flash","license":"MIT","source":"https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"},
-  {"id":"glm-5-2","label":"GLM 5.2","opencode":"opencode-go/glm-5.2","license":"Apache-2.0","source":"https://github.com/zai-org/GLM-5"},
-  {"id":"glm-5-3-flash","label":"GLM 5.3 Flash","opencode":"opencode-go/glm-5.3-flash","license":"Apache-2.0","source":"https://github.com/zai-org/GLM-5"},
-  {"id":"mimo-v2-6-flash","label":"MiMo V2.6 Flash","opencode":"opencode-go/mimo-v2.6-flash","license":"MIT","source":"https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL"},
-  {"id":"hy4-preview","label":"Tencent Hy4 Preview","opencode":"opencode-go/hy4-preview","license":"Apache-2.0","source":"https://huggingface.co/tencent/Hy4-preview"}
+  {
+    "id": "deepseek-v4-1-flash",
+    "label": "DeepSeek V4.1 Flash",
+    "opencode": "opencode-go/deepseek-v4.1-flash",
+    "license": "MIT",
+    "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash"
+  },
+  {
+    "id": "glm-5-2",
+    "label": "GLM 5.2",
+    "opencode": "opencode-go/glm-5.2",
+    "license": "MIT",
+    "source": "https://huggingface.co/zai-org/GLM-5.2"
+  },
+  {
+    "id": "glm-5-3",
+    "label": "GLM 5.3",
+    "opencode": "opencode-go/glm-5.3",
+    "license": "GLM-5.3 custom",
+    "source": "https://huggingface.co/zai-org/GLM-5.3"
+  },
+  {
+    "id": "mimo-v2-6-flash",
+    "label": "MiMo V2.6 Flash",
+    "opencode": "opencode-go/mimo-v2.6-flash",
+    "license": "MIT",
+    "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL"
+  },
+  {
+    "id": "hy4-preview",
+    "label": "Tencent Hy4 Preview",
+    "opencode": "opencode-go/hy4-preview",
+    "license": "Apache-2.0",
+    "source": "https://huggingface.co/tencent/Hy4-preview"
+  }
 ]
