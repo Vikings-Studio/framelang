@@ -18,7 +18,14 @@ jobs:
       - uses: browser-actions/setup-chrome@v2
         id: chrome
       - uses: FedericoCarboni/setup-ffmpeg@v3
+        if: runner.os != 'macOS'
+      - run: brew install ffmpeg
+        if: runner.os == 'macOS'
       - run: ffmpeg -version
+      - name: Warm Windows Chrome executable
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: '& "${{ steps.chrome.outputs.chrome-path }}" --version'
       - run: npm ci
       - run: npm test
       - run: npm run example:compile

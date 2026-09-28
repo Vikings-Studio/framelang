@@ -14,7 +14,7 @@ const models = JSON.parse(await readFile(path.join(here, 'models.json'), 'utf8')
 const cli = path.join(repo, 'src/cli.mjs');
 const hf = require.resolve('hyperframes/bin/hyperframes.mjs');
 const gsap = require.resolve('gsap/dist/gsap.min.js');
-const font = path.join(repo, 'assets/Inter.ttf');
+const font = path.join(repo, 'fonts/Inter.ttf');
 const bundle = path.join(here, 'bundle.json');
 
 function cleanTransport(raw) {
