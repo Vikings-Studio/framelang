@@ -14,7 +14,8 @@ generation request.
 
 FrameLang is a versioned, typed scene description. An AI may select content,
 evidence, composition, and motion intent. It may not emit HTML, CSS, JavaScript,
-GSAP, raw coordinates, `z-index`, or clipping rules. A deterministic compiler
+GSAP, arbitrary CSS coordinates, `z-index`, or clipping rules. It may supply
+bounded positions in a profile-safe canvas and typed keyframes. A deterministic compiler
 turns FrameLang into the existing HyperFrames artifact and records how every
 visible element was derived.
 
@@ -67,8 +68,9 @@ without forcing every scene into the same centered card.
 
 ### Included in v1
 
-- Text, image, timed video clip, shape, captured-product-state, and group nodes.
-- Stack, split, grid, and anchored-overlay layouts.
+- Text, image, timed video clip, shape, captured-product-state, SVG asset, and group nodes.
+- Stack, split, grid, anchored-overlay, and constrained-canvas layouts.
+- Typed solid/gradient paint, text styles, and bounded property keyframes.
 - Landscape and portrait profiles when requested by the job. A profile is
   admitted only after its own layout and checks pass.
 - Integer-frame scene timing, state changes, and a bounded set of seekable
@@ -80,7 +82,7 @@ without forcing every scene into the same centered card.
 
 ### Excluded from v1
 
-- General HTML/CSS/JS authoring, arbitrary SVG paths, shaders, WebGL, custom
+- General HTML/CSS/JS authoring, model-authored inline SVG paths, shaders, WebGL, custom
   animation functions, arbitrary easing curves, and runtime network requests.
 - Audio synthesis, narration scripting, captions, music selection, and mixing.
   Existing pipeline stages own these. FrameLang consumes optional locked
@@ -174,6 +176,7 @@ The supported kinds are:
 | `videoClip` | Staged asset ID, source start and length in frames, rational playback rate, fit mode | Seeks a finite source range; existing audio stages own sound. |
 | `productState` | Captured component/state ID or verified staged state asset | Shows a specific evidenced product state. |
 | `shape` | Approved primitive and tokenized style | Renders a line, panel, circle, or simple connector. |
+| `svg` | Hashed local SVG asset ID, display permission, license, and fit | Renders a verified vector asset without runtime network access. |
 | `group` | Ordered children | Gives content a shared layout and animation identity. |
 
 Text is data, escaped by the compiler. It cannot contain HTML, CSS, `<br>`,
@@ -204,7 +207,10 @@ persuasive still needs content review.
 Layout is a tree. A node appears once in each active layout variant unless it
 is decorative and explicitly omitted for that profile. Essential and
 supporting nodes may change order or placement across profiles but may not be
-omitted. Layout trees have no free coordinates.
+omitted. Stack, split, grid, and overlay layouts have no free coordinates.
+The constrained canvas accepts an integer rectangle in thousandths of each
+profile's inset safe area; bounds, intended overlap, layer, text fit, and
+motion excursion are validated. It is positioning as typed data, not CSS.
 
 `layouts.default` applies to every requested profile for which no explicit
 profile key exists. A profile-specific tree takes precedence. If neither
@@ -223,6 +229,7 @@ alternate side only if the blueprint explicitly declares that choice.
 | `split` | Exactly two regions | Ratio from a finite registry; reflows to a stack when declared or when the profile requires it. |
 | `grid` | 1–3 columns, bounded cell count | Content-aware track sizing; deterministic row order. |
 | `overlay` | One base and named attachments | Each attachment anchors to an existing node or region, with a declared side and clearance. |
+| `canvas` | Per-profile bounded placements | Explicit safe-area rectangles and intentional overlap declarations; compiler owns emitted coordinates and stacking. |
 
 The compiler uses the following hierarchy of constraints:
 
@@ -301,6 +308,13 @@ may not change layout dimensions during playback. The compiler calculates a
 conservative swept rectangle for every effect and reserves that space before
 layout is accepted. Overshooting easing is allowed only if its maximum excursion
 is included in that rectangle.
+
+Typed transform/opacity `tween` events are a direct keyframe form for broad
+motion authoring. They use finite numeric endpoints and enumerated easing.
+The v0.1 pilot rejects conflicting node writers and checks endpoint ranges;
+the swept-geometry proof described above is a v1 requirement still to build.
+More elaborate path, mask, and shader effects belong to versioned
+deterministic extensions with declared bounds, rather than injected GSAP.
 
 Events have `atFrame`, `durationFrames`, `effect`, and node/state references.
 Two events may not write the same property of the same node on overlapping

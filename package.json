@@ -13,7 +13,10 @@
     "example:render": "node src/cli.mjs render out/type-reveal",
     "rich:compile": "node src/cli.mjs compile examples/makemydemo-rich/program.json out/makemydemo-rich",
     "rich:check": "node src/cli.mjs check out/makemydemo-rich",
-    "rich:render": "node src/cli.mjs render out/makemydemo-rich"
+    "rich:render": "node src/cli.mjs render out/makemydemo-rich",
+    "cinematic:compile": "node src/cli.mjs compile examples/makemydemo-cinematic/program.json out/makemydemo-cinematic",
+    "cinematic:check": "node src/cli.mjs check out/makemydemo-cinematic",
+    "cinematic:render": "node src/cli.mjs render out/makemydemo-cinematic"
   },
   "dependencies": {
     "gsap": "3.15.0",
