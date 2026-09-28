@@ -1,0 +1,284 @@
+[
+  {
+    "id": "deepseek-v4-1-flash",
+    "arms": {
+      "withFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Rendered",
+            "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+            "tokens": {
+              "total": 3885,
+              "input": 765,
+              "output": 577,
+              "reasoning": 495,
+              "cache": {
+                "write": 0,
+                "read": 2048
+              }
+            },
+            "cost": 0.000764094
+          }
+        ],
+        "firstRenderedAttempt": 1,
+        "previewKind": "model"
+      },
+      "withoutFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Rendered",
+            "detail": "First response passed sampled HyperFrames checks and rendered in landscape.",
+            "tokens": {
+              "total": 5047,
+              "input": 598,
+              "output": 1101,
+              "reasoning": 1300,
+              "cache": {
+                "write": 0,
+                "read": 2048
+              }
+            },
+            "cost": 0.001536444
+          }
+        ],
+        "firstRenderedAttempt": 1,
+        "previewKind": "model"
+      }
+    }
+  },
+  {
+    "id": "glm-5-2",
+    "arms": {
+      "withFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Rendered",
+            "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+            "tokens": {
+              "total": 3400,
+              "input": 2642,
+              "output": 531,
+              "reasoning": 217,
+              "cache": {
+                "write": 0,
+                "read": 10
+              }
+            },
+            "cost": 0.0069926
+          }
+        ],
+        "firstRenderedAttempt": 1,
+        "previewKind": "model"
+      },
+      "withoutFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "No response",
+            "detail": "OpenCode emitted no answer; inspect the OpenCode event and stderr records.",
+            "tokens": {
+              "total": 6461,
+              "input": 3901,
+              "output": 11,
+              "reasoning": 0,
+              "cache": {
+                "write": 0,
+                "read": 2549
+              }
+            },
+            "cost": 0.00617254
+          },
+          {
+            "number": 2,
+            "status": "Check rejected",
+            "detail": "The raw HTML failed its first sampled HyperFrames check.",
+            "tokens": {
+              "total": 12926,
+              "input": 2540,
+              "output": 1490,
+              "reasoning": 8886,
+              "cache": {
+                "read": 10,
+                "write": 0
+              }
+            },
+            "cost": 0.049213
+          },
+          {
+            "number": 3,
+            "status": "Harness deadline",
+            "detail": "No answer before the 480-second harness deadline.",
+            "tokens": null,
+            "cost": null
+          }
+        ],
+        "firstRenderedAttempt": null,
+        "previewKind": "human-repair"
+      }
+    }
+  },
+  {
+    "id": "glm-5-3",
+    "arms": {
+      "withFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Rendered",
+            "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+            "tokens": {
+              "total": 3291,
+              "input": 2642,
+              "output": 527,
+              "reasoning": 112,
+              "cache": {
+                "write": 0,
+                "read": 10
+              }
+            },
+            "cost": 0.006513
+          }
+        ],
+        "firstRenderedAttempt": 1,
+        "previewKind": "model"
+      },
+      "withoutFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Harness deadline",
+            "detail": "No answer before the 240-second harness deadline; inspect the OpenCode event and stderr records.",
+            "tokens": null,
+            "cost": null
+          },
+          {
+            "number": 2,
+            "status": "Check rejected",
+            "detail": "The raw HTML failed its first sampled HyperFrames check.",
+            "tokens": {
+              "total": 21158,
+              "input": 2540,
+              "output": 1585,
+              "reasoning": 17023,
+              "cache": {
+                "read": 10,
+                "write": 0
+              }
+            },
+            "cost": 0.0854338
+          },
+          {
+            "number": 3,
+            "status": "Harness deadline",
+            "detail": "No answer before the 480-second harness deadline.",
+            "tokens": null,
+            "cost": null
+          }
+        ],
+        "firstRenderedAttempt": null,
+        "previewKind": "human-repair"
+      }
+    }
+  },
+  {
+    "id": "mimo-v2-6-flash",
+    "arms": {
+      "withFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Rendered",
+            "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+            "tokens": {
+              "total": 3487,
+              "input": 10,
+              "output": 560,
+              "reasoning": 229,
+              "cache": {
+                "write": 0,
+                "read": 2688
+              }
+            },
+            "cost": 0.0002298464
+          }
+        ],
+        "firstRenderedAttempt": 1,
+        "previewKind": "model"
+      },
+      "withoutFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Rendered",
+            "detail": "First response passed sampled HyperFrames checks and rendered in landscape.",
+            "tokens": {
+              "total": 5784,
+              "input": 35,
+              "output": 3071,
+              "reasoning": 118,
+              "cache": {
+                "write": 0,
+                "read": 2560
+              }
+            },
+            "cost": 0.000904988
+          }
+        ],
+        "firstRenderedAttempt": 1,
+        "previewKind": "model"
+      }
+    }
+  },
+  {
+    "id": "hy4-preview",
+    "arms": {
+      "withFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Rendered",
+            "detail": "First response compiled, passed sampled checks, and rendered in landscape and portrait.",
+            "tokens": {
+              "total": 3752,
+              "input": 2705,
+              "output": 855,
+              "reasoning": 192,
+              "cache": {
+                "write": 0,
+                "read": 0
+              }
+            },
+            "cost": 0.004874517
+          }
+        ],
+        "firstRenderedAttempt": 1,
+        "previewKind": "model"
+      },
+      "withoutFramework": {
+        "attempts": [
+          {
+            "number": 1,
+            "status": "Rendered",
+            "detail": "First response passed sampled HyperFrames checks and rendered in landscape.",
+            "tokens": {
+              "total": 6549,
+              "input": 476,
+              "output": 2493,
+              "reasoning": 1468,
+              "cache": {
+                "write": 0,
+                "read": 2112
+              }
+            },
+            "cost": 0.010392149
+          }
+        ],
+        "firstRenderedAttempt": 1,
+        "previewKind": "model"
+      }
+    }
+  }
+]

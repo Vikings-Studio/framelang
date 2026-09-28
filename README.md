@@ -6,7 +6,10 @@ repository contains the [reviewed RFC](spec/FRAME_LANG_V1_SPEC.md), its
 small compiler pilot, and reproducible one-shot OpenCode trials.
 
 The pilot accepts a **subset** of `framelang/v1`: text and staged SVG/image
-states, stack/split/overlay layout, hard cuts, and `replace` events. It rejects
+states, stack/split/overlay layout, hard cuts, and `replace` events. The
+[rich process subset](spec/V0_1_RICH_SUBSET.md) adds typed color emphasis,
+display typography, left alignment, process flows, decoration, and bounded
+entrance presets. It rejects
 unsupported syntax. The RFC's full geometry proof, video clips, sync anchors,
 and production integration are future work. A passing pilot render is evidence
 about this subset, not proof of the full language guarantee.
@@ -32,6 +35,9 @@ npm test
 npm run example:compile
 npm run example:check
 npm run example:render
+npm run rich:compile
+npm run rich:check
+npm run rich:render
 ```
 
 The example outputs are written under `out/` and are ignored by Git. To compile

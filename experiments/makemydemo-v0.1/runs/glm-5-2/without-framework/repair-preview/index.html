@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MakeMyDemo.com — Kinetic Teaser</title>
+<style>
+  @font-face{
+    font-family:'Inter';
+    src:url('assets/Inter.ttf') format('truetype');
+    font-weight:100 900;
+    font-style:normal;
+    font-display:block;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1920px;height:1080px;background:#09090B;overflow:hidden;}
+  body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  #root{position:relative;width:1920px;height:1080px;overflow:hidden;background:#09090B;color:#FAFAFA;}
+  .clip{position:absolute;inset:0;display:flex;align-items:center;padding:96px 120px;background:#09090B;}
+  .clip::before{content:'';position:absolute;inset:0;pointer-events:none;}
+  #s1::before{background:radial-gradient(1000px 640px at 20% 62%,rgba(223,225,4,0.07),transparent 70%);}
+  #s2::before{background:radial-gradient(1000px 640px at 80% 38%,rgba(223,225,4,0.07),transparent 70%);}
+  .content{position:relative;max-width:1680px;}
+  .eyebrow{display:inline-block;font-size:26px;font-weight:600;letter-spacing:0.42em;text-transform:uppercase;color:#DFE104;margin-bottom:34px;}
+  .bar{width:170px;height:6px;background:#DFE104;margin-bottom:44px;transform-origin:left center;transform:scaleX(0);}
+  .headline{font-size:104px;font-weight:800;line-height:1.06;letter-spacing:-0.02em;color:#FAFAFA;text-wrap:balance;max-width:1680px;}
+  .headline .w{display:inline-block;will-change:transform,opacity;}
+  .headline .w.acc{color:#DFE104;}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-fps="24" data-duration="8.000000">
+  <section id="s1" class="clip" data-start="0" data-duration="3.958333" data-track-index="0">
+    <div class="content">
+      <div class="eyebrow" id="e1" style="opacity:0">MakeMyDemo.com</div>
+      <div class="bar" id="b1"></div>
+      <h1 class="headline" id="h1" style="opacity:0">Paste a product URL. Get a first-cut video.</h1>
+    </div>
+  </section>
+  <section id="s2" class="clip" data-start="4.000000" data-duration="4.000000" data-track-index="1">
+    <div class="content">
+      <div class="eyebrow" id="e2" style="opacity:0">Your first cut</div>
+      <div class="bar" id="b2"></div>
+      <h1 class="headline" id="h2" style="opacity:0">AI script. Product visuals. Music. Review and export an MP4.</h1>
+    </div>
+  </section>
+</div>
+<script src="assets/gsap.min.js"></script>
+<script>
+(function(){
+  window.__timelines = window.__timelines || {};
+
+  function splitWords(el){
+    var words = (el.textContent || '').trim().split(/\s+/);
+    el.textContent = '';
+    var frag = document.createDocumentFragment();
+    for(var i = 0; i < words.length; i++){
+      var s = document.createElement('span');
+      s.className = 'w' + (/URL|MP4/.test(words[i]) ? ' acc' : '');
+      s.textContent = words[i];
+      frag.appendChild(s);
+      if(i < words.length - 1) frag.appendChild(document.createTextNode(' '));
+    }
+    el.appendChild(frag);
+    return el.querySelectorAll('.w');
+  }
+
+  var e1 = document.getElementById('e1');
+  var h1 = document.getElementById('h1');
+  var e2 = document.getElementById('e2');
+  var h2 = document.getElementById('h2');
+  var w1 = splitWords(h1);
+  var w2 = splitWords(h2);
+
+  var tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+
+  tl.fromTo(e1, {opacity:0, y:26}, {opacity:1, y:0, duration:0.5}, 0.166667)
+    .fromTo(h1, {opacity:0, y:44}, {opacity:1, y:0, duration:0.7}, 0.333333)
+    .fromTo(w1, {yPercent:80, rotation:5}, {yPercent:0, rotation:0, duration:0.75, stagger:0.055}, 0.333333)
+    .fromTo('#b1', {scaleX:0}, {scaleX:1, duration:0.6, ease:'power2.inOut'}, 0.55)
+    .to('#s1 .content', {y:-14, duration:1.0, ease:'none'}, 2.4)
+    .to('#s1 .content', {opacity:0, y:-46, duration:0.45, ease:'power2.in'}, 3.5)
+    .fromTo(e2, {opacity:0, y:26}, {opacity:1, y:0, duration:0.5}, 4.166667)
+    .fromTo(h2, {opacity:0, y:44}, {opacity:1, y:0, duration:0.7}, 4.333333)
+    .fromTo(w2, {yPercent:80, rotation:5}, {yPercent:0, rotation:0, duration:0.75, stagger:0.055}, 4.333333)
+    .fromTo('#b2', {scaleX:0}, {scaleX:1, duration:0.6, ease:'power2.inOut'}, 4.55)
+    .to('#s2 .content', {y:-22, duration:0.6, ease:'power1.inOut'}, 7.4);
+
+  window.__timelines['main'] = tl;
+  window.__renderReady = true;
+})();
+</script>
+</body>
+</html>

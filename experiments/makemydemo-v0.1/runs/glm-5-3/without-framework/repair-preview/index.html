@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MakeMyDemo.com — Kinetic Teaser</title>
+<style>
+  @font-face {
+    font-family: "Inter";
+    src: url("assets/Inter.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #09090B;
+  }
+  #root {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: #09090B;
+    color: #FAFAFA;
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .glow { position: absolute; border-radius: 50%; pointer-events: none; }
+  .glow-a {
+    width: 1300px; height: 1300px;
+    top: -420px; right: -380px;
+    background: radial-gradient(circle, rgba(223,225,4,0.16) 0%, rgba(223,225,4,0.05) 42%, rgba(223,225,4,0) 68%);
+  }
+  .glow-b {
+    width: 1100px; height: 1100px;
+    bottom: -460px; left: -360px;
+    background: radial-gradient(circle, rgba(223,225,4,0.09) 0%, rgba(223,225,4,0.03) 45%, rgba(223,225,4,0) 70%);
+  }
+  section {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 96px 120px;
+  }
+  .eyebrow { display: flex; align-items: center; gap: 28px; margin: 0 0 44px 0; }
+  .dash {
+    width: 72px; height: 6px; border-radius: 3px;
+    background: #DFE104;
+    transform-origin: left center;
+  }
+  .eyebrow-text {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #DFE104;
+    white-space: nowrap;
+  }
+  .headline {
+    margin: 0;
+    font-size: 118px;
+    line-height: 1.24;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    color: #FAFAFA;
+  }
+  .mask { display: block; overflow: hidden; }
+  .line { display: block; will-change: transform; }
+  .accent { font-style: normal; color: #DFE104; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-fps="24" data-duration="8.000000">
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <section id="s1" data-start="0" data-duration="3.958333" data-track-index="0">
+    <div class="eyebrow"><span class="dash"></span><span class="eyebrow-text">MakeMyDemo.com</span></div>
+    <h1 class="headline" style="opacity:0">
+      <span class="mask"><span class="line">Paste a product URL.</span></span>
+      <span class="mask"><span class="line">Get a video <span class="accent">first cut</span>.</span></span>
+    </h1>
+  </section>
+  <section id="s2" data-start="4.000000" data-duration="4.000000" data-track-index="1" style="opacity:0">
+    <div class="eyebrow"><span class="dash"></span><span class="eyebrow-text">AI Script · Visuals · Music</span></div>
+    <h1 class="headline" style="opacity:0">
+      <span class="mask"><span class="line">Review the cut.</span></span>
+      <span class="mask"><span class="line">Export the <span class="accent">MP4</span>.</span></span>
+    </h1>
+  </section>
+</div>
+<script src="assets/gsap.min.js"></script>
+<script>
+  (function () {
+    window.__timelines = window.__timelines || {};
+    window.__renderReady = false;
+
+    var tl = gsap.timeline({ paused: true });
+
+    tl.set("#s1", { opacity: 1 }, 0);
+    tl.set("#s1", { opacity: 0 }, 3.958333);
+    tl.set("#s2", { opacity: 1 }, 4.0);
+
+    tl.fromTo(".glow-a",
+      { x: -70, y: -20, scale: 1 },
+      { x: 70, y: 40, scale: 1.14, duration: 8, ease: "none" }, 0);
+    tl.fromTo(".glow-b",
+      { x: 60, y: 30, scale: 1.06 },
+      { x: -60, y: -30, scale: 1, duration: 8, ease: "none" }, 0);
+
+    function entrance(scope, at) {
+      tl.fromTo(scope + " .dash",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.6, ease: "power3.inOut" }, at);
+      tl.fromTo(scope + " .headline",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.45, ease: "power1.out" }, at);
+      tl.fromTo(scope + " .line",
+        { yPercent: 135 },
+        { yPercent: 0, duration: 0.95, ease: "power4.out", stagger: 0.09 }, at);
+    }
+
+    entrance("#s1", 0.333333);
+    entrance("#s2", 4.333333);
+
+    window.__timelines["main"] = tl;
+    window.__renderReady = true;
+  })();
+</script>
+</body>
+</html>
