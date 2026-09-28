@@ -1,0 +1,326 @@
+{
+  "protocol": "FrameLang token-efficient v0.1 local OpenCode study",
+  "modelAttempts": 15,
+  "knownInferenceCost": 0.052354145,
+  "costUnit": "OpenCode-reported USD; local compile/check/render and human review excluded",
+  "byModel": {
+    "deepseek-v4-1-flash": {
+      "attempts": 4,
+      "knownCost": 0.005213226
+    },
+    "mimo-v2-6-flash": {
+      "attempts": 5,
+      "knownCost": 0.00262766
+    },
+    "glm-5-2": {
+      "attempts": 2,
+      "knownCost": 0.01065872
+    },
+    "glm-5-3": {
+      "attempts": 2,
+      "knownCost": 0.02031672
+    },
+    "hy4-preview": {
+      "attempts": 2,
+      "knownCost": 0.013537819
+    }
+  },
+  "attempts": [
+    {
+      "stage": "pilot-runs",
+      "model": "deepseek-v4-1-flash",
+      "arm": "recipe",
+      "status": "Invalid JSON",
+      "tokens": {
+        "total": 3223,
+        "input": 687,
+        "output": 57,
+        "reasoning": 687,
+        "cache": {
+          "read": 1792,
+          "write": 0
+        }
+      },
+      "cost": 0.000554826,
+      "durationMs": 14334,
+      "evidence": "pilot-runs/deepseek-v4-1-flash/recipe"
+    },
+    {
+      "stage": "pilot-runs",
+      "model": "mimo-v2-6-flash",
+      "arm": "recipe",
+      "status": "Check rejected",
+      "tokens": {
+        "total": 3060,
+        "input": 2394,
+        "output": 80,
+        "reasoning": 586,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "cost": 0.00052164,
+      "durationMs": 19591,
+      "evidence": "pilot-runs/mimo-v2-6-flash/recipe"
+    },
+    {
+      "stage": "runs",
+      "model": "deepseek-v4-1-flash",
+      "arm": "full",
+      "status": "Check rejected",
+      "tokens": {
+        "total": 11241,
+        "input": 4300,
+        "output": 3960,
+        "reasoning": 677,
+        "cache": {
+          "read": 2304,
+          "write": 0
+        }
+      },
+      "cost": 0.003434112,
+      "durationMs": 28110,
+      "evidence": "runs/deepseek-v4-1-flash/full"
+    },
+    {
+      "stage": "runs",
+      "model": "deepseek-v4-1-flash",
+      "arm": "recipe",
+      "status": "Rendered",
+      "tokens": {
+        "total": 3948,
+        "input": 402,
+        "output": 57,
+        "reasoning": 1441,
+        "cache": {
+          "read": 2048,
+          "write": 0
+        }
+      },
+      "cost": 0.000965244,
+      "durationMs": 20185,
+      "evidence": "runs/deepseek-v4-1-flash/recipe"
+    },
+    {
+      "stage": "runs",
+      "model": "glm-5-2",
+      "arm": "recipe",
+      "status": "Compile rejected",
+      "tokens": {
+        "total": 3024,
+        "input": 2351,
+        "output": 441,
+        "reasoning": 222,
+        "cache": {
+          "read": 10,
+          "write": 0
+        }
+      },
+      "cost": 0.0062112,
+      "durationMs": 19197,
+      "evidence": "runs/glm-5-2/recipe"
+    },
+    {
+      "stage": "runs",
+      "model": "glm-5-3",
+      "arm": "recipe",
+      "status": "Compile rejected",
+      "tokens": {
+        "total": 5134,
+        "input": 2351,
+        "output": 818,
+        "reasoning": 1955,
+        "cache": {
+          "read": 10,
+          "write": 0
+        }
+      },
+      "cost": 0.0154952,
+      "durationMs": 53259,
+      "evidence": "runs/glm-5-3/recipe"
+    },
+    {
+      "stage": "runs",
+      "model": "hy4-preview",
+      "arm": "recipe",
+      "status": "Compile rejected",
+      "tokens": {
+        "total": 5874,
+        "input": 2394,
+        "output": 514,
+        "reasoning": 2966,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "cost": 0.010700076,
+      "durationMs": 72256,
+      "evidence": "runs/hy4-preview/recipe"
+    },
+    {
+      "stage": "runs",
+      "model": "mimo-v2-6-flash",
+      "arm": "full",
+      "status": "Check rejected",
+      "tokens": {
+        "total": 9656,
+        "input": 4466,
+        "output": 2415,
+        "reasoning": 599,
+        "cache": {
+          "read": 2176,
+          "write": 0
+        }
+      },
+      "cost": 0.0014752528,
+      "durationMs": 33698,
+      "evidence": "runs/mimo-v2-6-flash/full"
+    },
+    {
+      "stage": "runs",
+      "model": "mimo-v2-6-flash",
+      "arm": "recipe",
+      "status": "Rendered",
+      "tokens": {
+        "total": 2705,
+        "input": 2368,
+        "output": 54,
+        "reasoning": 283,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "cost": 0.00042588,
+      "durationMs": 14187,
+      "evidence": "runs/mimo-v2-6-flash/recipe"
+    },
+    {
+      "stage": "copy-runs",
+      "model": "deepseek-v4-1-flash",
+      "arm": "copy",
+      "status": "Rendered",
+      "tokens": {
+        "total": 2720,
+        "input": 334,
+        "output": 43,
+        "reasoning": 295,
+        "cache": {
+          "read": 2048,
+          "write": 0
+        }
+      },
+      "cost": 0.000259044,
+      "durationMs": 10965,
+      "evidence": "copy-runs/deepseek-v4-1-flash/copy"
+    },
+    {
+      "stage": "copy-runs",
+      "model": "glm-5-2",
+      "arm": "copy",
+      "status": "Rendered",
+      "tokens": {
+        "total": 2578,
+        "input": 2282,
+        "output": 51,
+        "reasoning": 233,
+        "cache": {
+          "read": 12,
+          "write": 0
+        }
+      },
+      "cost": 0.00444752,
+      "durationMs": 15930,
+      "evidence": "copy-runs/glm-5-2/copy"
+    },
+    {
+      "stage": "copy-runs",
+      "model": "glm-5-3",
+      "arm": "copy",
+      "status": "Rendered",
+      "tokens": {
+        "total": 2663,
+        "input": 2282,
+        "output": 53,
+        "reasoning": 316,
+        "cache": {
+          "read": 12,
+          "write": 0
+        }
+      },
+      "cost": 0.00482152,
+      "durationMs": 13967,
+      "evidence": "copy-runs/glm-5-3/copy"
+    },
+    {
+      "stage": "copy-runs",
+      "model": "hy4-preview",
+      "arm": "copy",
+      "status": "Rendered",
+      "tokens": {
+        "total": 2685,
+        "input": 2326,
+        "output": 58,
+        "reasoning": 301,
+        "cache": {
+          "read": 0,
+          "write": 0
+        }
+      },
+      "cost": 0.002837743,
+      "durationMs": 15918,
+      "evidence": "copy-runs/hy4-preview/copy"
+    },
+    {
+      "stage": "copy-runs",
+      "model": "mimo-v2-6-flash",
+      "arm": "copy",
+      "status": "Rendered",
+      "tokens": {
+        "total": 2565,
+        "input": 191,
+        "output": 41,
+        "reasoning": 221,
+        "cache": {
+          "read": 2112,
+          "write": 0
+        }
+      },
+      "cost": 0.0001060136,
+      "durationMs": 13438,
+      "evidence": "copy-runs/mimo-v2-6-flash/copy"
+    },
+    {
+      "stage": "final-runs",
+      "model": "mimo-v2-6-flash",
+      "arm": "copy-final",
+      "status": "Rendered",
+      "tokens": {
+        "total": 2544,
+        "input": 200,
+        "output": 38,
+        "reasoning": 194,
+        "cache": {
+          "read": 2112,
+          "write": 0
+        }
+      },
+      "cost": 0.0000988736,
+      "durationMs": 14125,
+      "evidence": "final-runs/mimo-v2-6-flash/copy-final"
+    }
+  ],
+  "finalPreview": {
+    "source": "final-runs/mimo-v2-6-flash/copy-final/program.json",
+    "sourceAttemptCost": 0.0000988736,
+    "note": "The saved model response was rerendered after a reviewed input-card template copy change without another inference call.",
+    "assets": {
+      "landscape.mp4": "sha256:a2d6fb162819cc70882a892054a91c53d4bc34bd2082e6ec04d53c4bd4336f31",
+      "portrait.mp4": "sha256:040707a736f3a61f2723f4463bd261d8acf7c43932687bf8e8fd0330e7b9dc82",
+      "landscape.jpg": "sha256:77e404fa3f4128a81ccb1d5f3ee0b9b52590d00acc3bf4a334e3197cff6ecc13",
+      "portrait.jpg": "sha256:e533622414b1fd7bf1b49801a5e4ed80be9fc3dce8e4f8f179eb779bdceb0414"
+    }
+  }
+}

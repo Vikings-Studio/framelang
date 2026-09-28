@@ -1,0 +1,17 @@
+Create one 11.5-second MakeMyDemo.com workflow video for landscape and portrait. Facts: a visitor can paste a public product URL; the first cut uses an AI-written script, product visuals and music; the user can review and export an MP4. Do not invent customers, metrics, screenshots, URLs, or features. Preserve the three-scene input → assembly → handoff story and the supplied visual structure. Return one JSON object only, with no Markdown. Use concise, factual copy.
+
+Use the compact FrameLang recipe below as the output shape. You may improve only headline text and the three workflow step labels. Keep every key, ID, layout, event, asset reference, value type, and scene count otherwise unchanged. Return the complete recipe JSON.
+
+{
+  "language": "framelang/recipe-v1",
+  "recipe": "makemydemo-workflow/v1",
+  "copy": {
+    "hook": "One public URL.",
+    "hookAccent": "first cut.",
+    "assembly": "Script. Visuals. Music.",
+    "assemblyAccent": "first cut.",
+    "handoff": "Review the cut.",
+    "handoffAccent": "MP4."
+  },
+  "steps": ["AI-written script", "Product visuals", "Music"]
+}

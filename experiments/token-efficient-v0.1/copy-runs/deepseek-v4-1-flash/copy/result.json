@@ -1,0 +1,22 @@
+{
+  "model": "opencode-go/deepseek-v4.1-flash",
+  "arm": "copy",
+  "deadlineMs": 300000,
+  "exitCode": 0,
+  "signal": null,
+  "durationMs": 10965,
+  "tokens": {
+    "total": 2720,
+    "input": 334,
+    "output": 43,
+    "reasoning": 295,
+    "cache": {
+      "read": 2048,
+      "write": 0
+    }
+  },
+  "cost": 0.000259044,
+  "outputBytes": 151,
+  "status": "Rendered",
+  "formatViolation": false
+}

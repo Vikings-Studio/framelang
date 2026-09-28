@@ -1,0 +1,59 @@
+{
+  "language": "framelang/recipe-v1",
+  "recipe": "makemydemo-workflow/v1",
+  "config": {
+    "duration_seconds": 11.5,
+    "aspect_ratios": ["landscape", "portrait"],
+    "scene_count": 3
+  },
+  "copy": {
+    "hook": "Paste a public product URL.",
+    "assembly": "AI script. Product visuals. Music.",
+    "handoff": "Review. Export MP4."
+  },
+  "scenes": [
+    {
+      "id": "scene-1-input",
+      "layout": "url-entry-centered",
+      "start_seconds": 0,
+      "duration_seconds": 3.5,
+      "headline": "hook",
+      "events": [
+        {"type": "paste-url", "target": "url-field", "at_seconds": 0.5}
+      ],
+      "assets": [
+        {"ref": "ui.url-field", "type": "component"}
+      ]
+    },
+    {
+      "id": "scene-2-assembly",
+      "layout": "three-track-split",
+      "start_seconds": 3.5,
+      "duration_seconds": 4.5,
+      "headline": "assembly",
+      "events": [
+        {"type": "generate-script", "at_seconds": 4.0},
+        {"type": "attach-visuals", "at_seconds": 5.5},
+        {"type": "add-music", "at_seconds": 7.0}
+      ],
+      "assets": [
+        {"ref": "media.product-visuals", "type": "visual"},
+        {"ref": "audio.music-bed", "type": "audio"}
+      ]
+    },
+    {
+      "id": "scene-3-handoff",
+      "layout": "preview-export-bar",
+      "start_seconds": 8.0,
+      "duration_seconds": 3.5,
+      "headline": "handoff",
+      "events": [
+        {"type": "review-cut", "at_seconds": 8.5},
+        {"type": "export-mp4", "at_seconds": 10.5}
+      ],
+      "assets": [
+        {"ref": "export.mp4", "type": "file"}
+      ]
+    }
+  ]
+}

@@ -68,7 +68,8 @@
           "id": "input",
           "kind": "inputCard",
           "importance": "essential",
-          "placeholder": "Paste a public product URL"
+          "placeholder": "Your public link",
+          "label": "THE SOURCE"
         },
         {
           "id": "panel",

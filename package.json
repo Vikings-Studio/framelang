@@ -16,7 +16,10 @@
     "rich:render": "node src/cli.mjs render out/makemydemo-rich",
     "cinematic:compile": "node src/cli.mjs compile examples/makemydemo-cinematic/program.json out/makemydemo-cinematic",
     "cinematic:check": "node src/cli.mjs check out/makemydemo-cinematic",
-    "cinematic:render": "node src/cli.mjs render out/makemydemo-cinematic"
+    "cinematic:render": "node src/cli.mjs render out/makemydemo-cinematic",
+    "recipe:compile": "node src/cli.mjs compile examples/makemydemo-recipe.json out/makemydemo-recipe",
+    "recipe:check": "node src/cli.mjs check out/makemydemo-recipe",
+    "recipe:render": "node src/cli.mjs render out/makemydemo-recipe"
   },
   "dependencies": {
     "gsap": "3.15.0",

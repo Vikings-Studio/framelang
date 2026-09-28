@@ -1,0 +1,1 @@
+{"recipe":"makemydemo-workflow/v1","hook":"Paste a public product URL.","assembly":"Script, product visuals, music.","handoff":"Review, then export MP4."}

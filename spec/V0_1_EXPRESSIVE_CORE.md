@@ -64,9 +64,10 @@ five-model first-shot result remains frozen and is not rescored by this example.
 Coordinates describe a **box in the profile's safe canvas**, not arbitrary CSS
 pixels. A portrait output may specify a different canvas tree. The program
 cannot write a selector, `z-index`, CSS declaration, or JS expression. The
-compiler checks box bounds and declared overlap intent before generating HTML;
-the current pilot also relies on sampled HyperFrames checks and visual review
-for actual glyph fit, moving bounds, and contrast. It does **not** yet prove
+compiler checks box bounds and declared overlap intent before generating HTML.
+For narrow canvas headlines, the pilot applies a compact type tier when the
+first line exceeds 20 characters. It also relies on sampled HyperFrames checks
+and visual review for actual glyph fit, moving bounds, and contrast. It does **not** yet prove
 all possible text or tween trajectories safe at every frame.
 
 ## General v1 capability design

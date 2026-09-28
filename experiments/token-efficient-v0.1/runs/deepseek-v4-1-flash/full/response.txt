@@ -1,0 +1,783 @@
+{
+  "language": "framelang/v1",
+  "fps": 24,
+  "profiles": [
+    "landscape-1920x1080",
+    "portrait-1080x1920"
+  ],
+  "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+  "assetsRef": "sha256:2eb65bb06440854bb635870c32d669e9350ec610936cd99e7d6453ea415258c5",
+  "seed": 47,
+  "scenes": [
+    {
+      "id": "source",
+      "role": "hook",
+      "blueprint": "workflow-demo/v1",
+      "durationFrames": 84,
+      "essential": [
+        "headline",
+        "input"
+      ],
+      "content": [
+        {
+          "id": "eyebrow",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "label",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "01 / THE INPUT"
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "importance": "essential",
+          "role": "headline",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "segments": [
+            {
+              "text": "A public product URL.",
+              "breakAfter": true
+            },
+            {
+              "text": "One ",
+              "tone": "foreground"
+            },
+            {
+              "text": "first cut.",
+              "tone": "accent"
+            }
+          ],
+          "style": {}
+        },
+        {
+          "id": "subline",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "body",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "Paste a link to start a video first cut.",
+          "style": {
+            "size": "compact",
+            "weight": 500
+          }
+        },
+        {
+          "id": "input",
+          "kind": "inputCard",
+          "importance": "essential",
+          "placeholder": "Paste a public product URL"
+        },
+        {
+          "id": "panel",
+          "kind": "shape",
+          "importance": "decorative",
+          "primitive": "panel",
+          "fill": {
+            "kind": "linear",
+            "angle": 45,
+            "stops": [
+              {
+                "at": 0,
+                "color": "accent"
+              },
+              {
+                "at": 100,
+                "color": "#575900"
+              }
+            ]
+          }
+        },
+        {
+          "id": "mark",
+          "kind": "svg",
+          "importance": "decorative",
+          "assetRef": "orbit-mark",
+          "fit": "contain"
+        }
+      ],
+      "layouts": {
+        "landscape-1920x1080": {
+          "type": "canvas",
+          "children": [
+            {
+              "node": "eyebrow",
+              "rect": [
+                0,
+                20,
+                430,
+                60
+              ]
+            },
+            {
+              "node": "headline",
+              "rect": [
+                0,
+                115,
+                500,
+                345
+              ]
+            },
+            {
+              "node": "subline",
+              "rect": [
+                0,
+                520,
+                465,
+                120
+              ]
+            },
+            {
+              "node": "mark",
+              "rect": [
+                20,
+                690,
+                190,
+                260
+              ]
+            },
+            {
+              "node": "panel",
+              "rect": [
+                505,
+                100,
+                495,
+                660
+              ],
+              "layer": 0,
+              "overlap": "intentional"
+            },
+            {
+              "node": "input",
+              "rect": [
+                525,
+                120,
+                475,
+                620
+              ],
+              "layer": 1,
+              "overlap": "intentional"
+            }
+          ]
+        },
+        "portrait-1080x1920": {
+          "type": "canvas",
+          "children": [
+            {
+              "node": "eyebrow",
+              "rect": [
+                0,
+                10,
+                1000,
+                45
+              ]
+            },
+            {
+              "node": "headline",
+              "rect": [
+                0,
+                75,
+                1000,
+                230
+              ]
+            },
+            {
+              "node": "input",
+              "rect": [
+                0,
+                355,
+                1000,
+                420
+              ]
+            },
+            {
+              "node": "subline",
+              "rect": [
+                0,
+                810,
+                660,
+                110
+              ]
+            },
+            {
+              "node": "mark",
+              "rect": [
+                720,
+                800,
+                260,
+                180
+              ]
+            }
+          ]
+        }
+      },
+      "initialState": "opening",
+      "resolvedState": "resolved",
+      "states": [
+        {
+          "id": "opening",
+          "visible": [
+            "eyebrow",
+            "panel",
+            "mark"
+          ]
+        },
+        {
+          "id": "resolved",
+          "visible": [
+            "eyebrow",
+            "headline",
+            "input",
+            "subline",
+            "panel",
+            "mark"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "atFrame": 0,
+          "durationFrames": 48,
+          "effect": "tween",
+          "target": "mark",
+          "from": {
+            "rotation": -12,
+            "scale": 0.92
+          },
+          "to": {
+            "rotation": 8,
+            "scale": 1.05
+          },
+          "ease": "none"
+        },
+        {
+          "atFrame": 6,
+          "durationFrames": 17,
+          "effect": "appear",
+          "target": "headline",
+          "preset": "slide"
+        },
+        {
+          "atFrame": 18,
+          "durationFrames": 30,
+          "effect": "appear",
+          "target": "input",
+          "preset": "paste"
+        },
+        {
+          "atFrame": 48,
+          "durationFrames": 13,
+          "effect": "appear",
+          "target": "subline",
+          "preset": "fade"
+        }
+      ],
+      "design": {
+        "alignment": "left",
+        "scale": "standard",
+        "decoration": "grid-glow",
+        "chrome": "editorial",
+        "ambient": "drift",
+        "background": {
+          "kind": "linear",
+          "angle": 135,
+          "stops": [
+            {
+              "at": 0,
+              "color": "#16170D"
+            },
+            {
+              "at": 56,
+              "color": "background"
+            },
+            {
+              "at": 100,
+              "color": "#111114"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "assembly",
+      "role": "feature_showcase",
+      "blueprint": "workflow-demo/v1",
+      "durationFrames": 108,
+      "essential": [
+        "headline",
+        "process",
+        "artifact"
+      ],
+      "content": [
+        {
+          "id": "eyebrow",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "label",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "02 / THE ASSEMBLY"
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "importance": "essential",
+          "role": "headline",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "segments": [
+            {
+              "text": "An AI-written script. Product visuals. Music.",
+              "breakAfter": true
+            },
+            {
+              "text": "A ",
+              "tone": "foreground"
+            },
+            {
+              "text": "first cut.",
+              "tone": "accent"
+            }
+          ],
+          "style": {
+            "size": "compact"
+          }
+        },
+        {
+          "id": "process",
+          "kind": "flow",
+          "importance": "essential",
+          "steps": [
+            "AI-written script",
+            "Product visuals",
+            "Music"
+          ],
+          "outcome": "Video first cut"
+        },
+        {
+          "id": "artifact",
+          "kind": "videoArtifact",
+          "importance": "essential",
+          "title": "VIDEO FIRST CUT",
+          "action": "VIEW FIRST CUT",
+          "phase": "preview"
+        }
+      ],
+      "layouts": {
+        "landscape-1920x1080": {
+          "type": "canvas",
+          "children": [
+            {
+              "node": "eyebrow",
+              "rect": [
+                0,
+                0,
+                550,
+                55
+              ]
+            },
+            {
+              "node": "headline",
+              "rect": [
+                0,
+                65,
+                1000,
+                215
+              ]
+            },
+            {
+              "node": "process",
+              "rect": [
+                0,
+                300,
+                390,
+                650
+              ]
+            },
+            {
+              "node": "artifact",
+              "rect": [
+                430,
+                305,
+                570,
+                650
+              ]
+            }
+          ]
+        },
+        "portrait-1080x1920": {
+          "type": "canvas",
+          "children": [
+            {
+              "node": "eyebrow",
+              "rect": [
+                0,
+                0,
+                1000,
+                45
+              ]
+            },
+            {
+              "node": "headline",
+              "rect": [
+                0,
+                55,
+                1000,
+                195
+              ]
+            },
+            {
+              "node": "process",
+              "rect": [
+                0,
+                290,
+                1000,
+                285
+              ]
+            },
+            {
+              "node": "artifact",
+              "rect": [
+                0,
+                610,
+                1000,
+                375
+              ]
+            }
+          ]
+        }
+      },
+      "initialState": "opening",
+      "resolvedState": "resolved",
+      "states": [
+        {
+          "id": "opening",
+          "visible": [
+            "eyebrow"
+          ]
+        },
+        {
+          "id": "resolved",
+          "visible": [
+            "eyebrow",
+            "headline",
+            "process",
+            "artifact"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "atFrame": 6,
+          "durationFrames": 16,
+          "effect": "appear",
+          "target": "headline",
+          "preset": "slide"
+        },
+        {
+          "atFrame": 27,
+          "durationFrames": 38,
+          "effect": "appear",
+          "target": "process",
+          "preset": "stagger"
+        },
+        {
+          "atFrame": 47,
+          "durationFrames": 39,
+          "effect": "appear",
+          "target": "artifact",
+          "preset": "reveal"
+        }
+      ],
+      "design": {
+        "alignment": "left",
+        "scale": "standard",
+        "decoration": "grid-glow",
+        "chrome": "editorial",
+        "ambient": "drift",
+        "background": {
+          "kind": "radial",
+          "center": "top-right",
+          "stops": [
+            {
+              "at": 0,
+              "color": "#272815"
+            },
+            {
+              "at": 58,
+              "color": "#111113"
+            },
+            {
+              "at": 100,
+              "color": "background"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "delivery",
+      "role": "cta",
+      "blueprint": "workflow-demo/v1",
+      "durationFrames": 84,
+      "essential": [
+        "headline",
+        "artifact"
+      ],
+      "content": [
+        {
+          "id": "eyebrow",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "label",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "03 / THE HANDOFF"
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "importance": "essential",
+          "role": "headline",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "segments": [
+            {
+              "text": "Review your first cut.",
+              "breakAfter": true
+            },
+            {
+              "text": "Export ",
+              "tone": "foreground"
+            },
+            {
+              "text": "MP4.",
+              "tone": "accent"
+            }
+          ],
+          "style": {
+            "size": "compact"
+          }
+        },
+        {
+          "id": "subline",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "body",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "A first cut you can review, then export.",
+          "style": {
+            "size": "compact",
+            "weight": 500
+          }
+        },
+        {
+          "id": "artifact",
+          "kind": "videoArtifact",
+          "importance": "essential",
+          "title": "VIDEO FIRST CUT",
+          "action": "EXPORT MP4",
+          "phase": "export"
+        },
+        {
+          "id": "mark",
+          "kind": "svg",
+          "importance": "decorative",
+          "assetRef": "orbit-mark",
+          "fit": "contain"
+        }
+      ],
+      "layouts": {
+        "landscape-1920x1080": {
+          "type": "canvas",
+          "children": [
+            {
+              "node": "eyebrow",
+              "rect": [
+                0,
+                20,
+                480,
+                60
+              ]
+            },
+            {
+              "node": "headline",
+              "rect": [
+                0,
+                120,
+                470,
+                340
+              ]
+            },
+            {
+              "node": "subline",
+              "rect": [
+                0,
+                520,
+                450,
+                120
+              ]
+            },
+            {
+              "node": "mark",
+              "rect": [
+                0,
+                690,
+                190,
+                250
+              ]
+            },
+            {
+              "node": "artifact",
+              "rect": [
+                505,
+                75,
+                495,
+                820
+              ]
+            }
+          ]
+        },
+        "portrait-1080x1920": {
+          "type": "canvas",
+          "children": [
+            {
+              "node": "eyebrow",
+              "rect": [
+                0,
+                10,
+                650,
+                45
+              ]
+            },
+            {
+              "node": "headline",
+              "rect": [
+                0,
+                65,
+                650,
+                200
+              ]
+            },
+            {
+              "node": "artifact",
+              "rect": [
+                0,
+                315,
+                1000,
+                530
+              ]
+            },
+            {
+              "node": "subline",
+              "rect": [
+                0,
+                865,
+                1000,
+                110
+              ]
+            },
+            {
+              "node": "mark",
+              "rect": [
+                700,
+                50,
+                250,
+                180
+              ],
+              "overlap": "intentional",
+              "layer": 0
+            }
+          ]
+        }
+      },
+      "initialState": "opening",
+      "resolvedState": "resolved",
+      "states": [
+        {
+          "id": "opening",
+          "visible": [
+            "eyebrow",
+            "mark"
+          ]
+        },
+        {
+          "id": "resolved",
+          "visible": [
+            "eyebrow",
+            "headline",
+            "artifact",
+            "subline",
+            "mark"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "atFrame": 0,
+          "durationFrames": 48,
+          "effect": "tween",
+          "target": "mark",
+          "from": {
+            "rotation": -8,
+            "scale": 0.9
+          },
+          "to": {
+            "rotation": 10,
+            "scale": 1.04
+          },
+          "ease": "none"
+        },
+        {
+          "atFrame": 5,
+          "durationFrames": 18,
+          "effect": "appear",
+          "target": "headline",
+          "preset": "pop"
+        },
+        {
+          "atFrame": 22,
+          "durationFrames": 38,
+          "effect": "appear",
+          "target": "artifact",
+          "preset": "reveal"
+        },
+        {
+          "atFrame": 52,
+          "durationFrames": 13,
+          "effect": "appear",
+          "target": "subline",
+          "preset": "fade"
+        }
+      ],
+      "design": {
+        "alignment": "left",
+        "scale": "standard",
+        "decoration": "grid-glow",
+        "chrome": "editorial",
+        "ambient": "drift",
+        "background": {
+          "kind": "linear",
+          "angle": 135,
+          "stops": [
+            {
+              "at": 0,
+              "color": "#16170D"
+            },
+            {
+              "at": 56,
+              "color": "background"
+            },
+            {
+              "at": 100,
+              "color": "#111114"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

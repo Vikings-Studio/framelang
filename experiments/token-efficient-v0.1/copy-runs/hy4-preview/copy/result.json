@@ -1,0 +1,22 @@
+{
+  "model": "opencode-go/hy4-preview",
+  "arm": "copy",
+  "deadlineMs": 300000,
+  "exitCode": 0,
+  "signal": null,
+  "durationMs": 15918,
+  "tokens": {
+    "total": 2685,
+    "input": 2326,
+    "output": 58,
+    "reasoning": 301,
+    "cache": {
+      "read": 0,
+      "write": 0
+    }
+  },
+  "cost": 0.002837743,
+  "outputBytes": 174,
+  "status": "Rendered",
+  "formatViolation": false
+}

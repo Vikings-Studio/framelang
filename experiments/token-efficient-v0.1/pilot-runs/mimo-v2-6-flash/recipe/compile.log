@@ -1,0 +1,39 @@
+{
+  "language": "framelang/v1",
+  "pilot": true,
+  "inputHash": "sha256:63b099ebbb12e8e61b6d1cf6a602a054a6b9055a261fbd3794656218286a4d4d",
+  "expandedHash": "sha256:c65486d38ba99e8ffd37440fc355ff9538f7a3a2a4b6b8365157ed08f89c1950",
+  "recipe": {
+    "id": "makemydemo-workflow/v1",
+    "inputHash": "sha256:63b099ebbb12e8e61b6d1cf6a602a054a6b9055a261fbd3794656218286a4d4d",
+    "templateHash": "sha256:a571559e3c5307f196c11511d32648ed444a757f60b06e5903cee96504ddb1f6"
+  },
+  "bundleRefs": {
+    "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+    "assetsRef": "sha256:2eb65bb06440854bb635870c32d669e9350ec610936cd99e7d6453ea415258c5"
+  },
+  "outputs": {
+    "landscape-1920x1080": {
+      "directory": "landscape-1920x1080",
+      "htmlHash": "sha256:50e972ab9b205c58ecd9bc3c4cf914341bb9b77bd61f96da15301998bc4df87c",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "source-mark.svg": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812",
+        "delivery-mark.svg": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812"
+      }
+    },
+    "portrait-1080x1920": {
+      "directory": "portrait-1080x1920",
+      "htmlHash": "sha256:d28cdbe27d311b7d624e0f50030a5f2de255c72d1f1368af3be1666174a92970",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "source-mark.svg": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812",
+        "delivery-mark.svg": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false
+}

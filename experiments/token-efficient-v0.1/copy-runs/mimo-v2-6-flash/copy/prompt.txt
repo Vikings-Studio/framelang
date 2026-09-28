@@ -1,0 +1,6 @@
+Write three short, factual lines of MakeMyDemo.com copy. Return ONLY one JSON object with exactly four keys: "recipe":"makemydemo-workflow/v1", "hook", "assembly", "handoff". Do not add scenes, config, layout, or explanations; the compiler creates the video. The hook (max 32 characters) is about pasting a public product URL. The assembly line (max 36 characters) mentions script, product visuals, and music. The handoff line (max 30 characters) mentions reviewing and exporting MP4. No customers, metrics, screenshots, URLs, or extra claims. Example shape: {
+  "recipe": "makemydemo-workflow/v1",
+  "hook": "One public URL.",
+  "assembly": "Script. Visuals. Music.",
+  "handoff": "Review the cut."
+}

@@ -1,0 +1,20 @@
+{
+  "model": "opencode-go/mimo-v2.6-flash",
+  "arm": "copy-final",
+  "deadlineMs": 300000,
+  "exitCode": 0,
+  "signal": null,
+  "durationMs": 14125,
+  "tokens": {
+    "total": 2544,
+    "input": 200,
+    "output": 38,
+    "reasoning": 194,
+    "cache": {
+      "read": 2112,
+      "write": 0
+    }
+  },
+  "cost": 0.0000988736,
+  "outputBytes": 145
+}
