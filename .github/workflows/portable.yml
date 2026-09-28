@@ -31,7 +31,7 @@ jobs:
       - run: npm run example:check
       - run: npm run example:render
         env:
-          HYPERFRAMES_BROWSER_PATH: ${{ runner.os == 'Windows' && '' || steps.chrome.outputs.chrome-path }}
+          HYPERFRAMES_BROWSER_PATH: ${{ runner.os != 'Windows' && steps.chrome.outputs.chrome-path || '' }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
