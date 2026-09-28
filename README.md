@@ -9,7 +9,9 @@ The pilot accepts a **subset** of `framelang/v1`: text and staged SVG/image
 states, stack/split/overlay layout, hard cuts, and `replace` events. The
 [rich process subset](spec/V0_1_RICH_SUBSET.md) adds typed color emphasis,
 display typography, left alignment, process flows, decoration, and bounded
-entrance presets. It rejects
+entrance presets. The [expressive core](spec/V0_1_EXPRESSIVE_CORE.md) adds
+typed gradients, positioned canvas layouts, local SVG assets, text styling,
+and bounded keyframe tweens. It rejects
 unsupported syntax. The RFC's full geometry proof, video clips, sync anchors,
 and production integration are future work. A passing pilot render is evidence
 about this subset, not proof of the full language guarantee.
@@ -38,6 +40,9 @@ npm run example:render
 npm run rich:compile
 npm run rich:check
 npm run rich:render
+npm run cinematic:compile
+npm run cinematic:check
+npm run cinematic:render
 ```
 
 The example outputs are written under `out/` and are ignored by Git. To compile

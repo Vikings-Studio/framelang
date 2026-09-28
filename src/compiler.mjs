@@ -47,6 +47,44 @@ function identifier(value, location) {
 function color(value, location) {
   if (typeof value !== 'string' || !/^#[0-9a-fA-F]{6}$/.test(value)) fail('syntax.color', location, 'expected six-digit hex color');
 }
+function colorRef(value, location) {
+  if (['background', 'foreground', 'accent'].includes(value)) return;
+  color(value, location);
+}
+function paint(value, location) {
+  keys(value, ['kind', 'color', 'angle', 'center', 'stops'], ['kind'], location);
+  if (value.kind === 'solid') {
+    keys(value, ['kind', 'color'], ['kind', 'color'], location);
+    colorRef(value.color, `${location}.color`);
+    return;
+  }
+  if (!['linear', 'radial'].includes(value.kind)) fail('syntax.paint', `${location}.kind`, 'expected solid, linear, or radial');
+  if (value.kind === 'linear') {
+    keys(value, ['kind', 'angle', 'stops'], ['kind', 'angle', 'stops'], location);
+    if (![0, 45, 90, 135, 180, 225, 270, 315].includes(value.angle)) fail('syntax.paint', `${location}.angle`, 'unsupported angle');
+  } else {
+    keys(value, ['kind', 'center', 'stops'], ['kind', 'center', 'stops'], location);
+    if (!['center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'].includes(value.center)) fail('syntax.paint', `${location}.center`, 'unsupported radial center');
+  }
+  const stops = list(value.stops, `${location}.stops`, 2);
+  if (stops.length > 5) fail('syntax.paint', `${location}.stops`, 'at most five color stops');
+  let previous = -1;
+  for (const [index, stop] of stops.entries()) {
+    const at = `${location}.stops[${index}]`;
+    keys(stop, ['at', 'color'], ['at', 'color'], at);
+    int(stop.at, `${at}.at`, 0, 100);
+    if (stop.at <= previous) fail('syntax.paint', `${at}.at`, 'stops must increase strictly');
+    previous = stop.at;
+    colorRef(stop.color, `${at}.color`);
+  }
+}
+function cssColor(value, brand) { return brand[value] || value; }
+function cssPaint(value, brand) {
+  if (value.kind === 'solid') return cssColor(value.color, brand);
+  const stops = value.stops.map(stop => `${cssColor(stop.color, brand)} ${stop.at}%`).join(',');
+  if (value.kind === 'linear') return `linear-gradient(${value.angle}deg,${stops})`;
+  return `radial-gradient(circle at ${value.center.replace('-', ' ')},${stops})`;
+}
 function plainText(value, location, max = 240) {
   if (typeof value !== 'string' || !value.trim() || value.length > max || /[<>\u0000-\u001f]/.test(value)) fail('syntax.text', location, `nonempty plain text up to ${max} characters required`);
 }
@@ -114,6 +152,31 @@ function layoutRefs(tree, location, known, refs) {
         layoutRefs(attachment.node, `${location}.attachments[${i}].node`, known, refs);
       }
       break;
+    case 'canvas': {
+      keys(tree, ['type', 'children'], ['type', 'children'], location);
+      const placements = list(tree.children, `${location}.children`, 1);
+      if (placements.length > 16) fail('syntax.layout', `${location}.children`, 'canvas supports at most 16 placements');
+      const rectangles = [];
+      for (const [index, placement] of placements.entries()) {
+        const at = `${location}.children[${index}]`;
+        keys(placement, ['node', 'rect', 'layer', 'align', 'overlap'], ['node', 'rect'], at);
+        if (typeof placement.node !== 'string') fail('syntax.layout', `${at}.node`, 'expected node ID');
+        layoutRefs(placement.node, `${at}.node`, known, refs);
+        if (!Array.isArray(placement.rect) || placement.rect.length !== 4) fail('syntax.layout', `${at}.rect`, 'expected [x,y,width,height] in thousandths');
+        const [x, y, width, height] = placement.rect;
+        [x, y, width, height].forEach((value, i) => int(value, `${at}.rect[${i}]`, i < 2 ? 0 : 1, 1000));
+        if (x + width > 1000 || y + height > 1000) fail('semantic.bounds', `${at}.rect`, 'placement exceeds the safe canvas');
+        if (placement.layer !== undefined) int(placement.layer, `${at}.layer`, 0, 9);
+        if (placement.align !== undefined && !['start', 'center', 'end'].includes(placement.align)) fail('syntax.layout', `${at}.align`, 'unsupported alignment');
+        if (placement.overlap !== undefined && !['avoid', 'intentional'].includes(placement.overlap)) fail('syntax.layout', `${at}.overlap`, 'unsupported overlap intent');
+        for (const previous of rectangles) {
+          const [px, py, pw, ph] = previous.rect;
+          if (x < px + pw && x + width > px && y < py + ph && y + height > py && (placement.overlap !== 'intentional' || previous.overlap !== 'intentional')) fail('semantic.overlap', at, `overlaps ${previous.node} without mutual intent`);
+        }
+        rectangles.push(placement);
+      }
+      break;
+    }
     default: fail('syntax.layout', location, `unsupported layout ${tree.type}`);
   }
 }
@@ -138,13 +201,17 @@ export function validate(program, bundle) {
     keys(scene, SCENE_KEYS, SCENE_REQUIRED, at);
     identifier(scene.id, `${at}.id`);
     if (!['hook', 'feature_showcase', 'benefit_highlight', 'cta', 'branding'].includes(scene.role)) fail('syntax.role', `${at}.role`, 'unsupported pilot role');
-    if (!['type-reveal/v1', 'product-reveal/v1', 'before-after/v1', 'product-process/v1'].includes(scene.blueprint)) fail('syntax.blueprint', `${at}.blueprint`, 'unsupported pilot blueprint');
+    if (!['type-reveal/v1', 'product-reveal/v1', 'before-after/v1', 'product-process/v1', 'workflow-demo/v1'].includes(scene.blueprint)) fail('syntax.blueprint', `${at}.blueprint`, 'unsupported pilot blueprint');
     int(scene.durationFrames, `${at}.durationFrames`, 48, 288);
     if (scene.design !== undefined) {
-      keys(scene.design, ['alignment', 'scale', 'decoration'], [], `${at}.design`);
+      keys(scene.design, ['alignment', 'scale', 'decoration', 'chrome', 'ambient', 'background'], [], `${at}.design`);
       if (scene.design.alignment !== undefined && !['left', 'center'].includes(scene.design.alignment)) fail('syntax.design', `${at}.design.alignment`, 'unsupported alignment');
       if (scene.design.scale !== undefined && !['standard', 'display'].includes(scene.design.scale)) fail('syntax.design', `${at}.design.scale`, 'unsupported type scale');
       if (scene.design.decoration !== undefined && !['none', 'rules', 'grid-glow'].includes(scene.design.decoration)) fail('syntax.design', `${at}.design.decoration`, 'unsupported decoration');
+      if (scene.design.chrome !== undefined && !['none', 'editorial'].includes(scene.design.chrome)) fail('syntax.design', `${at}.design.chrome`, 'unsupported chrome');
+      if (scene.design.ambient !== undefined && !['none', 'drift'].includes(scene.design.ambient)) fail('syntax.design', `${at}.design.ambient`, 'unsupported ambient motion');
+      if (scene.design.ambient === 'drift' && scene.design.decoration !== 'grid-glow') fail('syntax.design', `${at}.design.ambient`, 'drift requires grid-glow decoration');
+      if (scene.design.background !== undefined) paint(scene.design.background, `${at}.design.background`);
     }
     const nodes = list(scene.content, `${at}.content`, 1);
     unique(nodes.map(n => n.id), `${at}.content`);
@@ -154,25 +221,48 @@ export function validate(program, bundle) {
       identifier(node.id, `${na}.id`);
       if (!['essential', 'supporting', 'decorative'].includes(node.importance)) fail('syntax.importance', na, 'invalid importance');
       if (node.kind === 'text') {
-        keys(node, ['id', 'kind', 'importance', 'role', 'language', 'text', 'segments', 'fit'], ['id', 'kind', 'importance', 'role', 'language', 'fit'], na);
+        keys(node, ['id', 'kind', 'importance', 'role', 'language', 'text', 'segments', 'fit', 'style'], ['id', 'kind', 'importance', 'role', 'language', 'fit'], na);
         if (!['headline', 'body', 'label'].includes(node.role) || node.fit !== 'wrapThenShrink') fail('syntax.text', na, 'unsupported text role or fit');
         textCopy(node, na);
         if (node.language !== 'en') fail('syntax.text', `${na}.language`, 'pilot supports English only');
+        if (node.style !== undefined) {
+          keys(node.style, ['align', 'size', 'weight', 'color'], [], `${na}.style`);
+          if (node.style.align !== undefined && !['left', 'center', 'right'].includes(node.style.align)) fail('syntax.text', `${na}.style.align`, 'unsupported text alignment');
+          if (node.style.size !== undefined && !['compact', 'base', 'large', 'hero'].includes(node.style.size)) fail('syntax.text', `${na}.style.size`, 'unsupported type size');
+          if (node.style.weight !== undefined && ![400, 500, 600, 700, 800, 900].includes(node.style.weight)) fail('syntax.text', `${na}.style.weight`, 'unsupported font weight');
+          if (node.style.color !== undefined) colorRef(node.style.color, `${na}.style.color`);
+        }
       } else if (node.kind === 'flow') {
         keys(node, ['id', 'kind', 'importance', 'steps', 'outcome'], ['id', 'kind', 'importance', 'steps', 'outcome'], na);
-        if (scene.blueprint !== 'product-process/v1') fail('syntax.flow', na, 'flow requires product-process/v1');
+        if (!['product-process/v1', 'workflow-demo/v1'].includes(scene.blueprint)) fail('syntax.flow', na, 'flow requires a process blueprint');
         const steps = list(node.steps, `${na}.steps`, 2);
         if (steps.length > 4) fail('syntax.flow', `${na}.steps`, 'at most four flow steps');
         steps.forEach((step, stepIndex) => plainText(step, `${na}.steps[${stepIndex}]`, 28));
         plainText(node.outcome, `${na}.outcome`, 36);
+      } else if (node.kind === 'inputCard') {
+        keys(node, ['id', 'kind', 'importance', 'placeholder'], ['id', 'kind', 'importance', 'placeholder'], na);
+        if (scene.blueprint !== 'workflow-demo/v1') fail('syntax.inputCard', na, 'input card requires workflow-demo/v1');
+        plainText(node.placeholder, `${na}.placeholder`, 58);
+      } else if (node.kind === 'videoArtifact') {
+        keys(node, ['id', 'kind', 'importance', 'title', 'action', 'phase'], ['id', 'kind', 'importance', 'title', 'action', 'phase'], na);
+        if (scene.blueprint !== 'workflow-demo/v1') fail('syntax.videoArtifact', na, 'video artifact requires workflow-demo/v1');
+        plainText(node.title, `${na}.title`, 36);
+        plainText(node.action, `${na}.action`, 22);
+        if (!['preview', 'export'].includes(node.phase)) fail('syntax.videoArtifact', `${na}.phase`, 'expected preview or export');
       } else if (node.kind === 'productState') {
         keys(node, ['id', 'kind', 'importance', 'stateRef'], ['id', 'kind', 'importance', 'stateRef'], na);
         const asset = bundle.assets?.[node.stateRef];
         if (!asset) fail('reference.asset', `${na}.stateRef`, `missing ${node.stateRef}`);
         if (asset.kind !== 'productState' || asset.displayAllowed !== true || !SHA.test(asset.sha256 || '')) fail('reference.asset', `${na}.stateRef`, 'asset is not a verified displayable product state');
+      } else if (node.kind === 'svg') {
+        keys(node, ['id', 'kind', 'importance', 'assetRef', 'fit'], ['id', 'kind', 'importance', 'assetRef', 'fit'], na);
+        const asset = bundle.assets?.[node.assetRef];
+        if (!asset || asset.kind !== 'svg' || asset.displayAllowed !== true || !SHA.test(asset.sha256 || '') || typeof asset.license !== 'string' || !asset.license.trim()) fail('reference.asset', `${na}.assetRef`, 'missing verified displayable SVG with license');
+        if (!['contain', 'cover'].includes(node.fit)) fail('syntax.svg', `${na}.fit`, 'unsupported SVG fit');
       } else if (node.kind === 'shape') {
-        keys(node, ['id', 'kind', 'importance', 'primitive'], ['id', 'kind', 'importance', 'primitive'], na);
-        if (node.primitive !== 'panel') fail('syntax.shape', na, 'pilot supports panel only');
+        keys(node, ['id', 'kind', 'importance', 'primitive', 'fill'], ['id', 'kind', 'importance', 'primitive'], na);
+        if (!['panel', 'circle'].includes(node.primitive)) fail('syntax.shape', na, 'unsupported shape');
+        if (node.fill !== undefined) paint(node.fill, `${na}.fill`);
       } else fail('syntax.node', na, `unsupported node ${node.kind}`);
       byId.set(node.id, node);
     }
@@ -180,12 +270,14 @@ export function validate(program, bundle) {
     unique(essentials, `${at}.essential`);
     if (canonical(essentials.slice().sort()) !== canonical(nodes.filter(n => n.importance === 'essential').map(n => n.id).sort())) fail('semantic.essential', `${at}.essential`, 'must equal essential content IDs');
     object(scene.layouts, `${at}.layouts`);
+    const layoutVisible = new Map();
     for (const profile of program.profiles) {
       const tree = scene.layouts[profile] ?? scene.layouts.default;
       if (!tree) fail('semantic.profile', `${at}.layouts`, `missing layout for ${profile}`);
       const seen = [];
       layoutRefs(tree, `${at}.layouts.${profile}`, byId, seen);
       unique(seen, `${at}.layouts.${profile}`);
+      layoutVisible.set(profile, new Set(seen));
       for (const node of nodes.filter(n => n.importance !== 'decorative')) if (!seen.includes(node.id)) fail('semantic.layout', `${at}.layouts.${profile}`, `missing ${node.id}`);
     }
     const states = list(scene.states, `${at}.states`, 1);
@@ -206,15 +298,18 @@ export function validate(program, bundle) {
     const resolvedVisible = stateMap.get(scene.resolvedState).visible;
     for (const [i, event] of events.entries()) {
       const ea = `${at}.events[${i}]`;
-      keys(event, ['atFrame', 'durationFrames', 'effect', 'target', 'from', 'to', 'preset'], ['atFrame', 'durationFrames', 'effect'], ea);
+      keys(event, ['atFrame', 'durationFrames', 'effect', 'target', 'from', 'to', 'preset', 'ease'], ['atFrame', 'durationFrames', 'effect'], ea);
       int(event.atFrame, `${ea}.atFrame`, 0, scene.durationFrames - 1);
       int(event.durationFrames, `${ea}.durationFrames`, 1, scene.durationFrames);
       if (event.atFrame < latest || event.atFrame + event.durationFrames > scene.durationFrames) fail('semantic.timing', ea, 'events out of order or past scene end');
       latest = event.atFrame;
       if (event.effect === 'appear') {
         if (!byId.has(event.target)) fail('reference.node', ea, 'appear target missing');
-        if (event.preset !== undefined && !['rise', 'slide', 'pop', 'fade', 'stagger'].includes(event.preset)) fail('syntax.motion', `${ea}.preset`, 'unsupported entrance preset');
+        for (const profile of program.profiles) if (!layoutVisible.get(profile).has(event.target)) fail('semantic.layout', ea, `animated ${event.target} is missing from ${profile}`);
+        if (event.preset !== undefined && !['rise', 'slide', 'pop', 'fade', 'stagger', 'paste', 'reveal'].includes(event.preset)) fail('syntax.motion', `${ea}.preset`, 'unsupported entrance preset');
         if (event.preset === 'stagger' && byId.get(event.target).kind !== 'flow') fail('syntax.motion', `${ea}.preset`, 'stagger requires a flow node');
+        if (event.preset === 'paste' && byId.get(event.target).kind !== 'inputCard') fail('syntax.motion', `${ea}.preset`, 'paste requires an input card');
+        if (event.preset === 'reveal' && byId.get(event.target).kind !== 'videoArtifact') fail('syntax.motion', `${ea}.preset`, 'reveal requires a video artifact');
         if (initialVisible.includes(event.target) || !resolvedVisible.includes(event.target)) fail('semantic.state', ea, 'appear target must enter between initial and resolved');
         if (written.has(event.target)) fail('semantic.motion', ea, 'node receives multiple writes');
         written.add(event.target);
@@ -225,6 +320,21 @@ export function validate(program, bundle) {
           if (written.has(id)) fail('semantic.motion', ea, 'node receives multiple writes');
           written.add(id);
         }
+      } else if (event.effect === 'tween') {
+        if (!byId.has(event.target) || !initialVisible.includes(event.target) || !resolvedVisible.includes(event.target)) fail('semantic.motion', ea, 'tween target must be visible throughout scene');
+        for (const profile of program.profiles) if (!layoutVisible.get(profile).has(event.target)) fail('semantic.layout', ea, `animated ${event.target} is missing from ${profile}`);
+        if (event.preset !== undefined) fail('syntax.motion', `${ea}.preset`, 'tween uses from/to, not preset');
+        if (!['none', 'power2.out', 'power3.out', 'power2.inOut', 'back.out(1.5)'].includes(event.ease)) fail('syntax.motion', `${ea}.ease`, 'unsupported easing');
+        keys(event.from, ['x', 'y', 'scale', 'rotation', 'opacity'], [], `${ea}.from`);
+        keys(event.to, ['x', 'y', 'scale', 'rotation', 'opacity'], [], `${ea}.to`);
+        const properties = Object.keys(event.from);
+        if (!properties.length || canonical(properties.slice().sort()) !== canonical(Object.keys(event.to).sort())) fail('syntax.motion', ea, 'from/to must name the same nonempty properties');
+        for (const property of properties) {
+          const [min, max] = property === 'opacity' ? [0, 1] : property === 'scale' ? [0, 4] : property === 'rotation' ? [-360, 360] : [-1000, 1000];
+          for (const end of ['from', 'to']) if (typeof event[end][property] !== 'number' || !Number.isFinite(event[end][property]) || event[end][property] < min || event[end][property] > max) fail('syntax.motion', `${ea}.${end}.${property}`, `expected number ${min}..${max}`);
+        }
+        if (written.has(event.target)) fail('semantic.motion', ea, 'node receives multiple writes');
+        written.add(event.target);
       } else fail('syntax.effect', ea, `unsupported effect ${event.effect}`);
     }
     if (scene.initialState !== scene.resolvedState && !events.length) fail('semantic.state', at, 'state transition requires event');
@@ -249,22 +359,48 @@ function renderFlow(node, stagger) {
   const steps = node.steps.map((step, index) => `<div class="fl-flow-chip fl-flow-item" data-flow-order="${index + 1}"${hidden}>${escapeHtml(step)}</div>`).join('');
   return `<div class="fl-flow-steps">${steps}</div><div class="fl-flow-arrow fl-flow-item" data-flow-order="${node.steps.length + 1}"${hidden} aria-hidden="true">→</div><div class="fl-flow-outcome fl-flow-item" data-flow-order="${node.steps.length + 2}"${hidden}>${escapeHtml(node.outcome)}</div>`;
 }
-function renderTree(tree, scene, profile, nodes, initial) {
+function renderInputCard(node) {
+  return `<div class="fl-input-top"><div class="fl-input-dots"><i></i><i></i><i></i></div><span>PUBLIC LINK / INPUT</span><span class="fl-input-index">01</span></div><div class="fl-input-label">PASTE A PUBLIC PRODUCT URL</div><div class="fl-input-field"><span class="fl-input-link">${escapeHtml(node.placeholder)}</span><span class="fl-input-caret" aria-hidden="true"></span><span class="fl-input-go" aria-hidden="true">↗</span></div><div class="fl-input-foot"><span>URL</span><span class="fl-input-rule"></span><span>FIRST CUT</span></div>`;
+}
+function renderVideoArtifact(node, reveal) {
+  const hidden = reveal ? ' style="opacity:0"' : '';
+  const status = node.phase === 'export' ? 'READY TO REVIEW' : 'FIRST CUT PREVIEW';
+  const foot = node.phase === 'export' ? 'REVIEW THE CUT' : 'ASSEMBLING THE CUT';
+  return `<div class="fl-art-top"><span>VIDEO / FIRST CUT</span><span class="fl-art-indicator"><i></i> ${status}</span></div><div class="fl-art-body"><div class="fl-art-screen"><div class="fl-art-frame fl-art-frame-a"${hidden}><div class="fl-art-orbit" data-layout-allow-overflow></div></div><div class="fl-art-frame fl-art-frame-b"${hidden}><div class="fl-art-sun" data-layout-allow-overflow></div></div><div class="fl-art-frame fl-art-frame-c"${hidden}><div class="fl-art-bars"></div></div><div class="fl-art-play"${hidden} aria-hidden="true">▶</div><div class="fl-art-screen-label">${escapeHtml(node.title)}</div></div><div class="fl-art-timeline"${hidden}><div class="fl-art-ticks"><i></i><i></i><i></i><i></i><i></i></div><div class="fl-art-playhead"></div></div></div><div class="fl-art-bottom"><span>${foot}</span><span class="fl-art-action${node.phase === 'export' ? ' fl-art-action-live' : ''}"${hidden}>${escapeHtml(node.action)} <b>↗</b></span></div>`;
+}
+function textStyle(node, profile, brand) {
+  if (!node.style) return '';
+  const css = [];
+  if (node.style.align) css.push(`text-align:${node.style.align}`);
+  if (node.style.weight) css.push(`font-weight:${node.style.weight}`);
+  if (node.style.color) css.push(`color:${cssColor(node.style.color, brand)}`);
+  if (node.style.size) {
+    const base = node.role === 'headline' ? PROFILE[profile].heading : node.role === 'body' ? PROFILE[profile].body : Math.round(PROFILE[profile].body * .75);
+    const factor = { compact: .75, base: 1, large: 1.25, hero: 1.5 }[node.style.size];
+    css.push(`font-size:${Math.round(base * factor)}px`);
+  }
+  return css.join(';');
+}
+function renderTree(tree, scene, profile, nodes, initial, brand) {
   if (typeof tree === 'string') {
     const node = nodes.get(tree);
     const id = cssId(scene, tree);
     const hidden = initial.includes(tree) ? '' : ' style="opacity:0"';
-    if (node.kind === 'text') return `<div id="${id}" class="fl-node fl-text fl-${node.role}"${hidden}>${renderText(node)}</div>`;
+    if (node.kind === 'text') { const style = [initial.includes(tree) ? '' : 'opacity:0', textStyle(node, profile, brand)].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-text fl-${node.role}"${style ? ` style="${style}"` : ''}>${renderText(node)}</div>`; }
     if (node.kind === 'flow') return `<div id="${id}" class="fl-node fl-flow"${hidden}>${renderFlow(node, scene.events.some(event => event.target === node.id && event.preset === 'stagger'))}</div>`;
-    if (node.kind === 'shape') return `<div id="${id}" class="fl-node fl-panel"${hidden}></div>`;
+    if (node.kind === 'inputCard') return `<div id="${id}" class="fl-node fl-input-card"${hidden}>${renderInputCard(node)}</div>`;
+    if (node.kind === 'videoArtifact') return `<div id="${id}" class="fl-node fl-artifact fl-artifact-${node.phase}"${hidden}>${renderVideoArtifact(node, scene.events.some(event => event.target === node.id && event.preset === 'reveal'))}</div>`;
+    if (node.kind === 'shape') { const style = [initial.includes(tree) ? '' : 'opacity:0', node.fill ? `background:${cssPaint(node.fill, brand)}` : ''].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-panel${node.primitive === 'circle' ? ' fl-circle' : ''}"${style ? ` style="${style}"` : ''}></div>`; }
+    if (node.kind === 'svg') return `<div id="${id}" class="fl-node fl-media fl-svg"${hidden}><img src="assets/${scene.id}-${node.id}.svg" alt="" style="object-fit:${node.fit}" /></div>`;
     return `<div id="${id}" class="fl-node fl-media"${hidden}><img src="assets/${scene.id}-${node.id}.svg" alt="" /></div>`;
   }
-  if (tree.type === 'stack') return `<div class="fl-layout fl-stack${scene.design?.alignment === 'left' ? ' fl-start' : ''}" style="flex-direction:${tree.direction};gap:${gap(tree.gap)}px">${tree.children.map(n => renderTree(n, scene, profile, nodes, initial)).join('')}</div>`;
+  if (tree.type === 'stack') return `<div class="fl-layout fl-stack${scene.design?.alignment === 'left' ? ' fl-start' : ''}" style="flex-direction:${tree.direction};gap:${gap(tree.gap)}px">${tree.children.map(n => renderTree(n, scene, profile, nodes, initial, brand)).join('')}</div>`;
   if (tree.type === 'split') {
     const [a, b] = tree.ratio.split(':').map(n => Number(n) / 10);
-    return `<div class="fl-layout fl-split" style="grid-template-columns:${a}fr ${b}fr">${renderTree(tree.left, scene, profile, nodes, initial)}${renderTree(tree.right, scene, profile, nodes, initial)}</div>`;
+    return `<div class="fl-layout fl-split" style="grid-template-columns:${a}fr ${b}fr">${renderTree(tree.left, scene, profile, nodes, initial, brand)}${renderTree(tree.right, scene, profile, nodes, initial, brand)}</div>`;
   }
-  return `<div class="fl-layout fl-overlay">${renderTree(tree.base, scene, profile, nodes, initial)}${tree.attachments.map(a => `<div class="fl-attachment">${renderTree(a.node, scene, profile, nodes, initial)}</div>`).join('')}</div>`;
+  if (tree.type === 'canvas') return `<div class="fl-layout fl-canvas">${tree.children.map(placement => { const [x, y, width, height] = placement.rect; return `<div class="fl-placement fl-placement-${placement.align || 'start'}" style="left:${x / 10}%;top:${y / 10}%;width:${width / 10}%;height:${height / 10}%;z-index:${placement.layer || 0}">${renderTree(placement.node, scene, profile, nodes, initial, brand)}</div>`; }).join('')}</div>`;
+  return `<div class="fl-layout fl-overlay">${renderTree(tree.base, scene, profile, nodes, initial, brand)}${tree.attachments.map(a => `<div class="fl-attachment">${renderTree(a.node, scene, profile, nodes, initial, brand)}</div>`).join('')}</div>`;
 }
 
 function htmlFor(program, bundle, profile) {
@@ -278,11 +414,17 @@ function htmlFor(program, bundle, profile) {
     const initial = scene.states.find(s => s.id === scene.initialState).visible;
     const start = cursor / program.fps;
     const duration = (scene.durationFrames - (i === program.scenes.length - 1 ? 0 : 1)) / program.fps;
-    const body = renderTree(tree, scene, profile, nodes, initial);
+    const body = renderTree(tree, scene, profile, nodes, initial, bundle.brand);
     const design = scene.design || {};
-    const decoration = design.decoration === 'grid-glow' ? '<div class="fl-grid"></div><div class="fl-glow"></div><div class="fl-rule fl-rule-top"></div><div class="fl-rule fl-rule-bottom"></div>' : design.decoration === 'rules' ? '<div class="fl-rule fl-rule-top"></div><div class="fl-rule fl-rule-bottom"></div>' : '';
-    const sceneClass = `fl-scene${design.alignment === 'left' ? ' fl-left' : ''}${design.scale === 'display' ? ' fl-display' : ''}`;
-    clips.push(`<section class="clip" id="fl-${scene.id}" data-start="${start.toFixed(6)}" data-duration="${duration.toFixed(6)}" data-track-index="${i}">${decoration}<div class="${sceneClass}">${body}</div></section>`);
+    const decoration = design.decoration === 'grid-glow' ? '<div class="fl-grid" data-layout-allow-overflow></div><div class="fl-glow" data-layout-allow-overflow></div><div class="fl-rule fl-rule-top"></div><div class="fl-rule fl-rule-bottom"></div>' : design.decoration === 'rules' ? '<div class="fl-rule fl-rule-top"></div><div class="fl-rule fl-rule-bottom"></div>' : '';
+    const chrome = design.chrome === 'editorial' ? `<div class="fl-chrome-top"><span>${escapeHtml(bundle.brand.name.toUpperCase())} / FRAMELANG</span><span>${String(i + 1).padStart(2, '0')} / ${String(program.scenes.length).padStart(2, '0')}</span></div><div class="fl-chrome-bottom"><span>ILLUSTRATIVE VIDEO WORKFLOW</span><span>TYPED SCENE → VIDEO</span></div><div class="fl-progress"><span style="width:${((i + 1) / program.scenes.length * 100).toFixed(3)}%"></span></div>` : '';
+    const sceneClass = `fl-scene${design.alignment === 'left' ? ' fl-left' : ''}${design.scale === 'display' ? ' fl-display' : ''}${design.chrome === 'editorial' ? ' fl-chromed' : ''}`;
+    clips.push(`<section class="clip" id="fl-${scene.id}" data-start="${start.toFixed(6)}" data-duration="${duration.toFixed(6)}" data-track-index="${i}"${design.background ? ` style="background:${cssPaint(design.background, bundle.brand)}"` : ''}>${decoration}${chrome}<div class="${sceneClass}">${body}</div></section>`);
+    if (design.ambient === 'drift') {
+      timeline.push(`tl.fromTo('#fl-${scene.id} .fl-glow',{x:-36,y:20},{x:36,y:-18,duration:${(scene.durationFrames / program.fps).toFixed(6)},ease:'none'},${start.toFixed(6)});`);
+      timeline.push(`tl.fromTo('#fl-${scene.id} .fl-grid',{x:-18},{x:18,duration:${(scene.durationFrames / program.fps).toFixed(6)},ease:'none'},${start.toFixed(6)});`);
+    }
+    if (design.chrome === 'editorial') timeline.push(`tl.fromTo('#fl-${scene.id} .fl-progress span',{scaleX:0},{scaleX:1,duration:.48,ease:'power3.out'},${start.toFixed(6)});`);
     for (const event of scene.events) {
       const at = (cursor + event.atFrame) / program.fps;
       const dur = event.durationFrames / program.fps;
@@ -294,6 +436,18 @@ function htmlFor(program, bundle, profile) {
           const children = scene.content.find(n => n.id === event.target).steps.length + 2;
           const itemDuration = Math.max(.15, dur / (children + 1));
           for (let child = 0; child < children; child++) timeline.push(`tl.fromTo('${selector} [data-flow-order="${child + 1}"]',{opacity:0,y:20},{opacity:1,y:0,duration:${itemDuration.toFixed(6)},ease:'power2.out'},${(at + child * itemDuration).toFixed(6)});`);
+        } else if (preset === 'paste') {
+          timeline.push(`tl.fromTo('${selector}',{opacity:0,x:64,scale:.96},{opacity:1,x:0,scale:1,duration:${Math.min(dur, .55).toFixed(6)},ease:'power3.out'},${at.toFixed(6)});`);
+          timeline.push(`tl.fromTo('${selector} .fl-input-link',{opacity:0,x:-16},{opacity:1,x:0,duration:.34,ease:'power2.out'},${(at + Math.min(dur * .38, .32)).toFixed(6)});`);
+          timeline.push(`tl.fromTo('${selector} .fl-input-go',{scale:.7},{scale:1,duration:.3,ease:'back.out(1.5)'},${(at + Math.min(dur * .62, .52)).toFixed(6)});`);
+        } else if (preset === 'reveal') {
+          timeline.push(`tl.set('${selector}',{opacity:1},${at.toFixed(6)});`);
+          const part = Math.max(.18, dur / 6);
+          for (let frame = 0; frame < 3; frame++) timeline.push(`tl.fromTo('${selector} .fl-art-frame-${'abc'[frame]}',{opacity:0,y:32,scale:.92},{opacity:1,y:0,scale:1,duration:${(part * 1.5).toFixed(6)},ease:'power3.out'},${(at + frame * part).toFixed(6)});`);
+          timeline.push(`tl.fromTo('${selector} .fl-art-play',{opacity:0,scale:.55},{opacity:1,scale:1,duration:${part.toFixed(6)},ease:'back.out(1.7)'},${(at + 2.5 * part).toFixed(6)});`);
+          timeline.push(`tl.fromTo('${selector} .fl-art-timeline',{opacity:0,y:18},{opacity:1,y:0,duration:${part.toFixed(6)},ease:'power2.out'},${(at + 3 * part).toFixed(6)});`);
+          timeline.push(`tl.fromTo('${selector} .fl-art-action',{opacity:0,x:-18},{opacity:1,x:0,duration:${part.toFixed(6)},ease:'power2.out'},${(at + 4 * part).toFixed(6)});`);
+          timeline.push(`tl.fromTo('${selector} .fl-art-playhead',{x:0},{x:160,duration:${Math.max(.3, dur - 3 * part).toFixed(6)},ease:'none'},${(at + 3 * part).toFixed(6)});`);
         } else {
           const from = preset === 'slide' ? '{opacity:0,x:-28}' : preset === 'pop' ? '{opacity:0,scale:.92}' : preset === 'fade' ? '{opacity:0}' : '{opacity:0,y:24}';
           const to = preset === 'slide' ? `{opacity:1,x:0,duration:${dur.toFixed(6)},ease:'power2.out'}` : preset === 'pop' ? `{opacity:1,scale:1,duration:${dur.toFixed(6)},ease:'power2.out'}` : preset === 'fade' ? `{opacity:1,duration:${dur.toFixed(6)},ease:'power2.out'}` : `{opacity:1,y:0,duration:${dur.toFixed(6)},ease:'power2.out'}`;
@@ -307,6 +461,10 @@ function htmlFor(program, bundle, profile) {
         for (const id of oldIds) timeline.push(`tl.set('#${cssId(scene, id)}',{opacity:0},${switchAt.toFixed(6)});`);
         for (const id of newIds) timeline.push(`tl.set('#${cssId(scene, id)}',{opacity:1},${switchAt.toFixed(6)});`);
       }
+      if (event.effect === 'tween') {
+        const to = { ...event.to, duration: Number(dur.toFixed(6)), ease: event.ease };
+        timeline.push(`tl.fromTo('#${cssId(scene, event.target)}',${JSON.stringify(event.from)},${JSON.stringify(to)},${at.toFixed(6)});`);
+      }
     }
     cursor += scene.durationFrames;
   }
@@ -318,16 +476,36 @@ html,body{margin:0;width:${p.width}px;height:${p.height}px;background:${bundle.b
 *{box-sizing:border-box}#root{width:${p.width}px;height:${p.height}px;position:relative;overflow:hidden;background:${bundle.brand.background}}
 .clip{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;isolation:isolate}
 .fl-scene{position:absolute;left:${p.insetX}px;right:${p.insetX}px;top:${p.insetY}px;bottom:${p.insetY}px;display:flex;min-width:0;min-height:0;align-items:center;justify-content:center}
-.fl-scene.fl-left{justify-content:flex-start;text-align:left}.fl-layout{width:100%;height:100%;min-width:0;min-height:0}.fl-stack{display:flex;justify-content:center;align-items:center}.fl-stack.fl-start{align-items:flex-start}.fl-split{display:grid;align-items:center;gap:48px}
+.fl-scene.fl-left{justify-content:flex-start;text-align:left}.fl-scene.fl-chromed{top:${p.insetY + 66}px;bottom:${p.insetY + 76}px}.fl-layout{width:100%;height:100%;min-width:0;min-height:0}.fl-stack{display:flex;justify-content:center;align-items:center}.fl-stack.fl-start{align-items:flex-start}.fl-split{display:grid;align-items:center;gap:48px}.fl-canvas{position:relative}.fl-placement{position:absolute;display:flex;min-width:0;min-height:0}.fl-placement-start{align-items:flex-start}.fl-placement-center{align-items:center}.fl-placement-end{align-items:flex-end}.fl-placement>.fl-node{width:100%;height:100%}
 .fl-node{min-width:0;max-width:100%}.fl-text{font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};overflow-wrap:anywhere;line-height:1.05;font-weight:700}
 .fl-headline{font-size:${p.heading}px;letter-spacing:-.045em}.fl-display .fl-headline{font-size:${p.displayHeading}px;line-height:.98}.fl-body{font-size:${p.body}px;line-height:1.2;font-weight:500}.fl-label{font-size:${Math.round(p.body*.75)}px;color:${bundle.brand.accent};text-transform:uppercase;letter-spacing:.08em}.fl-tone-accent{color:${bundle.brand.accent}}
 .fl-flow{display:flex;align-items:center;gap:24px;font-family:FrameLangInter,sans-serif;font-size:${p.flow}px;font-weight:700;color:${bundle.brand.foreground}}
 .fl-flow-steps{display:flex;flex-wrap:wrap;align-items:center;gap:16px}.fl-flow-chip{border:2px solid ${bundle.brand.foreground}66;padding:18px 25px;background:${bundle.brand.foreground}0d;white-space:nowrap}.fl-flow-arrow{font-size:${p.flow + 14}px;color:${bundle.brand.accent}}.fl-flow-outcome{background:${bundle.brand.accent};color:${bundle.brand.background};padding:20px 30px;white-space:nowrap}
-${portrait ? '.fl-flow{flex-direction:column;align-items:flex-start}.fl-flow-arrow{transform:rotate(90deg);align-self:center}.fl-flow-steps{gap:16px}' : ''}
+.fl-canvas .fl-flow{flex-direction:column;align-items:stretch;width:100%;gap:12px}.fl-canvas .fl-flow-steps{flex-direction:column;align-items:stretch;width:100%;gap:11px}.fl-canvas .fl-flow-chip{white-space:normal}.fl-canvas .fl-flow-arrow{transform:rotate(90deg);align-self:center}.fl-canvas .fl-flow-outcome{text-align:center;white-space:normal}
+${portrait ? '.fl-flow{flex-direction:column;align-items:stretch;width:100%;gap:18px}.fl-flow-steps{flex-direction:column;align-items:stretch;width:100%;gap:13px}.fl-flow-chip{text-align:left;white-space:normal}.fl-flow-arrow{transform:rotate(90deg);align-self:center}.fl-flow-outcome{text-align:center}.fl-chromed .fl-stack{justify-content:space-evenly}' : ''}
 .fl-grid{position:absolute;inset:0;background-image:linear-gradient(90deg,${bundle.brand.foreground}0b 1px,transparent 1px);background-size:160px 100%;pointer-events:none}.fl-glow{position:absolute;width:880px;height:880px;right:-220px;top:-300px;background:radial-gradient(circle,${bundle.brand.accent}22,transparent 65%);pointer-events:none}.fl-rule{position:absolute;left:${p.insetX}px;right:${p.insetX}px;height:2px;background:${bundle.brand.foreground}2a;pointer-events:none}.fl-rule-top{top:${p.insetY}px}.fl-rule-bottom{bottom:${p.insetY}px}
+.fl-chrome-top,.fl-chrome-bottom{position:absolute;left:${p.insetX}px;right:${p.insetX}px;display:flex;align-items:center;justify-content:space-between;font-family:FrameLangInter,sans-serif;font-size:${portrait ? 27 : 25}px;font-weight:700;letter-spacing:.12em;color:${bundle.brand.foreground}a8}.fl-chrome-top{top:${p.insetY + 5}px}.fl-chrome-bottom{bottom:${p.insetY + 15}px}.fl-chrome-top span:first-child{color:${bundle.brand.accent}}.fl-progress{position:absolute;left:${p.insetX}px;right:${p.insetX}px;bottom:${p.insetY - 19}px;height:5px;background:${bundle.brand.foreground}38;overflow:hidden}.fl-progress span{display:block;height:100%;background:${bundle.brand.accent};transform-origin:left}
+.fl-input-card{width:100%;height:${portrait ? 620 : 400}px;padding:${portrait ? 44 : 38}px;border:2px solid ${bundle.brand.foreground}75;background:#131315;box-shadow:22px 28px 0 ${bundle.brand.accent}26,0 35px 100px #0009;font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};display:flex;flex-direction:column;justify-content:space-between}
+.fl-input-top,.fl-input-foot{display:flex;align-items:center;gap:24px;font-size:${portrait ? 28 : 24}px;letter-spacing:.12em;font-weight:700}.fl-input-top{color:${bundle.brand.foreground}9c}.fl-input-dots{display:flex;gap:10px;margin-right:15px}.fl-input-dots i{display:block;width:14px;height:14px;border:2px solid ${bundle.brand.foreground}78;border-radius:50%}.fl-input-index{margin-left:auto;color:${bundle.brand.accent}}.fl-input-label{font-size:${portrait ? 30 : 28}px;font-weight:800;letter-spacing:.12em;color:${bundle.brand.accent}}
+.fl-input-field{display:flex;align-items:center;gap:15px;min-height:${portrait ? 160 : 124}px;padding:20px 24px;border:2px solid ${bundle.brand.accent};background:${bundle.brand.accent}0c;font-size:${portrait ? 48 : 50}px;font-weight:600;letter-spacing:-.035em;box-shadow:inset 0 0 50px ${bundle.brand.accent}12}.fl-input-link{overflow-wrap:anywhere}.fl-input-caret{width:4px;height:1.2em;background:${bundle.brand.accent};flex:none}.fl-input-go{margin-left:auto;display:grid;place-items:center;flex:none;width:${portrait ? 82 : 76}px;height:${portrait ? 82 : 76}px;background:${bundle.brand.accent};color:${bundle.brand.background};font-size:58px;line-height:1}.fl-input-foot{color:${bundle.brand.foreground}9c}.fl-input-rule{flex:1;height:2px;background:${bundle.brand.accent}8c}
+.fl-artifact{width:100%;height:${portrait ? 900 : 550}px;padding:${portrait ? 34 : 30}px;border:2px solid ${bundle.brand.foreground}6d;background:#141416;box-shadow:18px 24px 0 ${bundle.brand.accent}21,0 35px 100px #0008;font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};display:flex;flex-direction:column;gap:19px}.fl-art-top,.fl-art-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:${portrait ? 26 : 22}px;font-weight:800;letter-spacing:.1em}.fl-art-top{color:${bundle.brand.foreground}a8}.fl-art-indicator{display:flex;align-items:center;gap:12px;color:${bundle.brand.accent}}.fl-art-indicator i{display:block;width:15px;height:15px;border-radius:50%;background:${bundle.brand.accent};box-shadow:0 0 22px ${bundle.brand.accent}}
+.fl-art-body{flex:1;min-height:0;display:flex;flex-direction:column;gap:17px}.fl-art-screen{position:relative;flex:1;overflow:hidden;border:2px solid ${bundle.brand.foreground}65;background:radial-gradient(circle at 72% 25%,${bundle.brand.accent}24,transparent 43%),#0A0A0C}.fl-art-frame{position:absolute;width:42%;height:57%;top:19%;border:3px solid ${bundle.brand.foreground}e0;background:#222226;box-shadow:15px 20px 40px #000a;overflow:hidden}.fl-art-frame-a{left:7%;background:linear-gradient(145deg,#292A2D,#111114)}.fl-art-frame-b{left:29%;top:14%;background:linear-gradient(135deg,#3B3C20,#1B1B1B)}.fl-art-frame-c{left:51%;top:9%;background:linear-gradient(155deg,#18191A,#323317)}.fl-art-orbit{position:absolute;left:19%;top:15%;width:60%;aspect-ratio:1;border:12px solid ${bundle.brand.accent};border-radius:50%;box-shadow:0 0 45px ${bundle.brand.accent}64}.fl-art-sun{position:absolute;right:15%;top:15%;width:41%;aspect-ratio:1;border-radius:50%;background:${bundle.brand.accent};box-shadow:0 0 58px ${bundle.brand.accent}95}.fl-art-bars{position:absolute;inset:29% 12%;background:repeating-linear-gradient(90deg,${bundle.brand.accent} 0 12px,transparent 12px 24px);clip-path:polygon(0 45%,10% 45%,10% 20%,20% 20%,20% 70%,30% 70%,30% 5%,40% 5%,40% 85%,50% 85%,50% 30%,60% 30%,60% 63%,70% 63%,70% 10%,80% 10%,80% 77%,90% 77%,90% 42%,100% 42%,100% 100%,0 100%)}.fl-art-play{position:absolute;left:48%;top:38%;display:grid;place-items:center;width:${portrait ? 110 : 94}px;height:${portrait ? 110 : 94}px;border:3px solid ${bundle.brand.foreground};border-radius:50%;background:#111d;font-size:${portrait ? 42 : 35}px;color:${bundle.brand.accent};box-shadow:0 0 50px #000c}.fl-art-screen-label{position:absolute;left:22px;bottom:20px;padding:10px 15px;background:#09090Bde;font-size:${portrait ? 25 : 24}px;font-weight:800;letter-spacing:.08em;color:${bundle.brand.accent}}
+.fl-art-timeline{height:${portrait ? 130 : 80}px;padding:16px 20px;border:2px solid ${bundle.brand.foreground}5c;background:#0B0B0D;position:relative}.fl-art-ticks{display:flex;gap:7px;height:100%}.fl-art-ticks i{flex:1;background:linear-gradient(135deg,${bundle.brand.accent}7a,${bundle.brand.foreground}35);border:1px solid ${bundle.brand.foreground}4a}.fl-art-ticks i:nth-child(2n){background:linear-gradient(145deg,${bundle.brand.foreground}45,${bundle.brand.accent}45)}.fl-art-playhead{position:absolute;left:20px;top:8px;bottom:8px;width:4px;background:${bundle.brand.accent};box-shadow:0 0 14px ${bundle.brand.accent}}
+.fl-art-bottom{min-height:${portrait ? 75 : 56}px}.fl-art-action{padding:12px 22px;border:2px solid ${bundle.brand.accent};color:${bundle.brand.accent};white-space:nowrap}.fl-art-action-live{background:${bundle.brand.accent};color:${bundle.brand.background}}.fl-art-action b{font-size:1.3em}
+${portrait ? '.fl-chrome-bottom{font-size:22px}.fl-art-top{flex-wrap:wrap}.fl-input-top{flex-wrap:wrap}.fl-input-field{font-size:44px}.fl-art-screen-label{max-width:80%}' : ''}
 .fl-media{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.fl-media img{display:block;width:100%;height:100%;object-fit:contain}
-.fl-panel{background:${bundle.brand.accent};border-radius:24px;min-height:120px;width:100%}.fl-overlay{position:relative}.fl-overlay>.fl-node{width:100%;height:100%}.fl-attachment{position:absolute;inset:0}.fl-attachment>.fl-node{width:100%;height:100%}
+.fl-panel{background:${bundle.brand.accent};border-radius:24px;min-height:120px;width:100%}.fl-circle{border-radius:50%;aspect-ratio:1}.fl-overlay{position:relative}.fl-overlay>.fl-node{width:100%;height:100%}.fl-attachment{position:absolute;inset:0}.fl-attachment>.fl-node{width:100%;height:100%}
 </style></head><body><div id="root" data-composition-id="main" data-start="0" data-width="${p.width}" data-height="${p.height}" data-fps="${program.fps}" data-duration="${total.toFixed(6)}">${clips.join('')}</div><script src="assets/gsap.min.js"></script><script>const tl=gsap.timeline({paused:true});${timeline.join('')}window.__timelines['main']=tl;window.__renderReady=true;</script></body></html>`;
+}
+
+function verifySvg(bytes, location) {
+  if (bytes.length > 1_000_000) fail('reference.svg', location, 'SVG exceeds 1 MB limit');
+  const svg = bytes.toString('utf8');
+  if (!/^\s*<svg\b[\s\S]*<\/svg>\s*$/i.test(svg)) fail('reference.svg', location, 'expected standalone SVG');
+  const allowed = new Set(['svg', 'g', 'path', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'text', 'tspan', 'defs', 'lineargradient', 'radialgradient', 'stop', 'clippath', 'mask']);
+  for (const tag of svg.matchAll(/<\/?([a-zA-Z][\w:-]*)\b/g)) if (!allowed.has(tag[1].toLowerCase())) fail('reference.svg', location, `unsupported SVG element ${tag[1]}`);
+  const stripped = svg.replace(/xmlns(?:\:[\w-]+)?\s*=\s*["'][^"']*["']/gi, '').replace(/url\(\s*#[a-zA-Z0-9_-]+\s*\)/g, '');
+  if (/<!|<\?|&|\bon[a-z]+\s*=|\bhref\s*=|\bstyle\s*=|\b(?:https?|file|data|javascript):|\burl\s*\(|@import/i.test(stripped)) fail('reference.svg', location, 'SVG contains executable or external content');
 }
 
 export async function compile(programPath, outDir) {
@@ -349,17 +527,19 @@ export async function compile(programPath, outDir) {
     await copyFile(gsapPath, path.join(target, 'assets', 'gsap.min.js'));
     await copyFile(fontPath, path.join(target, 'assets', 'Inter.ttf'));
     outputs[profile] = { directory: profile, htmlHash: hash(html), assetHashes: {} };
-    for (const scene of program.scenes) for (const node of scene.content) if (node.kind === 'productState') {
-      const item = bundle.assets[node.stateRef];
-      if (!item || typeof item.path !== 'string' || !item.path.startsWith('assets/')) fail('reference.asset', node.stateRef, 'invalid asset path');
+    for (const scene of program.scenes) for (const node of scene.content) if (node.kind === 'productState' || node.kind === 'svg') {
+      const item = bundle.assets[node.kind === 'svg' ? node.assetRef : node.stateRef];
+      const ref = node.kind === 'svg' ? node.assetRef : node.stateRef;
+      if (!item || typeof item.path !== 'string' || !item.path.startsWith('assets/')) fail('reference.asset', ref, 'invalid asset path');
       const absolute = path.resolve(inputDir, item.path);
-      if (!absolute.startsWith(inputDir + path.sep)) fail('reference.asset', node.stateRef, 'asset escapes input directory');
+      if (!absolute.startsWith(inputDir + path.sep)) fail('reference.asset', ref, 'asset escapes input directory');
       const bytes = await readFile(absolute);
-      if (hash(bytes) !== item.sha256) fail('reference.asset', node.stateRef, 'asset digest mismatch');
+      if (hash(bytes) !== item.sha256) fail('reference.asset', ref, 'asset digest mismatch');
+      verifySvg(bytes, ref);
       await copyFile(absolute, path.join(target, 'assets', `${scene.id}-${node.id}.svg`));
     }
     const stagedFiles = ['gsap.min.js', 'Inter.ttf', ...program.scenes.flatMap(scene => scene.content
-      .filter(node => node.kind === 'productState').map(node => `${scene.id}-${node.id}.svg`))];
+      .filter(node => node.kind === 'productState' || node.kind === 'svg').map(node => `${scene.id}-${node.id}.svg`))];
     for (const file of stagedFiles) outputs[profile].assetHashes[file] = hash(await readFile(path.join(target, 'assets', file)));
   }
   const report = { language: program.language, pilot: true, inputHash: hash(canonical(program)), bundleRefs: bundleRefs(bundle), outputs, checked: false, degraded: false };
