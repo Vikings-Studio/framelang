@@ -53,3 +53,41 @@ mostly static, sparse videos. Human review also found imprecise or unsupported
 copy in some admitted FrameLang videos, including Hy4's unsupported speed
 claim. The pilot can reject invalid input, but it does not make AI generation
 infallible or guarantee polished, factually accurate video.
+
+## Raw retries and repair previews
+
+After freezing the first-shot study, we retried the two missing raw videos with
+the identical prompt, model alias, temperature, and tool-disabled agent. Each
+retry used a fresh OpenCode session and a separate output directory. The local
+harness deadline increased from 240 seconds on attempt #1 to 480 seconds on
+attempts #2 and #3. The original results and first-shot success counts above
+are unchanged. `retry-results.json` records all three attempts per GLM arm;
+`runs/<model>/without-framework/attempts/<number>/` preserves events, stderr,
+response, token/cost metadata, and available check logs.
+
+| Raw arm | #1 | #2 | #3 | Successful model render | Known raw inference cost |
+| --- | --- | --- | --- | --- | ---: |
+| GLM 5.2 | No visible response; 6,461 tokens | Check rejected: GSAP wrote `display` on a clip; 12,926 tokens | 480s harness deadline; usage unavailable | None after 3 attempts | At least $0.055385540 |
+| GLM 5.3 | 240s harness deadline; usage unavailable | Check rejected: animated `letterSpacing`; 21,158 tokens | 480s harness deadline; usage unavailable | None after 3 attempts | At least $0.085433800 |
+
+No generic service timeout is inferred. The deadline attempts ended because
+the **local harness** stopped waiting; OpenCode emitted no `step_finish` usage
+for them. Unknown usage is not counted as zero. The known OpenCode-reported
+inference cost across all ten original arms and four GLM retries is **at least
+$0.173026978**. That amount excludes local rendering and may understate actual
+inference charges. It is an OpenCode report, not a provider invoice.
+
+To make both missing videos watchable, `repair-preview.mjs` creates separate
+**human repair previews** from each GLM attempt #2. For GLM 5.2 it removes one
+clip `display` write; for GLM 5.3 it removes two `letterSpacing` tweens. The
+script retains the model HTML unchanged, documents the edit in `repair.json`,
+rechecks the edited HTML, and renders a landscape MP4. Both previews show
+readable content at 2s and 6s. They are **excluded from model-success counts**
+and require zero additional model inference. The MakeMyDemo side-by-side labels
+them explicitly, shows attempt count, tokens, and cumulative cost per arm, and
+uses lower-bound costs where usage is unavailable.
+
+The richer FrameLang v0.1 process subset is documented in
+`../../spec/V0_1_RICH_SUBSET.md`. Its landscape and portrait example is
+hand-authored proof of what the compiler can express; it is not a sixth model
+result or a revised first-shot score.

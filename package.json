@@ -10,7 +10,10 @@
     "test": "node --test",
     "example:compile": "node src/cli.mjs compile examples/type-reveal.json out/type-reveal",
     "example:check": "node src/cli.mjs check out/type-reveal",
-    "example:render": "node src/cli.mjs render out/type-reveal"
+    "example:render": "node src/cli.mjs render out/type-reveal",
+    "rich:compile": "node src/cli.mjs compile examples/makemydemo-rich/program.json out/makemydemo-rich",
+    "rich:check": "node src/cli.mjs check out/makemydemo-rich",
+    "rich:render": "node src/cli.mjs render out/makemydemo-rich"
   },
   "dependencies": {
     "gsap": "3.15.0",

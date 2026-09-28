@@ -1,0 +1,14 @@
+{
+  "id": "glm-5-3",
+  "model": "opencode-go/glm-5.3",
+  "arm": "without-framework",
+  "attempt": 3,
+  "deadlineMs": 480000,
+  "code": null,
+  "signal": "SIGTERM",
+  "durationMs": 480092,
+  "outputBytes": 0,
+  "tokens": null,
+  "cost": null,
+  "sessionID": "ses_f16ef9b65ffeXpTaSe7YRTbsPG"
+}

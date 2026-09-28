@@ -1,0 +1,7 @@
+{
+  "sourceAttempt": 2,
+  "repair": "Removed the GSAP display write to the clip section; HyperFrames owns clip visibility.",
+  "modelInferenceCost": 0,
+  "modelAttemptSuccess": false,
+  "video": "runs/glm-5-2/without-framework/repair-preview/video.mp4"
+}

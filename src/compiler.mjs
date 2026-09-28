@@ -6,12 +6,13 @@ import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const PROFILE = Object.freeze({
-  'landscape-1920x1080': { width: 1920, height: 1080, insetX: 120, insetY: 96, heading: 104, body: 48 },
-  'portrait-1080x1920': { width: 1080, height: 1920, insetX: 72, insetY: 96, heading: 88, body: 50 },
+  'landscape-1920x1080': { width: 1920, height: 1080, insetX: 120, insetY: 96, heading: 104, displayHeading: 156, body: 48, flow: 38 },
+  'portrait-1080x1920': { width: 1080, height: 1920, insetX: 72, insetY: 96, heading: 88, displayHeading: 120, body: 50, flow: 40 },
 });
 const ID = /^[a-z][a-z0-9-]{0,39}$/;
 const SHA = /^sha256:[0-9a-f]{64}$/;
-const SCENE_KEYS = ['id', 'role', 'blueprint', 'durationFrames', 'essential', 'content', 'layouts', 'initialState', 'resolvedState', 'states', 'events'];
+const SCENE_KEYS = ['id', 'role', 'blueprint', 'durationFrames', 'essential', 'content', 'layouts', 'initialState', 'resolvedState', 'states', 'events', 'design'];
+const SCENE_REQUIRED = SCENE_KEYS.filter(key => key !== 'design');
 const DOCUMENT_KEYS = ['language', 'fps', 'profiles', 'brandRef', 'assetsRef', 'seed', 'scenes'];
 
 export class FrameLangError extends Error {
@@ -45,6 +46,27 @@ function identifier(value, location) {
 }
 function color(value, location) {
   if (typeof value !== 'string' || !/^#[0-9a-fA-F]{6}$/.test(value)) fail('syntax.color', location, 'expected six-digit hex color');
+}
+function plainText(value, location, max = 240) {
+  if (typeof value !== 'string' || !value.trim() || value.length > max || /[<>\u0000-\u001f]/.test(value)) fail('syntax.text', location, `nonempty plain text up to ${max} characters required`);
+}
+function textCopy(node, location) {
+  if (node.text !== undefined && node.segments !== undefined) fail('syntax.text', location, 'use text or segments, not both');
+  if (node.text !== undefined) { plainText(node.text, `${location}.text`); return node.text; }
+  const segments = list(node.segments, `${location}.segments`, 1);
+  if (segments.length > 8) fail('syntax.text', `${location}.segments`, 'at most 8 text segments');
+  let copy = '';
+  for (const [index, segment] of segments.entries()) {
+    const at = `${location}.segments[${index}]`;
+    keys(segment, ['text', 'tone', 'breakAfter'], ['text'], at);
+    plainText(segment.text, `${at}.text`, 120);
+    if (segment.tone !== undefined && !['foreground', 'accent'].includes(segment.tone)) fail('syntax.text', `${at}.tone`, 'invalid tone');
+    if (segment.breakAfter !== undefined && typeof segment.breakAfter !== 'boolean') fail('syntax.text', `${at}.breakAfter`, 'expected boolean');
+    if (index === segments.length - 1 && segment.breakAfter) fail('syntax.text', `${at}.breakAfter`, 'last segment cannot end with a break');
+    copy += segment.text + (segment.breakAfter ? '\n' : '');
+  }
+  if (copy.length > 240) fail('syntax.text', location, 'combined copy exceeds 240 characters');
+  return copy;
 }
 function hash(value) { return `sha256:${createHash('sha256').update(value).digest('hex')}`; }
 export function canonical(value) {
@@ -113,11 +135,17 @@ export function validate(program, bundle) {
   unique(scenes.map(s => s.id), '$.scenes');
   for (const [index, scene] of scenes.entries()) {
     const at = `$.scenes[${index}]`;
-    keys(scene, SCENE_KEYS, SCENE_KEYS, at);
+    keys(scene, SCENE_KEYS, SCENE_REQUIRED, at);
     identifier(scene.id, `${at}.id`);
     if (!['hook', 'feature_showcase', 'benefit_highlight', 'cta', 'branding'].includes(scene.role)) fail('syntax.role', `${at}.role`, 'unsupported pilot role');
-    if (!['type-reveal/v1', 'product-reveal/v1', 'before-after/v1'].includes(scene.blueprint)) fail('syntax.blueprint', `${at}.blueprint`, 'unsupported pilot blueprint');
+    if (!['type-reveal/v1', 'product-reveal/v1', 'before-after/v1', 'product-process/v1'].includes(scene.blueprint)) fail('syntax.blueprint', `${at}.blueprint`, 'unsupported pilot blueprint');
     int(scene.durationFrames, `${at}.durationFrames`, 48, 288);
+    if (scene.design !== undefined) {
+      keys(scene.design, ['alignment', 'scale', 'decoration'], [], `${at}.design`);
+      if (scene.design.alignment !== undefined && !['left', 'center'].includes(scene.design.alignment)) fail('syntax.design', `${at}.design.alignment`, 'unsupported alignment');
+      if (scene.design.scale !== undefined && !['standard', 'display'].includes(scene.design.scale)) fail('syntax.design', `${at}.design.scale`, 'unsupported type scale');
+      if (scene.design.decoration !== undefined && !['none', 'rules', 'grid-glow'].includes(scene.design.decoration)) fail('syntax.design', `${at}.design.decoration`, 'unsupported decoration');
+    }
     const nodes = list(scene.content, `${at}.content`, 1);
     unique(nodes.map(n => n.id), `${at}.content`);
     const byId = new Map();
@@ -126,10 +154,17 @@ export function validate(program, bundle) {
       identifier(node.id, `${na}.id`);
       if (!['essential', 'supporting', 'decorative'].includes(node.importance)) fail('syntax.importance', na, 'invalid importance');
       if (node.kind === 'text') {
-        keys(node, ['id', 'kind', 'importance', 'role', 'language', 'text', 'fit'], ['id', 'kind', 'importance', 'role', 'language', 'text', 'fit'], na);
+        keys(node, ['id', 'kind', 'importance', 'role', 'language', 'text', 'segments', 'fit'], ['id', 'kind', 'importance', 'role', 'language', 'fit'], na);
         if (!['headline', 'body', 'label'].includes(node.role) || node.fit !== 'wrapThenShrink') fail('syntax.text', na, 'unsupported text role or fit');
-        if (typeof node.text !== 'string' || !node.text.trim() || node.text.length > 240 || /[<>]/.test(node.text)) fail('syntax.text', `${na}.text`, 'nonempty plain text up to 240 characters required');
+        textCopy(node, na);
         if (node.language !== 'en') fail('syntax.text', `${na}.language`, 'pilot supports English only');
+      } else if (node.kind === 'flow') {
+        keys(node, ['id', 'kind', 'importance', 'steps', 'outcome'], ['id', 'kind', 'importance', 'steps', 'outcome'], na);
+        if (scene.blueprint !== 'product-process/v1') fail('syntax.flow', na, 'flow requires product-process/v1');
+        const steps = list(node.steps, `${na}.steps`, 2);
+        if (steps.length > 4) fail('syntax.flow', `${na}.steps`, 'at most four flow steps');
+        steps.forEach((step, stepIndex) => plainText(step, `${na}.steps[${stepIndex}]`, 28));
+        plainText(node.outcome, `${na}.outcome`, 36);
       } else if (node.kind === 'productState') {
         keys(node, ['id', 'kind', 'importance', 'stateRef'], ['id', 'kind', 'importance', 'stateRef'], na);
         const asset = bundle.assets?.[node.stateRef];
@@ -171,17 +206,20 @@ export function validate(program, bundle) {
     const resolvedVisible = stateMap.get(scene.resolvedState).visible;
     for (const [i, event] of events.entries()) {
       const ea = `${at}.events[${i}]`;
-      keys(event, ['atFrame', 'durationFrames', 'effect', 'target', 'from', 'to'], ['atFrame', 'durationFrames', 'effect'], ea);
+      keys(event, ['atFrame', 'durationFrames', 'effect', 'target', 'from', 'to', 'preset'], ['atFrame', 'durationFrames', 'effect'], ea);
       int(event.atFrame, `${ea}.atFrame`, 0, scene.durationFrames - 1);
       int(event.durationFrames, `${ea}.durationFrames`, 1, scene.durationFrames);
       if (event.atFrame < latest || event.atFrame + event.durationFrames > scene.durationFrames) fail('semantic.timing', ea, 'events out of order or past scene end');
       latest = event.atFrame;
       if (event.effect === 'appear') {
         if (!byId.has(event.target)) fail('reference.node', ea, 'appear target missing');
+        if (event.preset !== undefined && !['rise', 'slide', 'pop', 'fade', 'stagger'].includes(event.preset)) fail('syntax.motion', `${ea}.preset`, 'unsupported entrance preset');
+        if (event.preset === 'stagger' && byId.get(event.target).kind !== 'flow') fail('syntax.motion', `${ea}.preset`, 'stagger requires a flow node');
         if (initialVisible.includes(event.target) || !resolvedVisible.includes(event.target)) fail('semantic.state', ea, 'appear target must enter between initial and resolved');
         if (written.has(event.target)) fail('semantic.motion', ea, 'node receives multiple writes');
         written.add(event.target);
       } else if (event.effect === 'replace') {
+        if (event.preset !== undefined) fail('syntax.motion', `${ea}.preset`, 'replace has no entrance preset');
         if (event.from !== scene.initialState || event.to !== scene.resolvedState) fail('reference.state', ea, 'pilot replace must connect initial to resolved');
         for (const id of [...initialVisible, ...resolvedVisible]) {
           if (written.has(id)) fail('semantic.motion', ea, 'node receives multiple writes');
@@ -202,16 +240,26 @@ export function validate(program, bundle) {
 function escapeHtml(value) { return String(value).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]); }
 function cssId(scene, id) { return `fl-${scene.id}-${id}`; }
 function gap(token) { return { tight: 16, regular: 32, comfortable: 56 }[token || 'regular']; }
+function renderText(node) {
+  if (node.text !== undefined) return escapeHtml(node.text);
+  return node.segments.map(segment => `<span class="fl-tone-${segment.tone || 'foreground'}">${escapeHtml(segment.text)}</span>${segment.breakAfter ? '<br>' : ''}`).join('');
+}
+function renderFlow(node, stagger) {
+  const hidden = stagger ? ' style="opacity:0"' : '';
+  const steps = node.steps.map((step, index) => `<div class="fl-flow-chip fl-flow-item" data-flow-order="${index + 1}"${hidden}>${escapeHtml(step)}</div>`).join('');
+  return `<div class="fl-flow-steps">${steps}</div><div class="fl-flow-arrow fl-flow-item" data-flow-order="${node.steps.length + 1}"${hidden} aria-hidden="true">→</div><div class="fl-flow-outcome fl-flow-item" data-flow-order="${node.steps.length + 2}"${hidden}>${escapeHtml(node.outcome)}</div>`;
+}
 function renderTree(tree, scene, profile, nodes, initial) {
   if (typeof tree === 'string') {
     const node = nodes.get(tree);
     const id = cssId(scene, tree);
     const hidden = initial.includes(tree) ? '' : ' style="opacity:0"';
-    if (node.kind === 'text') return `<div id="${id}" class="fl-node fl-text fl-${node.role}"${hidden}>${escapeHtml(node.text)}</div>`;
+    if (node.kind === 'text') return `<div id="${id}" class="fl-node fl-text fl-${node.role}"${hidden}>${renderText(node)}</div>`;
+    if (node.kind === 'flow') return `<div id="${id}" class="fl-node fl-flow"${hidden}>${renderFlow(node, scene.events.some(event => event.target === node.id && event.preset === 'stagger'))}</div>`;
     if (node.kind === 'shape') return `<div id="${id}" class="fl-node fl-panel"${hidden}></div>`;
     return `<div id="${id}" class="fl-node fl-media"${hidden}><img src="assets/${scene.id}-${node.id}.svg" alt="" /></div>`;
   }
-  if (tree.type === 'stack') return `<div class="fl-layout fl-stack" style="flex-direction:${tree.direction};gap:${gap(tree.gap)}px">${tree.children.map(n => renderTree(n, scene, profile, nodes, initial)).join('')}</div>`;
+  if (tree.type === 'stack') return `<div class="fl-layout fl-stack${scene.design?.alignment === 'left' ? ' fl-start' : ''}" style="flex-direction:${tree.direction};gap:${gap(tree.gap)}px">${tree.children.map(n => renderTree(n, scene, profile, nodes, initial)).join('')}</div>`;
   if (tree.type === 'split') {
     const [a, b] = tree.ratio.split(':').map(n => Number(n) / 10);
     return `<div class="fl-layout fl-split" style="grid-template-columns:${a}fr ${b}fr">${renderTree(tree.left, scene, profile, nodes, initial)}${renderTree(tree.right, scene, profile, nodes, initial)}</div>`;
@@ -231,11 +279,27 @@ function htmlFor(program, bundle, profile) {
     const start = cursor / program.fps;
     const duration = (scene.durationFrames - (i === program.scenes.length - 1 ? 0 : 1)) / program.fps;
     const body = renderTree(tree, scene, profile, nodes, initial);
-    clips.push(`<section class="clip" id="fl-${scene.id}" data-start="${start.toFixed(6)}" data-duration="${duration.toFixed(6)}" data-track-index="${i}"><div class="fl-scene">${body}</div></section>`);
+    const design = scene.design || {};
+    const decoration = design.decoration === 'grid-glow' ? '<div class="fl-grid"></div><div class="fl-glow"></div><div class="fl-rule fl-rule-top"></div><div class="fl-rule fl-rule-bottom"></div>' : design.decoration === 'rules' ? '<div class="fl-rule fl-rule-top"></div><div class="fl-rule fl-rule-bottom"></div>' : '';
+    const sceneClass = `fl-scene${design.alignment === 'left' ? ' fl-left' : ''}${design.scale === 'display' ? ' fl-display' : ''}`;
+    clips.push(`<section class="clip" id="fl-${scene.id}" data-start="${start.toFixed(6)}" data-duration="${duration.toFixed(6)}" data-track-index="${i}">${decoration}<div class="${sceneClass}">${body}</div></section>`);
     for (const event of scene.events) {
       const at = (cursor + event.atFrame) / program.fps;
       const dur = event.durationFrames / program.fps;
-      if (event.effect === 'appear') timeline.push(`tl.fromTo('#${cssId(scene, event.target)}',{opacity:0,y:24},{opacity:1,y:0,duration:${dur.toFixed(6)},ease:'power2.out'},${at.toFixed(6)});`);
+      if (event.effect === 'appear') {
+        const selector = `#${cssId(scene, event.target)}`;
+        const preset = event.preset || 'rise';
+        if (preset === 'stagger') {
+          timeline.push(`tl.set('${selector}',{opacity:1},${at.toFixed(6)});`);
+          const children = scene.content.find(n => n.id === event.target).steps.length + 2;
+          const itemDuration = Math.max(.15, dur / (children + 1));
+          for (let child = 0; child < children; child++) timeline.push(`tl.fromTo('${selector} [data-flow-order="${child + 1}"]',{opacity:0,y:20},{opacity:1,y:0,duration:${itemDuration.toFixed(6)},ease:'power2.out'},${(at + child * itemDuration).toFixed(6)});`);
+        } else {
+          const from = preset === 'slide' ? '{opacity:0,x:-28}' : preset === 'pop' ? '{opacity:0,scale:.92}' : preset === 'fade' ? '{opacity:0}' : '{opacity:0,y:24}';
+          const to = preset === 'slide' ? `{opacity:1,x:0,duration:${dur.toFixed(6)},ease:'power2.out'}` : preset === 'pop' ? `{opacity:1,scale:1,duration:${dur.toFixed(6)},ease:'power2.out'}` : preset === 'fade' ? `{opacity:1,duration:${dur.toFixed(6)},ease:'power2.out'}` : `{opacity:1,y:0,duration:${dur.toFixed(6)},ease:'power2.out'}`;
+          timeline.push(`tl.fromTo('${selector}',${from},${to},${at.toFixed(6)});`);
+        }
+      }
       if (event.effect === 'replace') {
         const oldIds = scene.states.find(s => s.id === event.from).visible.filter(id => !scene.states.find(s => s.id === event.to).visible.includes(id));
         const newIds = scene.states.find(s => s.id === event.to).visible.filter(id => !scene.states.find(s => s.id === event.from).visible.includes(id));
@@ -247,15 +311,20 @@ function htmlFor(program, bundle, profile) {
     cursor += scene.durationFrames;
   }
   const total = cursor / program.fps;
+  const portrait = p.width < p.height;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=${p.width},height=${p.height}"><title>${escapeHtml(bundle.brand.name)}</title><style>
 @font-face{font-family:FrameLangInter;src:url('assets/Inter.ttf') format('truetype');font-style:normal;font-weight:100 900;font-display:block}
 html,body{margin:0;width:${p.width}px;height:${p.height}px;background:${bundle.brand.background}}
 *{box-sizing:border-box}#root{width:${p.width}px;height:${p.height}px;position:relative;overflow:hidden;background:${bundle.brand.background}}
 .clip{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;isolation:isolate}
 .fl-scene{position:absolute;left:${p.insetX}px;right:${p.insetX}px;top:${p.insetY}px;bottom:${p.insetY}px;display:flex;min-width:0;min-height:0;align-items:center;justify-content:center}
-.fl-layout{width:100%;height:100%;min-width:0;min-height:0}.fl-stack{display:flex;justify-content:center;align-items:center}.fl-split{display:grid;align-items:center;gap:48px}
+.fl-scene.fl-left{justify-content:flex-start;text-align:left}.fl-layout{width:100%;height:100%;min-width:0;min-height:0}.fl-stack{display:flex;justify-content:center;align-items:center}.fl-stack.fl-start{align-items:flex-start}.fl-split{display:grid;align-items:center;gap:48px}
 .fl-node{min-width:0;max-width:100%}.fl-text{font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};overflow-wrap:anywhere;line-height:1.05;font-weight:700}
-.fl-headline{font-size:${p.heading}px;letter-spacing:-.045em}.fl-body{font-size:${p.body}px;line-height:1.2;font-weight:500}.fl-label{font-size:${Math.round(p.body*.75)}px;color:${bundle.brand.accent};text-transform:uppercase;letter-spacing:.08em}
+.fl-headline{font-size:${p.heading}px;letter-spacing:-.045em}.fl-display .fl-headline{font-size:${p.displayHeading}px;line-height:.98}.fl-body{font-size:${p.body}px;line-height:1.2;font-weight:500}.fl-label{font-size:${Math.round(p.body*.75)}px;color:${bundle.brand.accent};text-transform:uppercase;letter-spacing:.08em}.fl-tone-accent{color:${bundle.brand.accent}}
+.fl-flow{display:flex;align-items:center;gap:24px;font-family:FrameLangInter,sans-serif;font-size:${p.flow}px;font-weight:700;color:${bundle.brand.foreground}}
+.fl-flow-steps{display:flex;flex-wrap:wrap;align-items:center;gap:16px}.fl-flow-chip{border:2px solid ${bundle.brand.foreground}66;padding:18px 25px;background:${bundle.brand.foreground}0d;white-space:nowrap}.fl-flow-arrow{font-size:${p.flow + 14}px;color:${bundle.brand.accent}}.fl-flow-outcome{background:${bundle.brand.accent};color:${bundle.brand.background};padding:20px 30px;white-space:nowrap}
+${portrait ? '.fl-flow{flex-direction:column;align-items:flex-start}.fl-flow-arrow{transform:rotate(90deg);align-self:center}.fl-flow-steps{gap:16px}' : ''}
+.fl-grid{position:absolute;inset:0;background-image:linear-gradient(90deg,${bundle.brand.foreground}0b 1px,transparent 1px);background-size:160px 100%;pointer-events:none}.fl-glow{position:absolute;width:880px;height:880px;right:-220px;top:-300px;background:radial-gradient(circle,${bundle.brand.accent}22,transparent 65%);pointer-events:none}.fl-rule{position:absolute;left:${p.insetX}px;right:${p.insetX}px;height:2px;background:${bundle.brand.foreground}2a;pointer-events:none}.fl-rule-top{top:${p.insetY}px}.fl-rule-bottom{bottom:${p.insetY}px}
 .fl-media{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.fl-media img{display:block;width:100%;height:100%;object-fit:contain}
 .fl-panel{background:${bundle.brand.accent};border-radius:24px;min-height:120px;width:100%}.fl-overlay{position:relative}.fl-overlay>.fl-node{width:100%;height:100%}.fl-attachment{position:absolute;inset:0}.fl-attachment>.fl-node{width:100%;height:100%}
 </style></head><body><div id="root" data-composition-id="main" data-start="0" data-width="${p.width}" data-height="${p.height}" data-fps="${program.fps}" data-duration="${total.toFixed(6)}">${clips.join('')}</div><script src="assets/gsap.min.js"></script><script>const tl=gsap.timeline({paused:true});${timeline.join('')}window.__timelines['main']=tl;window.__renderReady=true;</script></body></html>`;

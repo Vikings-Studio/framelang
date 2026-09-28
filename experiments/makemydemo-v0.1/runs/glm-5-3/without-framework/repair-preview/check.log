@@ -1,0 +1,1753 @@
+[INFO] [Compiler] Fetched 11 font face(s) for "Inter" from Google Fonts (cached to /Users/ace/.cache/hyperframes/fonts/inter)
+[INFO] [Compiler] Fetched 11 font face(s) for "Inter" from Google Fonts (cached to /Users/ace/.cache/hyperframes/fonts/inter)
+[INFO] [Compiler] Fetched 11 font face(s) for "Inter" from Google Fonts (cached to /Users/ace/.cache/hyperframes/fonts/inter)
+[INFO] [Compiler] Injected deterministic @font-face rules for 3 requested font families
+[hyperframes] browserGpuMode probe → hardware (WebGL renderer vendor="Google Inc. (Apple)" renderer="ANGLE (Apple, ANGLE Metal Renderer: Apple M1 Pro, Unspecified Version)")
+{
+  "ok": true,
+  "strict": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "timed_element_missing_clip_class",
+        "severity": "warning",
+        "message": "<section id=\"s1\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+        "selector": "#s1",
+        "dataAttributes": {},
+        "sourceFile": "/private/tmp/framelang/experiments/makemydemo-v0.1/runs/glm-5-3/without-framework/repair-preview/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+      },
+      {
+        "code": "timed_element_missing_clip_class",
+        "severity": "warning",
+        "message": "<section id=\"s2\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+        "selector": "#s2",
+        "dataAttributes": {},
+        "sourceFile": "/private/tmp/framelang/experiments/makemydemo-v0.1/runs/glm-5-3/without-framework/repair-preview/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s1",
+        "dataAttributes": {},
+        "sourceFile": "/private/tmp/framelang/experiments/makemydemo-v0.1/runs/glm-5-3/without-framework/repair-preview/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"s2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#s2",
+        "dataAttributes": {},
+        "sourceFile": "/private/tmp/framelang/experiments/makemydemo-v0.1/runs/glm-5-3/without-framework/repair-preview/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"s2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 8,
+    "infoCount": 30,
+    "findings": [
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 0.558,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 494.26,
+          "right": 1241.98,
+          "bottom": 640.58,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 60.58
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 494.26,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.558,
+        "lastSeen": 4.558,
+        "occurrences": 2,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 0.558,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 686.76,
+          "right": 1241.98,
+          "bottom": 833.07,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 106.76
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 686.76,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.558,
+        "lastSeen": 4.558,
+        "occurrences": 2,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 0.783,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 443.09,
+          "right": 1241.98,
+          "bottom": 589.4,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 9.4
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 443.09,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.783,
+        "lastSeen": 4.783,
+        "occurrences": 2,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 0.783,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 600.98,
+          "right": 1241.98,
+          "bottom": 747.29,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 20.98
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 600.98,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.783,
+        "lastSeen": 4.783,
+        "occurrences": 2,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 0.858,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 438.4,
+          "right": 1241.98,
+          "bottom": 584.71,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 4.71
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 438.4,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.858,
+        "lastSeen": 4.858,
+        "occurrences": 2,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 0.858,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 591.72,
+          "right": 1241.98,
+          "bottom": 738.03,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 11.72
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 591.72,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.858,
+        "lastSeen": 4.858,
+        "occurrences": 2,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 0.933,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 435.8,
+          "right": 1241.98,
+          "bottom": 582.11,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 2.11
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 435.8,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.933,
+        "lastSeen": 4.933,
+        "occurrences": 2,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "warning",
+        "time": 0.933,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 586.06,
+          "right": 1241.98,
+          "bottom": 732.38,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 6.07
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 586.06,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.933,
+        "lastSeen": 4.933,
+        "occurrences": 2,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.558,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 496.26,
+          "right": 1241.98,
+          "bottom": 638.26,
+          "width": 1121.98,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Paste a product URL.",
+        "fixHint": "Text is 1122px x 142px inside 1122px x 146px and overflows by up to 58px; increase the container height to at least ~205px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 58.26
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 496.26,
+          "width": 1121.98,
+          "height": 142
+        },
+        "firstSeen": 0.558,
+        "lastSeen": 0.558,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.558,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 688.76,
+          "right": 1200.36,
+          "bottom": 830.76,
+          "width": 1080.36,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Get a video .",
+        "fixHint": "Text is 1080px x 142px inside 1122px x 146px and overflows by up to 104px; increase the container height to at least ~251px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 104.45
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 688.76,
+          "width": 1080.36,
+          "height": 142
+        },
+        "firstSeen": 0.558,
+        "lastSeen": 0.558,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.558,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 745,
+          "top": 688.76,
+          "right": 1172.08,
+          "bottom": 830.76,
+          "width": 427.08,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "first cut",
+        "fixHint": "Text is 427px x 142px inside 1122px x 146px and overflows by up to 104px; increase the container height to at least ~251px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 104.45
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 745,
+          "y": 688.76,
+          "width": 427.08,
+          "height": 142
+        },
+        "firstSeen": 0.558,
+        "lastSeen": 0.558,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.783,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 445.09,
+          "right": 1241.98,
+          "bottom": 587.09,
+          "width": 1121.98,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Paste a product URL.",
+        "fixHint": "Text is 1122px x 142px inside 1122px x 146px and overflows by up to 7px; increase the container height to at least ~153px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 7.09
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 445.09,
+          "width": 1121.98,
+          "height": 142
+        },
+        "firstSeen": 0.783,
+        "lastSeen": 0.783,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.783,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 602.98,
+          "right": 1200.36,
+          "bottom": 744.98,
+          "width": 1080.36,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Get a video .",
+        "fixHint": "Text is 1080px x 142px inside 1122px x 146px and overflows by up to 19px; increase the container height to at least ~165px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 18.67
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 602.98,
+          "width": 1080.36,
+          "height": 142
+        },
+        "firstSeen": 0.783,
+        "lastSeen": 0.783,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.783,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 745,
+          "top": 602.98,
+          "right": 1172.08,
+          "bottom": 744.98,
+          "width": 427.08,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "first cut",
+        "fixHint": "Text is 427px x 142px inside 1122px x 146px and overflows by up to 19px; increase the container height to at least ~165px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 18.67
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 745,
+          "y": 602.98,
+          "width": 427.08,
+          "height": 142
+        },
+        "firstSeen": 0.783,
+        "lastSeen": 0.783,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.8,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 442.42,
+          "right": 1241.98,
+          "bottom": 584.42,
+          "width": 1121.98,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Paste a product URL.",
+        "fixHint": "Text is 1122px x 142px inside 1122px x 146px and overflows by up to 4px; increase the container height to at least ~151px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 4.42
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 442.42,
+          "width": 1121.98,
+          "height": 142
+        },
+        "firstSeen": 0.8,
+        "lastSeen": 0.8,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.8,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 597.81,
+          "right": 1200.36,
+          "bottom": 739.81,
+          "width": 1080.36,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Get a video .",
+        "fixHint": "Text is 1080px x 142px inside 1122px x 146px and overflows by up to 14px; increase the container height to at least ~160px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 13.5
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 597.81,
+          "width": 1080.36,
+          "height": 142
+        },
+        "firstSeen": 0.8,
+        "lastSeen": 0.8,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.8,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 745,
+          "top": 597.81,
+          "right": 1172.08,
+          "bottom": 739.81,
+          "width": 427.08,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "first cut",
+        "fixHint": "Text is 427px x 142px inside 1122px x 146px and overflows by up to 14px; increase the container height to at least ~160px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 13.5
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 745,
+          "y": 597.81,
+          "width": 427.08,
+          "height": 142
+        },
+        "firstSeen": 0.8,
+        "lastSeen": 0.8,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 0.8,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 440.42,
+          "right": 1241.98,
+          "bottom": 586.73,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 6.73
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 440.42,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.8,
+        "lastSeen": 0.8,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 0.8,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 595.81,
+          "right": 1241.98,
+          "bottom": 742.13,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 15.82
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 595.81,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "firstSeen": 0.8,
+        "lastSeen": 0.8,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.858,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 440.4,
+          "right": 1241.98,
+          "bottom": 582.4,
+          "width": 1121.98,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Paste a product URL.",
+        "fixHint": "Text is 1122px x 142px inside 1122px x 146px and overflows by up to 2px; increase the container height to at least ~149px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 1241.98,
+          "bottom": 580,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 2.4
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 440.4,
+          "width": 1121.98,
+          "height": 142
+        },
+        "firstSeen": 0.858,
+        "lastSeen": 0.858,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.858,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 593.72,
+          "right": 1200.36,
+          "bottom": 735.72,
+          "width": 1080.36,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Get a video .",
+        "fixHint": "Text is 1080px x 142px inside 1122px x 146px and overflows by up to 9px; increase the container height to at least ~156px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 9.41
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 593.72,
+          "width": 1080.36,
+          "height": 142
+        },
+        "firstSeen": 0.858,
+        "lastSeen": 0.858,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.858,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 745,
+          "top": 593.72,
+          "right": 1172.08,
+          "bottom": 735.72,
+          "width": 427.08,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "first cut",
+        "fixHint": "Text is 427px x 142px inside 1122px x 146px and overflows by up to 9px; increase the container height to at least ~156px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 9.41
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 745,
+          "y": 593.72,
+          "width": 427.08,
+          "height": 142
+        },
+        "firstSeen": 0.858,
+        "lastSeen": 0.858,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.933,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 588.06,
+          "right": 1200.36,
+          "bottom": 730.06,
+          "width": 1080.36,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Get a video .",
+        "fixHint": "Text is 1080px x 142px inside 1122px x 146px and overflows by up to 4px; increase the container height to at least ~150px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 3.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 588.06,
+          "width": 1080.36,
+          "height": 142
+        },
+        "firstSeen": 0.933,
+        "lastSeen": 0.933,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 0.933,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 745,
+          "top": 588.06,
+          "right": 1172.08,
+          "bottom": 730.06,
+          "width": 427.08,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "first cut",
+        "fixHint": "Text is 427px x 142px inside 1122px x 146px and overflows by up to 4px; increase the container height to at least ~150px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 1241.98,
+          "bottom": 726.31,
+          "width": 1121.98,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 3.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 745,
+          "y": 588.06,
+          "width": 427.08,
+          "height": 142
+        },
+        "firstSeen": 0.933,
+        "lastSeen": 0.933,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.533,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 510.98,
+          "right": 943.55,
+          "bottom": 652.98,
+          "width": 823.55,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Review the cut.",
+        "fixHint": "Text is 824px x 142px inside 869px x 146px and overflows by up to 73px; increase the container height to at least ~219px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 988.59,
+          "bottom": 580,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 72.98
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 510.98,
+          "width": 823.55,
+          "height": 142
+        },
+        "firstSeen": 4.533,
+        "lastSeen": 4.533,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 4.533,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 508.98,
+          "right": 988.59,
+          "bottom": 655.29,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 988.59,
+          "bottom": 580,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 75.29
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 508.98,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "firstSeen": 4.533,
+        "lastSeen": 4.533,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "container_overflow",
+        "severity": "info",
+        "time": 4.533,
+        "selector": "span.line",
+        "message": "Element extends outside a clipping layout container.",
+        "rect": {
+          "left": 120,
+          "top": 709.69,
+          "right": 988.59,
+          "bottom": 856,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "containerSelector": "span.mask",
+        "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 129.69
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 709.69,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "firstSeen": 4.533,
+        "lastSeen": 4.533,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.558,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 496.26,
+          "right": 943.55,
+          "bottom": 638.26,
+          "width": 823.55,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Review the cut.",
+        "fixHint": "Text is 824px x 142px inside 869px x 146px and overflows by up to 58px; increase the container height to at least ~205px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 988.59,
+          "bottom": 580,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 58.26
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 496.26,
+          "width": 823.55,
+          "height": 142
+        },
+        "firstSeen": 4.558,
+        "lastSeen": 4.558,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.558,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 688.76,
+          "right": 988.59,
+          "bottom": 830.76,
+          "width": 868.59,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Export the .",
+        "fixHint": "Text is 869px x 142px inside 869px x 146px and overflows by up to 104px; increase the container height to at least ~251px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 104.45
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 688.76,
+          "width": 868.59,
+          "height": 142
+        },
+        "firstSeen": 4.558,
+        "lastSeen": 4.558,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.558,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 707.53,
+          "top": 688.76,
+          "right": 960.31,
+          "bottom": 830.76,
+          "width": 252.78,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "MP4",
+        "fixHint": "Text is 253px x 142px inside 869px x 146px and overflows by up to 104px; increase the container height to at least ~251px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 104.45
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 707.53,
+          "y": 688.76,
+          "width": 252.78,
+          "height": 142
+        },
+        "firstSeen": 4.558,
+        "lastSeen": 4.558,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.783,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 445.09,
+          "right": 943.55,
+          "bottom": 587.09,
+          "width": 823.55,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Review the cut.",
+        "fixHint": "Text is 824px x 142px inside 869px x 146px and overflows by up to 7px; increase the container height to at least ~153px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 988.59,
+          "bottom": 580,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 7.09
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 445.09,
+          "width": 823.55,
+          "height": 142
+        },
+        "firstSeen": 4.783,
+        "lastSeen": 4.783,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.783,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 602.98,
+          "right": 988.59,
+          "bottom": 744.98,
+          "width": 868.59,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Export the .",
+        "fixHint": "Text is 869px x 142px inside 869px x 146px and overflows by up to 19px; increase the container height to at least ~165px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 18.67
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 602.98,
+          "width": 868.59,
+          "height": 142
+        },
+        "firstSeen": 4.783,
+        "lastSeen": 4.783,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.783,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 707.53,
+          "top": 602.98,
+          "right": 960.31,
+          "bottom": 744.98,
+          "width": 252.78,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "MP4",
+        "fixHint": "Text is 253px x 142px inside 869px x 146px and overflows by up to 19px; increase the container height to at least ~165px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 18.67
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 707.53,
+          "y": 602.98,
+          "width": 252.78,
+          "height": 142
+        },
+        "firstSeen": 4.783,
+        "lastSeen": 4.783,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.858,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 440.4,
+          "right": 943.55,
+          "bottom": 582.4,
+          "width": 823.55,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Review the cut.",
+        "fixHint": "Text is 824px x 142px inside 869px x 146px and overflows by up to 2px; increase the container height to at least ~149px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 433.69,
+          "right": 988.59,
+          "bottom": 580,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 2.4
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 440.4,
+          "width": 823.55,
+          "height": 142
+        },
+        "firstSeen": 4.858,
+        "lastSeen": 4.858,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.858,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 593.72,
+          "right": 988.59,
+          "bottom": 735.72,
+          "width": 868.59,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Export the .",
+        "fixHint": "Text is 869px x 142px inside 869px x 146px and overflows by up to 9px; increase the container height to at least ~156px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 9.41
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 593.72,
+          "width": 868.59,
+          "height": 142
+        },
+        "firstSeen": 4.858,
+        "lastSeen": 4.858,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.858,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 707.53,
+          "top": 593.72,
+          "right": 960.31,
+          "bottom": 735.72,
+          "width": 252.78,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "MP4",
+        "fixHint": "Text is 253px x 142px inside 869px x 146px and overflows by up to 9px; increase the container height to at least ~156px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 9.41
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 707.53,
+          "y": 593.72,
+          "width": 252.78,
+          "height": 142
+        },
+        "firstSeen": 4.858,
+        "lastSeen": 4.858,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.933,
+        "selector": "span.line",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 120,
+          "top": 588.06,
+          "right": 988.59,
+          "bottom": 730.06,
+          "width": 868.59,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "Export the .",
+        "fixHint": "Text is 869px x 142px inside 869px x 146px and overflows by up to 4px; increase the container height to at least ~150px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 3.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 120,
+          "y": 588.06,
+          "width": 868.59,
+          "height": 142
+        },
+        "firstSeen": 4.933,
+        "lastSeen": 4.933,
+        "occurrences": 1,
+        "heldMs": 0
+      },
+      {
+        "code": "text_box_overflow",
+        "severity": "info",
+        "time": 4.933,
+        "selector": "span.accent",
+        "message": "Text extends outside its nearest visual/container box.",
+        "rect": {
+          "left": 707.53,
+          "top": 588.06,
+          "right": 960.31,
+          "bottom": 730.06,
+          "width": 252.78,
+          "height": 142
+        },
+        "containerSelector": "span.mask",
+        "text": "MP4",
+        "fixHint": "Text is 253px x 142px inside 869px x 146px and overflows by up to 4px; increase the container height to at least ~150px, or allow wrapping with max-width/fitTextFontSize.",
+        "containerRect": {
+          "left": 120,
+          "top": 580,
+          "right": 988.59,
+          "bottom": 726.31,
+          "width": 868.59,
+          "height": 146.31
+        },
+        "overflow": {
+          "bottom": 3.75
+        },
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 707.53,
+          "y": 588.06,
+          "width": 252.78,
+          "height": 142
+        },
+        "firstSeen": 4.933,
+        "lastSeen": 4.933,
+        "occurrences": 1,
+        "heldMs": 0
+      }
+    ],
+    "duration": 8,
+    "samples": [
+      0,
+      0.167,
+      0.267,
+      0.333,
+      0.558,
+      0.783,
+      0.8,
+      0.858,
+      0.933,
+      1.153,
+      1.333,
+      1.373,
+      1.867,
+      2.4,
+      2.666,
+      2.933,
+      3.467,
+      3.958,
+      3.979,
+      4,
+      4.167,
+      4.333,
+      4.533,
+      4.558,
+      4.783,
+      4.858,
+      4.933,
+      5.067,
+      5.153,
+      5.373,
+      5.6,
+      6.133,
+      6.667,
+      6.687,
+      7.2,
+      7.733,
+      8
+    ],
+    "transitionSamples": [
+      0,
+      0.167,
+      0.333,
+      0.558,
+      0.783,
+      0.858,
+      0.933,
+      1.153,
+      1.373,
+      2.666,
+      3.958,
+      3.979,
+      4,
+      4.167,
+      4.333,
+      4.558,
+      4.783,
+      4.858,
+      4.933,
+      5.153,
+      5.373,
+      6.687,
+      8
+    ],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 38,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      0,
+      1.153,
+      3.979,
+      5.067,
+      8
+    ],
+    "checked": 13,
+    "passed": 13
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  },
+  "_meta": {
+    "version": "0.8.82",
+    "latestVersion": "0.8.82",
+    "updateAvailable": false
+  }
+}

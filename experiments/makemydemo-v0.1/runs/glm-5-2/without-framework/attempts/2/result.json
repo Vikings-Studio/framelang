@@ -1,0 +1,17 @@
+{
+  "attempt": 2,
+  "status": "Check rejected",
+  "detail": "The raw HTML failed its first sampled HyperFrames check.",
+  "tokens": {
+    "total": 12926,
+    "input": 2540,
+    "output": 1490,
+    "reasoning": 8886,
+    "cache": {
+      "read": 10,
+      "write": 0
+    }
+  },
+  "cost": 0.049213,
+  "formatViolation": false
+}

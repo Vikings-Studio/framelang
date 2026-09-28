@@ -1,0 +1,8 @@
+{
+  "attempt": 3,
+  "status": "Harness deadline",
+  "detail": "No answer before the 480-second harness deadline.",
+  "tokens": null,
+  "cost": null,
+  "formatViolation": false
+}

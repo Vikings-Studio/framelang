@@ -1,0 +1,236 @@
+{
+  "language": "framelang/v1",
+  "fps": 24,
+  "profiles": [
+    "landscape-1920x1080",
+    "portrait-1080x1920"
+  ],
+  "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+  "assetsRef": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "seed": 47,
+  "scenes": [
+    {
+      "id": "s1",
+      "role": "hook",
+      "blueprint": "product-process/v1",
+      "durationFrames": 96,
+      "essential": [
+        "headline"
+      ],
+      "content": [
+        {
+          "id": "eyebrow",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "label",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "MAKEMYDEMO.COM / 01"
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "importance": "essential",
+          "role": "headline",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "segments": [
+            {
+              "text": "Paste a public product URL.",
+              "breakAfter": true
+            },
+            {
+              "text": "Get a "
+            },
+            {
+              "text": "video first cut.",
+              "tone": "accent"
+            }
+          ]
+        },
+        {
+          "id": "subline",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "body",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "One public link starts your demo video."
+        }
+      ],
+      "layouts": {
+        "default": {
+          "type": "stack",
+          "direction": "column",
+          "gap": "comfortable",
+          "children": [
+            "eyebrow",
+            "headline",
+            "subline"
+          ]
+        }
+      },
+      "initialState": "opening",
+      "resolvedState": "resolved",
+      "states": [
+        {
+          "id": "opening",
+          "visible": [
+            "eyebrow"
+          ]
+        },
+        {
+          "id": "resolved",
+          "visible": [
+            "eyebrow",
+            "headline",
+            "subline"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "atFrame": 8,
+          "durationFrames": 18,
+          "effect": "appear",
+          "target": "headline",
+          "preset": "slide"
+        },
+        {
+          "atFrame": 34,
+          "durationFrames": 14,
+          "effect": "appear",
+          "target": "subline",
+          "preset": "fade"
+        }
+      ],
+      "design": {
+        "alignment": "left",
+        "scale": "display",
+        "decoration": "grid-glow"
+      }
+    },
+    {
+      "id": "s2",
+      "role": "benefit_highlight",
+      "blueprint": "product-process/v1",
+      "durationFrames": 96,
+      "essential": [
+        "headline",
+        "process"
+      ],
+      "content": [
+        {
+          "id": "eyebrow",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "label",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "FROM URL TO FIRST CUT / 02"
+        },
+        {
+          "id": "headline",
+          "kind": "text",
+          "importance": "essential",
+          "role": "headline",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "segments": [
+            {
+              "text": "Review the cut.",
+              "breakAfter": true
+            },
+            {
+              "text": "Export the "
+            },
+            {
+              "text": "MP4.",
+              "tone": "accent"
+            }
+          ]
+        },
+        {
+          "id": "process",
+          "kind": "flow",
+          "importance": "essential",
+          "steps": [
+            "AI script",
+            "Product visuals",
+            "Music"
+          ],
+          "outcome": "Video first cut"
+        },
+        {
+          "id": "subline",
+          "kind": "text",
+          "importance": "supporting",
+          "role": "body",
+          "language": "en",
+          "fit": "wrapThenShrink",
+          "text": "AI script, product visuals, and music come together for your review."
+        }
+      ],
+      "layouts": {
+        "default": {
+          "type": "stack",
+          "direction": "column",
+          "gap": "comfortable",
+          "children": [
+            "eyebrow",
+            "headline",
+            "process",
+            "subline"
+          ]
+        }
+      },
+      "initialState": "opening",
+      "resolvedState": "resolved",
+      "states": [
+        {
+          "id": "opening",
+          "visible": [
+            "eyebrow"
+          ]
+        },
+        {
+          "id": "resolved",
+          "visible": [
+            "eyebrow",
+            "headline",
+            "process",
+            "subline"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "atFrame": 8,
+          "durationFrames": 16,
+          "effect": "appear",
+          "target": "headline",
+          "preset": "pop"
+        },
+        {
+          "atFrame": 28,
+          "durationFrames": 28,
+          "effect": "appear",
+          "target": "process",
+          "preset": "stagger"
+        },
+        {
+          "atFrame": 60,
+          "durationFrames": 12,
+          "effect": "appear",
+          "target": "subline",
+          "preset": "rise"
+        }
+      ],
+      "design": {
+        "alignment": "left",
+        "scale": "display",
+        "decoration": "grid-glow"
+      }
+    }
+  ]
+}

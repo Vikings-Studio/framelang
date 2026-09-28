@@ -1,0 +1,7 @@
+{
+  "sourceAttempt": 2,
+  "repair": "Removed two GSAP letter-spacing tweens that HyperFrames rejects because layout snapping stutters.",
+  "modelInferenceCost": 0,
+  "modelAttemptSuccess": false,
+  "video": "runs/glm-5-3/without-framework/repair-preview/video.mp4"
+}
