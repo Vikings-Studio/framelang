@@ -1,0 +1,39 @@
+{
+  "language": "framelang/v1",
+  "pilot": true,
+  "inputHash": "sha256:f3babc4452f64f18521f307730994993432adef44b987c7d5b2e33728add8c66",
+  "expandedHash": "sha256:8d6cb8f2cdc944279aad6b197c8a962f305e4b43da4dcbd56f0868bf062c074c",
+  "recipe": {
+    "id": "makemydemo-workflow/v1",
+    "inputHash": "sha256:f3babc4452f64f18521f307730994993432adef44b987c7d5b2e33728add8c66",
+    "templateHash": "sha256:a571559e3c5307f196c11511d32648ed444a757f60b06e5903cee96504ddb1f6"
+  },
+  "bundleRefs": {
+    "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+    "assetsRef": "sha256:2eb65bb06440854bb635870c32d669e9350ec610936cd99e7d6453ea415258c5"
+  },
+  "outputs": {
+    "landscape-1920x1080": {
+      "directory": "landscape-1920x1080",
+      "htmlHash": "sha256:eaa8f8f01ef511ffe6e2da811f90db6e979bf4b8d70cb82b93d0fea289ca813e",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "source-mark.svg": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812",
+        "delivery-mark.svg": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812"
+      }
+    },
+    "portrait-1080x1920": {
+      "directory": "portrait-1080x1920",
+      "htmlHash": "sha256:551aeddd263a3bc7f68231d00a1ec68bbbde1417ac544595d770d764745fcd50",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "source-mark.svg": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812",
+        "delivery-mark.svg": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false
+}

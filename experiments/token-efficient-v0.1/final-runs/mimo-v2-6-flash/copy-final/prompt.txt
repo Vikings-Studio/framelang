@@ -1,0 +1,6 @@
+Write only three short factual MakeMyDemo.com lines. Return exactly one JSON object with keys "recipe":"makemydemo-workflow/v1", "hook", "assembly", "handoff"; no other keys or markdown. The compiler adds these fixed following lines: "One first cut.", "A first cut.", and "Export MP4." respectively. Therefore hook (max 32 chars) only says to paste a public product URL; assembly (max 36 chars) only lists script, product visuals, and music; handoff (max 30 chars) only says to review the cut. Do not repeat the following lines. Do not invent claims or URLs. Example shape: {
+  "recipe": "makemydemo-workflow/v1",
+  "hook": "One public URL.",
+  "assembly": "Script. Visuals. Music.",
+  "handoff": "Review the cut."
+}

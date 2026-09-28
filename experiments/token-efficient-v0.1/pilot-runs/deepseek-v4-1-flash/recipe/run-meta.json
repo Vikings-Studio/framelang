@@ -1,0 +1,20 @@
+{
+  "model": "opencode-go/deepseek-v4.1-flash",
+  "arm": "recipe",
+  "deadlineMs": 300000,
+  "exitCode": 0,
+  "signal": null,
+  "durationMs": 14334,
+  "tokens": {
+    "total": 3223,
+    "input": 687,
+    "output": 57,
+    "reasoning": 687,
+    "cache": {
+      "read": 1792,
+      "write": 0
+    }
+  },
+  "cost": 0.000554826,
+  "outputBytes": 252
+}

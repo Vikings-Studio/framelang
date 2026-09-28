@@ -240,8 +240,9 @@ export function validate(program, bundle) {
         steps.forEach((step, stepIndex) => plainText(step, `${na}.steps[${stepIndex}]`, 28));
         plainText(node.outcome, `${na}.outcome`, 36);
       } else if (node.kind === 'inputCard') {
-        keys(node, ['id', 'kind', 'importance', 'placeholder'], ['id', 'kind', 'importance', 'placeholder'], na);
+        keys(node, ['id', 'kind', 'importance', 'label', 'placeholder'], ['id', 'kind', 'importance', 'placeholder'], na);
         if (scene.blueprint !== 'workflow-demo/v1') fail('syntax.inputCard', na, 'input card requires workflow-demo/v1');
+        if (node.label !== undefined) plainText(node.label, `${na}.label`, 36);
         plainText(node.placeholder, `${na}.placeholder`, 58);
       } else if (node.kind === 'videoArtifact') {
         keys(node, ['id', 'kind', 'importance', 'title', 'action', 'phase'], ['id', 'kind', 'importance', 'title', 'action', 'phase'], na);
@@ -360,7 +361,7 @@ function renderFlow(node, stagger) {
   return `<div class="fl-flow-steps">${steps}</div><div class="fl-flow-arrow fl-flow-item" data-flow-order="${node.steps.length + 1}"${hidden} aria-hidden="true">→</div><div class="fl-flow-outcome fl-flow-item" data-flow-order="${node.steps.length + 2}"${hidden}>${escapeHtml(node.outcome)}</div>`;
 }
 function renderInputCard(node) {
-  return `<div class="fl-input-top"><div class="fl-input-dots"><i></i><i></i><i></i></div><span>PUBLIC LINK / INPUT</span><span class="fl-input-index">01</span></div><div class="fl-input-label">PASTE A PUBLIC PRODUCT URL</div><div class="fl-input-field"><span class="fl-input-link">${escapeHtml(node.placeholder)}</span><span class="fl-input-caret" aria-hidden="true"></span><span class="fl-input-go" aria-hidden="true">↗</span></div><div class="fl-input-foot"><span>URL</span><span class="fl-input-rule"></span><span>FIRST CUT</span></div>`;
+  return `<div class="fl-input-top"><div class="fl-input-dots"><i></i><i></i><i></i></div><span>PUBLIC LINK / INPUT</span><span class="fl-input-index">01</span></div><div class="fl-input-label">${escapeHtml(node.label || 'PASTE A PUBLIC PRODUCT URL')}</div><div class="fl-input-field"><span class="fl-input-link">${escapeHtml(node.placeholder)}</span><span class="fl-input-caret" aria-hidden="true"></span><span class="fl-input-go" aria-hidden="true">↗</span></div><div class="fl-input-foot"><span>URL</span><span class="fl-input-rule"></span><span>FIRST CUT</span></div>`;
 }
 function renderVideoArtifact(node, reveal) {
   const hidden = reveal ? ' style="opacity:0"' : '';
@@ -368,25 +369,26 @@ function renderVideoArtifact(node, reveal) {
   const foot = node.phase === 'export' ? 'REVIEW THE CUT' : 'ASSEMBLING THE CUT';
   return `<div class="fl-art-top"><span>VIDEO / FIRST CUT</span><span class="fl-art-indicator"><i></i> ${status}</span></div><div class="fl-art-body"><div class="fl-art-screen"><div class="fl-art-frame fl-art-frame-a"${hidden}><div class="fl-art-orbit" data-layout-allow-overflow></div></div><div class="fl-art-frame fl-art-frame-b"${hidden}><div class="fl-art-sun" data-layout-allow-overflow></div></div><div class="fl-art-frame fl-art-frame-c"${hidden}><div class="fl-art-bars"></div></div><div class="fl-art-play"${hidden} aria-hidden="true">▶</div><div class="fl-art-screen-label">${escapeHtml(node.title)}</div></div><div class="fl-art-timeline"${hidden}><div class="fl-art-ticks"><i></i><i></i><i></i><i></i><i></i></div><div class="fl-art-playhead"></div></div></div><div class="fl-art-bottom"><span>${foot}</span><span class="fl-art-action${node.phase === 'export' ? ' fl-art-action-live' : ''}"${hidden}>${escapeHtml(node.action)} <b>↗</b></span></div>`;
 }
-function textStyle(node, profile, brand) {
-  if (!node.style) return '';
+function textStyle(node, profile, brand, rect) {
   const css = [];
-  if (node.style.align) css.push(`text-align:${node.style.align}`);
-  if (node.style.weight) css.push(`font-weight:${node.style.weight}`);
-  if (node.style.color) css.push(`color:${cssColor(node.style.color, brand)}`);
-  if (node.style.size) {
+  if (node.style?.align) css.push(`text-align:${node.style.align}`);
+  if (node.style?.weight) css.push(`font-weight:${node.style.weight}`);
+  if (node.style?.color) css.push(`color:${cssColor(node.style.color, brand)}`);
+  const firstLine = node.segments?.[0]?.text || node.text || '';
+  const size = node.style?.size || (node.fit === 'wrapThenShrink' && node.role === 'headline' && rect && rect[2] <= 550 && firstLine.length > 20 ? 'compact' : undefined);
+  if (size) {
     const base = node.role === 'headline' ? PROFILE[profile].heading : node.role === 'body' ? PROFILE[profile].body : Math.round(PROFILE[profile].body * .75);
-    const factor = { compact: .75, base: 1, large: 1.25, hero: 1.5 }[node.style.size];
+    const factor = { compact: .75, base: 1, large: 1.25, hero: 1.5 }[size];
     css.push(`font-size:${Math.round(base * factor)}px`);
   }
   return css.join(';');
 }
-function renderTree(tree, scene, profile, nodes, initial, brand) {
+function renderTree(tree, scene, profile, nodes, initial, brand, rect) {
   if (typeof tree === 'string') {
     const node = nodes.get(tree);
     const id = cssId(scene, tree);
     const hidden = initial.includes(tree) ? '' : ' style="opacity:0"';
-    if (node.kind === 'text') { const style = [initial.includes(tree) ? '' : 'opacity:0', textStyle(node, profile, brand)].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-text fl-${node.role}"${style ? ` style="${style}"` : ''}>${renderText(node)}</div>`; }
+    if (node.kind === 'text') { const style = [initial.includes(tree) ? '' : 'opacity:0', textStyle(node, profile, brand, rect)].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-text fl-${node.role}"${style ? ` style="${style}"` : ''}>${renderText(node)}</div>`; }
     if (node.kind === 'flow') return `<div id="${id}" class="fl-node fl-flow"${hidden}>${renderFlow(node, scene.events.some(event => event.target === node.id && event.preset === 'stagger'))}</div>`;
     if (node.kind === 'inputCard') return `<div id="${id}" class="fl-node fl-input-card"${hidden}>${renderInputCard(node)}</div>`;
     if (node.kind === 'videoArtifact') return `<div id="${id}" class="fl-node fl-artifact fl-artifact-${node.phase}"${hidden}>${renderVideoArtifact(node, scene.events.some(event => event.target === node.id && event.preset === 'reveal'))}</div>`;
@@ -399,7 +401,7 @@ function renderTree(tree, scene, profile, nodes, initial, brand) {
     const [a, b] = tree.ratio.split(':').map(n => Number(n) / 10);
     return `<div class="fl-layout fl-split" style="grid-template-columns:${a}fr ${b}fr">${renderTree(tree.left, scene, profile, nodes, initial, brand)}${renderTree(tree.right, scene, profile, nodes, initial, brand)}</div>`;
   }
-  if (tree.type === 'canvas') return `<div class="fl-layout fl-canvas">${tree.children.map(placement => { const [x, y, width, height] = placement.rect; return `<div class="fl-placement fl-placement-${placement.align || 'start'}" style="left:${x / 10}%;top:${y / 10}%;width:${width / 10}%;height:${height / 10}%;z-index:${placement.layer || 0}">${renderTree(placement.node, scene, profile, nodes, initial, brand)}</div>`; }).join('')}</div>`;
+  if (tree.type === 'canvas') return `<div class="fl-layout fl-canvas">${tree.children.map(placement => { const [x, y, width, height] = placement.rect; return `<div class="fl-placement fl-placement-${placement.align || 'start'}" style="left:${x / 10}%;top:${y / 10}%;width:${width / 10}%;height:${height / 10}%;z-index:${placement.layer || 0}">${renderTree(placement.node, scene, profile, nodes, initial, brand, placement.rect)}</div>`; }).join('')}</div>`;
   return `<div class="fl-layout fl-overlay">${renderTree(tree.base, scene, profile, nodes, initial, brand)}${tree.attachments.map(a => `<div class="fl-attachment">${renderTree(a.node, scene, profile, nodes, initial, brand)}</div>`).join('')}</div>`;
 }
 
@@ -510,8 +512,32 @@ function verifySvg(bytes, location) {
 
 export async function compile(programPath, outDir) {
   const source = await readFile(programPath, 'utf8');
-  const program = JSON.parse(source);
-  const inputDir = path.dirname(path.resolve(programPath));
+  const authored = JSON.parse(source);
+  let program = authored;
+  let inputDir = path.dirname(path.resolve(programPath));
+  let recipe = null;
+  if (authored.recipe !== undefined && authored.language === undefined) {
+    keys(authored, ['recipe', 'hook', 'assembly', 'handoff'], ['recipe', 'hook', 'assembly', 'handoff'], '$');
+    if (authored.recipe !== 'makemydemo-workflow/v1') fail('syntax.recipe', '$.recipe', 'unknown vetted recipe');
+    const fields = ['hook', 'assembly', 'handoff'];
+    const limits = { hook: 32, assembly: 36, handoff: 30 };
+    for (const field of fields) plainText(authored[field], `$.${field}`, limits[field]);
+    if (!/\bpublic\b/i.test(authored.hook) || !/\burl\b/i.test(authored.hook)) fail('semantic.copy', '$.hook', 'hook must identify a public URL');
+    if (!/script/i.test(authored.assembly) || !/visual/i.test(authored.assembly) || !/music/i.test(authored.assembly)) fail('semantic.copy', '$.assembly', 'assembly must name script, visuals, and music');
+    if (!/review/i.test(authored.handoff) || /export|mp4/i.test(authored.handoff)) fail('semantic.copy', '$.handoff', 'handoff must cover review; the fixed accent covers MP4 export');
+    inputDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'examples', 'makemydemo-cinematic');
+    program = JSON.parse(await readFile(path.join(inputDir, 'program.json'), 'utf8'));
+    for (const [sceneId, lead] of [
+      ['source', 'hook'],
+      ['assembly', 'assembly'],
+      ['delivery', 'handoff'],
+    ]) {
+      const scene = program.scenes.find(item => item.id === sceneId);
+      const headline = scene.content.find(item => item.id === 'headline');
+      headline.segments[0].text = authored[lead];
+    }
+    recipe = { id: authored.recipe, inputHash: hash(canonical(authored)), templateHash: hash(canonical(JSON.parse(await readFile(path.join(inputDir, 'program.json'), 'utf8')))) };
+  }
   const bundlePath = path.join(inputDir, 'bundle.json');
   const bundle = JSON.parse(await readFile(bundlePath, 'utf8'));
   validate(program, bundle);
@@ -542,7 +568,7 @@ export async function compile(programPath, outDir) {
       .filter(node => node.kind === 'productState' || node.kind === 'svg').map(node => `${scene.id}-${node.id}.svg`))];
     for (const file of stagedFiles) outputs[profile].assetHashes[file] = hash(await readFile(path.join(target, 'assets', file)));
   }
-  const report = { language: program.language, pilot: true, inputHash: hash(canonical(program)), bundleRefs: bundleRefs(bundle), outputs, checked: false, degraded: false };
+  const report = { language: program.language, pilot: true, inputHash: hash(canonical(authored)), expandedHash: hash(canonical(program)), recipe, bundleRefs: bundleRefs(bundle), outputs, checked: false, degraded: false };
   await writeFile(path.join(outDir, 'compile-report.json'), `${JSON.stringify(report, null, 2)}\n`);
   return report;
 }

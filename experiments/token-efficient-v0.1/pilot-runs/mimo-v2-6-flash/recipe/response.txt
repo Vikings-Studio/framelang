@@ -1,0 +1,1 @@
+{"language":"framelang/recipe-v1","recipe":"makemydemo-workflow/v1","copy":{"hook":"Paste a public product URL.","hookAccent":"Input.","assembly":"AI script. Product visuals. Music.","assemblyAccent":"First cut.","handoff":"Review and export.","handoffAccent":"MP4."},"steps":["AI-written script","Product visuals","Music"]}

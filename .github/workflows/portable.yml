@@ -33,7 +33,9 @@ jobs:
         env:
           HYPERFRAMES_BROWSER_PATH: ${{ runner.os == 'Linux' && steps.chrome.outputs.chrome-path || '' }}
       - run: npm run cinematic:compile
+      - run: npm run recipe:compile
       - run: npm run cinematic:check
+      - run: npm run recipe:check
       - run: npm run cinematic:render
         env:
           HYPERFRAMES_BROWSER_PATH: ${{ runner.os == 'Linux' && steps.chrome.outputs.chrome-path || '' }}

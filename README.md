@@ -16,6 +16,10 @@ unsupported syntax. The RFC's full geometry proof, video clips, sync anchors,
 and production integration are future work. A passing pilot render is evidence
 about this subset, not proof of the full language guarantee.
 
+For routine generation, a [versioned compact recipe](spec/V0_1_RECIPES.md)
+can expand into the reviewed cinematic scene. The model writes three lead lines
+instead of repeating layouts, hashes, assets, and animation boilerplate.
+
 ## Requirements
 
 - Node.js 22 or newer
@@ -43,6 +47,9 @@ npm run rich:render
 npm run cinematic:compile
 npm run cinematic:check
 npm run cinematic:render
+npm run recipe:compile
+npm run recipe:check
+npm run recipe:render
 ```
 
 The example outputs are written under `out/` and are ignored by Git. To compile
@@ -71,6 +78,11 @@ included trial artifacts are pilot observations, not a statistical claim. The
 MakeMyDemo comparison records raw responses, check and render logs, token counts,
 and the admitted videos. GLM 5.3 is open-weight under its own custom license;
 the other four selected releases have MIT or Apache-2.0 weight licenses.
+
+The later [token-efficient recipe trial](experiments/token-efficient-v0.1/RESULTS.md)
+records 15 local model calls, including rejected attempts, a matched
+full-scene serialization comparison, and a reviewed four-field MiMo example.
+It keeps model inference cost separate from rendering and human review.
 
 ## Naming
 

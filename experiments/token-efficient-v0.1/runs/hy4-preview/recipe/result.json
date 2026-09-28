@@ -1,0 +1,22 @@
+{
+  "model": "opencode-go/hy4-preview",
+  "arm": "recipe",
+  "deadlineMs": 300000,
+  "exitCode": 0,
+  "signal": null,
+  "durationMs": 72256,
+  "tokens": {
+    "total": 5874,
+    "input": 2394,
+    "output": 514,
+    "reasoning": 2966,
+    "cache": {
+      "read": 0,
+      "write": 0
+    }
+  },
+  "cost": 0.010700076,
+  "outputBytes": 1572,
+  "status": "Compile rejected",
+  "formatViolation": false
+}

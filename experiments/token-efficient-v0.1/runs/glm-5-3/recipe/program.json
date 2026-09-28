@@ -1,0 +1,152 @@
+{
+  "language": "framelang/recipe-v1",
+  "recipe": "makemydemo-workflow/v1",
+  "format": {
+    "duration": 11.5,
+    "orientations": [
+      "landscape",
+      "portrait"
+    ],
+    "sceneCount": 3,
+    "story": [
+      "input",
+      "assembly",
+      "handoff"
+    ]
+  },
+  "copy": {
+    "hook": "Paste one public product URL.",
+    "assembly": "AI-written script. Product visuals. Music.",
+    "handoff": "Review the cut. Export an MP4."
+  },
+  "scenes": [
+    {
+      "id": "scene-input",
+      "role": "input",
+      "duration": 3.5,
+      "workflowLabel": "input",
+      "accent": "hook",
+      "layout": {
+        "landscape": {
+          "headline": "center",
+          "body": "below-headline",
+          "visual": "lower-third"
+        },
+        "portrait": {
+          "headline": "upper-third",
+          "body": "below-headline",
+          "visual": "center"
+        }
+      },
+      "headline": "Paste one public product URL.",
+      "body": "A visitor starts with one public product URL.",
+      "events": [
+        {
+          "t": 0,
+          "type": "focus",
+          "target": "input-field"
+        },
+        {
+          "t": 1,
+          "type": "type",
+          "target": "input-field",
+          "text": "‹public product URL›"
+        },
+        {
+          "t": 2.5,
+          "type": "submit",
+          "target": "input-field"
+        }
+      ],
+      "assets": [
+        "asset:input-field"
+      ]
+    },
+    {
+      "id": "scene-assembly",
+      "role": "assembly",
+      "duration": 5,
+      "workflowLabel": "assembly",
+      "accent": "assembly",
+      "layout": {
+        "landscape": {
+          "headline": "upper-third",
+          "body": "below-headline",
+          "visual": "timeline-wide"
+        },
+        "portrait": {
+          "headline": "upper-third",
+          "body": "below-headline",
+          "visual": "timeline-stacked"
+        }
+      },
+      "headline": "AI-written script. Product visuals. Music.",
+      "body": "The first cut is assembled from an AI-written script, product visuals, and music.",
+      "events": [
+        {
+          "t": 0,
+          "type": "generate",
+          "target": "script-track"
+        },
+        {
+          "t": 1.6,
+          "type": "reveal",
+          "target": "visual-track"
+        },
+        {
+          "t": 3.2,
+          "type": "reveal",
+          "target": "music-track"
+        },
+        {
+          "t": 4.2,
+          "type": "assemble",
+          "target": "first-cut"
+        }
+      ],
+      "assets": [
+        "asset:script-track",
+        "asset:visual-track",
+        "asset:music-track",
+        "asset:first-cut"
+      ]
+    },
+    {
+      "id": "scene-handoff",
+      "role": "handoff",
+      "duration": 3,
+      "workflowLabel": "handoff",
+      "accent": "handoff",
+      "layout": {
+        "landscape": {
+          "headline": "center",
+          "body": "below-headline",
+          "visual": "right-panel"
+        },
+        "portrait": {
+          "headline": "upper-third",
+          "body": "below-headline",
+          "visual": "center"
+        }
+      },
+      "headline": "Review the cut. Export an MP4.",
+      "body": "The user reviews the first cut and exports an MP4.",
+      "events": [
+        {
+          "t": 0,
+          "type": "play",
+          "target": "preview-player"
+        },
+        {
+          "t": 1.5,
+          "type": "export",
+          "target": "mp4-export"
+        }
+      ],
+      "assets": [
+        "asset:preview-player",
+        "asset:mp4-export"
+      ]
+    }
+  ]
+}
