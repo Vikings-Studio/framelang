@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, copyFile, rm } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -47,6 +47,7 @@ for (const model of models) {
   for (const [arm, field] of [['with-framework', 'withFramework'], ['without-framework', 'withoutFramework']]) {
     const sourceDir = path.join(rawRoot, model.id);
     const targetDir = path.join(here, 'runs', model.id, arm);
+    await rm(targetDir, { recursive: true, force: true });
     await mkdir(targetDir, { recursive: true });
     const raw = await readFile(path.join(sourceDir, `${arm}.raw.txt`), 'utf8');
     const meta = JSON.parse(await readFile(path.join(sourceDir, `${arm}.meta.json`), 'utf8'));
@@ -54,8 +55,11 @@ for (const model of models) {
     await copyFile(path.join(sourceDir, `${arm}.meta.json`), path.join(targetDir, 'run-meta.json'));
     await copyFile(path.join(sourceDir, `${arm}.events.jsonl`), path.join(targetDir, 'opencode-events.jsonl'));
     await copyFile(path.join(sourceDir, `${arm}.stderr.txt`), path.join(targetDir, 'opencode-stderr.txt'));
-    const response = cleanTransport(raw);
-    const result = { status: 'failed', detail: '', video: undefined, tokens: meta.tokens ?? null, cost: meta.cost ?? null };
+    const transported = cleanTransport(raw);
+    const fence = transported.match(/^```(?:json|html)?\s*\n([\s\S]*?)\n```$/i);
+    const response = fence ? fence[1].trim() : transported;
+    if (fence) await writeFile(path.join(targetDir, 'unwrapped-response.txt'), `${response}\n`);
+    const result = { status: 'failed', detail: '', video: undefined, tokens: meta.tokens ?? null, cost: meta.cost ?? null, formatViolation: Boolean(fence) };
     if (!response) {
       result.status = meta.timedOut ? 'Harness deadline' : 'No response';
       result.detail = meta.timedOut ? `No answer before the ${Math.round(meta.durationMs / 1000)}-second harness deadline; inspect the OpenCode event and stderr records.` : 'OpenCode emitted no answer; inspect the OpenCode event and stderr records.';
@@ -89,7 +93,8 @@ for (const model of models) {
               result.status = 'Render failed'; result.detail = 'Both profile checks passed, but rendering failed.';
             } else {
               result.status = 'Rendered'; result.detail = 'First response compiled, passed sampled checks, and rendered in landscape and portrait.';
-              result.video = path.join(targetDir, 'compiled/landscape-1920x1080/video.mp4');
+              result.video = path.relative(here, path.join(targetDir, 'compiled/landscape-1920x1080/video.mp4')).replaceAll('\\', '/');
+              result.portraitVideo = path.relative(here, path.join(targetDir, 'compiled/portrait-1080x1920/video.mp4')).replaceAll('\\', '/');
             }
           }
         }
@@ -105,15 +110,21 @@ for (const model of models) {
         await copyFile(font, path.join(scene, 'assets/Inter.ttf'));
         const checked = await run([hf, 'check', '--json', '--samples=15', '--at-transitions', scene], scene);
         await writeFile(path.join(targetDir, 'check.log'), checked.stdout + checked.stderr);
-        if (checked.code !== 0) { result.status = 'Check rejected'; result.detail = 'The raw HyperFrames HTML failed its first sampled check.'; }
+        let checkReport = null;
+        try { checkReport = JSON.parse(checked.stdout.slice(checked.stdout.indexOf('{'), checked.stdout.lastIndexOf('}') + 1)); } catch { /* missing report is a failure */ }
+        if (checked.code !== 0 || checkReport?.ok !== true || !checkReport.layout?.samples?.length) { result.status = 'Check rejected'; result.detail = 'The raw HyperFrames HTML failed its first sampled check.'; }
         else {
           const video = path.join(scene, 'video.mp4');
           const rendered = await run([hf, 'render', '--quality', 'draft', '--output', video, scene], scene);
           await writeFile(path.join(targetDir, 'render.log'), rendered.stdout + rendered.stderr);
           if (rendered.code !== 0) { result.status = 'Render failed'; result.detail = 'Raw HTML passed its sampled check, but rendering failed.'; }
-          else { result.status = 'Rendered'; result.detail = 'First response passed sampled HyperFrames checks and rendered in landscape.'; result.video = video; }
+          else { result.status = 'Rendered'; result.detail = 'First response passed sampled HyperFrames checks and rendered in landscape.'; result.video = path.relative(here, video).replaceAll('\\', '/'); }
         }
       }
+    }
+    if (fence) {
+      if (result.status === 'Rendered') result.status = 'Rendered with fence';
+      result.detail += ' The model added a Markdown fence despite the prompt; only that enclosing fence was removed for validation.';
     }
     row[field] = result;
     process.stdout.write(`${model.id} ${arm}: ${result.status}\n`);
