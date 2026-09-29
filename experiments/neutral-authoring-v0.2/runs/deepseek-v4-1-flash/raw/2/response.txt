@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>MakeMyDemo — First Cut</title>
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('assets/Inter.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    background: #09090B;
+    overflow: hidden;
+  }
+
+  #root {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    background: #09090B;
+    font-family: 'Inter', 'Inter.ttf', sans-serif;
+    color: #FAFAFA;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  .scene {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    padding: 96px 120px;
+    overflow: hidden;
+    background:
+      radial-gradient(900px 700px at 80% 14%, rgba(223, 225, 4, 0.10), transparent 62%),
+      radial-gradient(780px 640px at 8% 98%, rgba(223, 225, 4, 0.055), transparent 60%),
+      #09090B;
+  }
+
+  .flow {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .s-visual {
+    margin: auto 0;
+  }
+
+  .step-tag {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .step-num {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #DFE104;
+  }
+
+  .step-rule {
+    width: 54px;
+    height: 2px;
+    background: rgba(250, 250, 250, 0.24);
+  }
+
+  .step-name {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(250, 250, 250, 0.55);
+  }
+
+  .s-title {
+    margin-top: 28px;
+    font-size: 84px;
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    line-height: 1.04;
+    color: #FAFAFA;
+  }
+
+  /* ---------- Scene 1 — intro ---------- */
+  #scene-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .s1-mark {
+    overflow: hidden;
+    padding-bottom: 16px;
+  }
+
+  .s1-mark-inner {
+    font-size: 210px;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .s1-dot {
+    color: #DFE104;
+    margin-left: 6px;
+  }
+
+  .s1-accent {
+    width: 248px;
+    height: 8px;
+    border-radius: 4px;
+    background: #DFE104;
+  }
+
+  .s1-tag {
+    margin-top: 34px;
+    font-size: 46px;
+    font-weight: 400;
+    letter-spacing: 0.004em;
+    color: rgba(250, 250, 250, 0.74);
+  }
+
+  /* ---------- Scene 2 — paste ---------- */
+  .s2-field {
+    width: 1320px;
+    height: 152px;
+    border-radius: 26px;
+    border: 1.5px solid rgba(250, 250, 250, 0.16);
+    background: rgba(250, 250, 250, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 0 46px;
+  }
+
+  .s2-icon {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+  }
+
+  .s2-text {
+    font-size: 40px;
+    font-weight: 400;
+    letter-spacing: 0.004em;
+    color: rgba(250, 250, 250, 0.74);
+  }
+
+  .s2-caret {
+    width: 3px;
+    height: 58px;
+    border-radius: 2px;
+    background: #DFE104;
+    margin-left: 2px;
+  }
+
+  /* ---------- Scene 3 — script ---------- */
+  .s3-doc {
+    width: 1320px;
+    border-radius: 28px;
+    border: 1.5px solid rgba(250, 250, 250, 0.12);
+    background: rgba(250, 250, 250, 0.035);
+    padding: 54px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+  }
+
+  .s3-row {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+  }
+
+  .s3-tag {
+    flex: none;
+    width: 148px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(250, 250, 250, 0.5);
+  }
+
+  .s3-tag--a { color: #DFE104; }
+
+  .s3-track {
+    flex: 1;
+    height: 18px;
+    border-radius: 9px;
+    background: rgba(250, 250, 250, 0.08);
+    overflow: hidden;
+  }
+
+  .s3-fill {
+    height: 100%;
+    border-radius: 9px;
+    background: rgba(250, 250, 250, 0.86);
+    transform-origin: left center;
+  }
+
+  .s3-row:first-child .s3-fill { background: #DFE104; }
+
+  /* ---------- Scene 4 — assemble ---------- */
+  .s4-panel {
+    width: 1320px;
+    border-radius: 28px;
+    border: 1.5px solid rgba(250, 250, 250, 0.12);
+    background: rgba(250, 250, 250, 0.035);
+    padding: 46px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+  }
+
+  .s4-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .s4-label {
+    flex: none;
+    width: 118px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(250, 250, 250, 0.45);
+  }
+
+  .s4-clips {
+    flex: 1;
+    height: 84px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .clip {
+    height: 100%;
+    border-radius: 10px;
+    background: rgba(250, 250, 250, 0.07);
+    border: 1.5px solid rgba(250, 250, 250, 0.16);
+    transform-origin: left center;
+  }
+
+  .clip--a {
+    background: rgba(223, 225, 4, 0.16);
+    border-color: #DFE104;
+  }
+
+  .s4-wave {
+    flex: 1;
+    height: 84px;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .wave-bar {
+    flex: 1;
+    border-radius: 3px;
+    background: #DFE104;
+    opacity: 0.86;
+    transform-origin: bottom center;
+  }
+
+  /* ---------- Scene 5 — export ---------- */
+  .s5-card {
+    width: 1320px;
+    border-radius: 30px;
+    border: 1.5px solid rgba(250, 250, 250, 0.14);
+    background: rgba(250, 250, 250, 0.04);
+    padding: 56px 60px;
+    display: flex;
+    align-items: center;
+    gap: 56px;
+  }
+
+  .s5-play {
+    flex: none;
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    background: #DFE104;
+    display: grid;
+    place-items: center;
+  }
+
+  .s5-play svg { transform: translateX(7px); }
+
+  .s5-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .s5-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .s5-export {
+    font-size: 44px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #FAFAFA;
+  }
+
+  .s5-check {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #DFE104;
+    display: grid;
+    place-items: center;
+  }
+
+  .s5-track {
+    height: 14px;
+    border-radius: 7px;
+    background: rgba(250, 250, 250, 0.12);
+    overflow: hidden;
+  }
+
+  .s5-fill {
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+    background: #DFE104;
+    transform-origin: left center;
+  }
+
+  .s5-foot {
+    margin-top: 46px;
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(250, 250, 250, 0.48);
+  }
+
+  .s5-foot .s1-dot { font-size: 30px; margin-left: 2px; }
+</style>
+</head>
+<body>
+<div id="root"
+     data-composition-id="main"
+     data-start="0"
+     data-width="1920"
+     data-height="1080"
+     data-fps="24"
+     data-duration="8">
+
+  <!-- Scene 1 -->
+  <section class="scene" id="scene-intro" data-start="0" data-duration="1.5" data-track-index="1">
+    <div class="s1-mark">
+      <div class="s1-mark-inner">MakeMyDemo<span class="s1-dot">.</span></div>
+    </div>
+    <div class="s1-accent"></div>
+    <div class="s1-tag">Paste a URL. Get a first cut.</div>
+  </section>
+
+  <!-- Scene 2 -->
+  <section class="scene flow" id="scene-paste" data-start="1.5" data-duration="1.8" data-track-index="2">
+    <div class="s-head">
+      <div class="step-tag">
+        <span class="step-num">01</span>
+        <span class="step-rule"></span>
+        <span class="step-name">Paste</span>
+      </div>
+      <h2 class="s-title">Paste a public product URL</h2>
+    </div>
+    <div class="s-visual">
+      <div class="s2-field">
+        <div class="s2-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#DFE104"
+               stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8.5" y="3" width="7" height="4" rx="1.5"/>
+            <path d="M15.5 5H18a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2.5"/>
+          </svg>
+        </div>
+        <div class="s2-text">Paste a public product URL</div>
+        <div class="s2-caret"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 3 -->
+  <section class="scene flow" id="scene-script" data-start="3.3" data-duration="1.8" data-track-index="3">
+    <div class="s-head">
+      <div class="step-tag">
+        <span class="step-num">02</span>
+        <span class="step-rule"></span>
+        <span class="step-name">Script</span>
+      </div>
+      <h2 class="s-title">An AI-written script</h2>
+    </div>
+    <div class="s-visual">
+      <div class="s3-doc">
+        <div class="s3-row">
+          <div class="s3-tag s3-tag--a">Hook</div>
+          <div class="s3-track"><div class="s3-fill" style="width:96%"></div></div>
+        </div>
+        <div class="s3-row">
+          <div class="s3-tag">Story</div>
+          <div class="s3-track"><div class="s3-fill" style="width:82%"></div></div>
+        </div>
+        <div class="s3-row">
+          <div class="s3-tag">Close</div>
+          <div class="s3-track"><div class="s3-fill" style="width:61%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 4 -->
+  <section class="scene flow" id="scene-assemble" data-start="5.1" data-duration="1.5" data-track-index="4">
+    <div class="s-head">
+      <div class="step-tag">
+        <span class="step-num">03</span>
+        <span class="step-rule"></span>
+        <span class="step-name">Assemble</span>
+      </div>
+      <h2 class="s-title">Product visuals + music</h2>
+    </div>
+    <div class="s-visual">
+      <div class="s4-panel">
+        <div class="s4-row">
+          <div class="s4-label">Visual</div>
+          <div class="s4-clips">
+            <div class="clip clip--a" style="flex:1.5"></div>
+            <div class="clip" style="flex:1"></div>
+            <div class="clip" style="flex:1.9"></div>
+            <div class="clip" style="flex:1.2"></div>
+            <div class="clip" style="flex:0.9"></div>
+          </div>
+        </div>
+        <div class="s4-row">
+          <div class="s4-label">Music</div>
+          <div class="s4-wave"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 5 -->
+  <section class="scene flow" id="scene-export" data-start="6.6" data-duration="1.4" data-track-index="5">
+    <div class="s-head">
+      <div class="step-tag">
+        <span class="step-num">04</span>
+        <span class="step-rule"></span>
+        <span class="step-name">Export</span>
+      </div>
+      <h2 class="s-title">Review, then export MP4</h2>
+    </div>
+    <div class="s-visual">
+      <div class="s5-card">
+        <div class="s5-play">
+          <svg width="42" height="48" viewBox="0 0 40 46">
+            <polygon points="0,0 40,23 0,46" fill="#09090B"/>
+          </svg>
+        </div>
+        <div class="s5-body">
+          <div class="s5-topline">
+            <div class="s5-export">Export MP4</div>
+            <div class="s5-check">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#09090B"
+                   stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12.5l5 5L20 6.5"/>
+              </svg>
+            </div>
+          </div>
+          <div class="s5-track"><div class="s5-fill"></div></div>
+        </div>
+      </div>
+      <div class="s5-foot">MakeMyDemo<span class="s1-dot">.</span></div>
+    </div>
+  </section>
+
+</div>
+
+<script src="assets/gsap.min.js"></script>
+<script>
+(function () {
+  var waveHeights = [
+    18, 30, 44, 26, 56, 38, 22, 48, 64, 34, 20, 42, 58, 30, 18, 40,
+    54, 32, 24, 46, 60, 36, 20, 44, 56, 28, 22, 48, 62, 34, 18, 42,
+    52, 30, 24, 44, 58, 32, 20, 40, 50, 28, 22, 42, 54, 30, 18, 38,
+    48, 26, 20, 40, 52, 28, 22, 44
+  ];
+  var wave = document.querySelector('.s4-wave');
+  waveHeights.forEach(function (h) {
+    var b = document.createElement('div');
+    b.className = 'wave-bar';
+    b.style.height = h + 'px';
+    wave.appendChild(b);
+  });
+
+  gsap.set(['#scene-paste', '#scene-script', '#scene-assemble', '#scene-export'], { opacity: 0 });
+
+  gsap.set('.s1-mark-inner', { yPercent: 112, opacity: 0 });
+  gsap.set('.s1-accent', { scaleX: 0, transformOrigin: 'center center' });
+  gsap.set('.s1-tag', { y: 26, opacity: 0 });
+
+  gsap.set('#scene-paste .step-tag', { x: -28, opacity: 0 });
+  gsap.set('#scene-paste .s-title', { y: 36, opacity: 0 });
+  gsap.set('#scene-paste .s2-field', { y: 36, opacity: 0 });
+
+  gsap.set('#scene-script .step-tag', { x: -28, opacity: 0 });
+  gsap.set('#scene-script .s-title', { y: 36, opacity: 0 });
+  gsap.set('#scene-script .s3-doc', { y: 36, opacity: 0 });
+  gsap.set('.s3-row', { x: -22, opacity: 0 });
+  gsap.set('.s3-fill', { scaleX: 0, transformOrigin: 'left center' });
+
+  gsap.set('#scene-assemble .step-tag', { x: -28, opacity: 0 });
+  gsap.set('#scene-assemble .s-title', { y: 36, opacity: 0 });
+  gsap.set('#scene-assemble .s4-panel', { y: 36, opacity: 0 });
+  gsap.set('.clip', { scaleX: 0, opacity: 0, transformOrigin: 'left center' });
+  gsap.set('.wave-bar', { scaleY: 0, transformOrigin: 'bottom center' });
+
+  gsap.set('#scene-export .step-tag', { x: -28, opacity: 0 });
+  gsap.set('#scene-export .s-title', { y: 36, opacity: 0 });
+  gsap.set('.s5-card', { y: 36, opacity: 0 });
+  gsap.set('.s5-play', { scale: 0, opacity: 0, transformOrigin: 'center center' });
+  gsap.set('.s5-check', { scale: 0, opacity: 0, transformOrigin: 'center center' });
+  gsap.set('.s5-fill', { scaleX: 0, transformOrigin: 'left center' });
+  gsap.set('.s5-foot', { y: 16, opacity: 0 });
+
+  var tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+
+  // Scene 1 — 0.00 → 1.50
+  tl.to('.s1-mark-inner', { yPercent: 0, opacity: 1, duration: 0.85, ease: 'power4.out' }, 0.05)
+    .to('.s1-accent', { scaleX: 1, duration: 0.5, ease: 'power3.out' }, 0.5)
+    .to('.s1-tag', { y: 0, opacity: 1, duration: 0.55 }, 0.62);
+
+  // Scene 2 — 1.50 → 3.30
+  tl.set('#scene-intro', { opacity: 0 }, 1.5)
+    .set('#scene-paste', { opacity: 1 }, 1.5)
+    .to('#scene-paste .step-tag', { x: 0, opacity: 1, duration: 0.5 }, 1.6)
+    .to('#scene-paste .s-title', { y: 0, opacity: 1, duration: 0.6 }, 1.7)
+    .to('#scene-paste .s2-field', { y: 0, opacity: 1, duration: 0.6 }, 1.86)
+    .fromTo('.s2-caret', { opacity: 1 }, { opacity: 0, duration: 0.26, repeat: 3, yoyo: true, ease: 'steps(1)' }, 2.16);
+
+  // Scene 3 — 3.30 → 5.10
+  tl.set('#scene-paste', { opacity: 0 }, 3.3)
+    .set('#scene-script', { opacity: 1 }, 3.3)
+    .to('#scene-script .step-tag', { x: 0, opacity: 1, duration: 0.5 }, 3.4)
+    .to('#scene-script .s-title', { y: 0, opacity: 1, duration: 0.6 }, 3.5)
+    .to('#scene-script .s3-doc', { y: 0, opacity: 1, duration: 0.6 }, 3.66)
+    .to('.s3-row', { x: 0, opacity: 1, duration: 0.45, stagger: 0.12 }, 3.82)
+    .to('.s3-fill', { scaleX: 1, duration: 0.6, stagger: 0.14, ease: 'power2.out' }, 3.88);
+
+  // Scene 4 — 5.10 → 6.60
+  tl.set('#scene-script', { opacity: 0 }, 5.1)
+    .set('#scene-assemble', { opacity: 1 }, 5.1)
+    .to('#scene-assemble .step-tag', { x: 0, opacity: 1, duration: 0.5 }, 5.18)
+    .to('#scene-assemble .s-title', { y: 0, opacity: 1, duration: 0.6 }, 5.28)
+    .to('#scene-assemble .s4-panel', { y: 0, opacity: 1, duration: 0.6 }, 5.4)
+    .to('.clip', { scaleX: 1, opacity: 1, duration: 0.5, stagger: 0.07, ease: 'power2.out' }, 5.56)
+    .to('.wave-bar', { scaleY: 1, duration: 0.45, stagger: 0.012, ease: 'power2.out' }, 5.64);
+
+  // Scene 5 — 6.60 → 8.00
+  tl.set('#scene-assemble', { opacity: 0 }, 6.6)
+    .set('#scene-export', { opacity: 1 }, 6.6)
+    .to('#scene-export .step-tag', { x: 0, opacity: 1, duration: 0.4 }, 6.64)
+    .to('#scene-export .s-title', { y: 0, opacity: 1, duration: 0.5 }, 6.7)
+    .to('.s5-card', { y: 0, opacity: 1, duration: 0.5 }, 6.78)
+    .to('.s5-play', { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(1.6)' }, 6.86)
+    .to('.s5-fill', { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, 6.9)
+    .to('.s5-foot', { y: 0, opacity: 1, duration: 0.35 }, 6.98)
+    .to('.s5-check', { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.8)' }, 7.28)
+    .set('#root', { backgroundColor: '#09090B' }, 8);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines['main'] = tl;
+  window.__renderReady = true;
+})();
+</script>
+</body>
+</html>

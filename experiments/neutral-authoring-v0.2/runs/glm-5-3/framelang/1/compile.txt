@@ -1,0 +1,185 @@
+{
+  "language": "framelang/v1",
+  "sourceLanguage": "framelang/creative-v0.1",
+  "pilot": true,
+  "inputHash": "sha256:416eed11d9f813494320ce4b0a1d135704c6f86c84cff6c23e490e2e61c870ca",
+  "expandedHash": "sha256:16c85adf2255ecd98126b2d48b2610d2007b5178ec1a089a8d40bd18861e3181",
+  "recipe": null,
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "bundleRefs": {
+    "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+    "assetsRef": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "sourceMap": {
+    "#fl-scene-paste-accent-dot": {
+      "sceneId": "scene-paste",
+      "nodeId": "accent-dot",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 2,
+      "location": "$.scenes[0].nodes[0]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[0]"
+      }
+    },
+    "#fl-scene-paste-headline-paste": {
+      "sceneId": "scene-paste",
+      "nodeId": "headline-paste",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 2,
+      "location": "$.scenes[0].nodes[1]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[1]"
+      }
+    },
+    "#fl-scene-paste-url-bar": {
+      "sceneId": "scene-paste",
+      "nodeId": "url-bar",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 2,
+      "location": "$.scenes[0].nodes[2]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[2]"
+      }
+    },
+    "#fl-scene-paste-url-bar-text": {
+      "sceneId": "scene-paste",
+      "nodeId": "url-bar-text",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 2,
+      "location": "$.scenes[0].nodes[3]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[3]"
+      }
+    },
+    "#fl-scene-paste-url-cursor": {
+      "sceneId": "scene-paste",
+      "nodeId": "url-cursor",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 2,
+      "location": "$.scenes[0].nodes[4]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[4]"
+      }
+    },
+    "#fl-scene-firstcut-headline-firstcut": {
+      "sceneId": "scene-firstcut",
+      "nodeId": "headline-firstcut",
+      "componentPrefixes": [],
+      "startTime": 2,
+      "endTime": 4,
+      "location": "$.scenes[1].nodes[0]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[0]"
+      }
+    },
+    "#fl-scene-firstcut-accent-rule": {
+      "sceneId": "scene-firstcut",
+      "nodeId": "accent-rule",
+      "componentPrefixes": [],
+      "startTime": 2,
+      "endTime": 4,
+      "location": "$.scenes[1].nodes[1]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[1]"
+      }
+    },
+    "#fl-scene-firstcut-body-firstcut": {
+      "sceneId": "scene-firstcut",
+      "nodeId": "body-firstcut",
+      "componentPrefixes": [],
+      "startTime": 2,
+      "endTime": 4,
+      "location": "$.scenes[1].nodes[2]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[2]"
+      }
+    },
+    "#fl-scene-export-headline-export": {
+      "sceneId": "scene-export",
+      "nodeId": "headline-export",
+      "componentPrefixes": [],
+      "startTime": 4,
+      "endTime": 6,
+      "location": "$.scenes[2].nodes[0]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[2].nodes[0]"
+      }
+    },
+    "#fl-scene-export-export-pill": {
+      "sceneId": "scene-export",
+      "nodeId": "export-pill",
+      "componentPrefixes": [],
+      "startTime": 4,
+      "endTime": 6,
+      "location": "$.scenes[2].nodes[1]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[2].nodes[1]"
+      }
+    },
+    "#fl-scene-export-export-label": {
+      "sceneId": "scene-export",
+      "nodeId": "export-label",
+      "componentPrefixes": [],
+      "startTime": 4,
+      "endTime": 6,
+      "location": "$.scenes[2].nodes[2]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[2].nodes[2]"
+      }
+    },
+    "#fl-scene-brand-title-brand": {
+      "sceneId": "scene-brand",
+      "nodeId": "title-brand",
+      "componentPrefixes": [],
+      "startTime": 6,
+      "endTime": 8,
+      "location": "$.scenes[3].nodes[0]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[3].nodes[0]"
+      }
+    },
+    "#fl-scene-brand-brand-rule": {
+      "sceneId": "scene-brand",
+      "nodeId": "brand-rule",
+      "componentPrefixes": [],
+      "startTime": 6,
+      "endTime": 8,
+      "location": "$.scenes[3].nodes[1]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[3].nodes[1]"
+      }
+    },
+    "#fl-scene-brand-tagline": {
+      "sceneId": "scene-brand",
+      "nodeId": "tagline",
+      "componentPrefixes": [],
+      "startTime": 6,
+      "endTime": 8,
+      "location": "$.scenes[3].nodes[2]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[3].nodes[2]"
+      }
+    }
+  },
+  "outputs": {
+    "landscape-1920x1080": {
+      "directory": "landscape-1920x1080",
+      "htmlHash": "sha256:01f0a2720b4dfb91f4e6b58c1626ea046e64ab52faeec8a861c5388f4794fff7",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false
+}

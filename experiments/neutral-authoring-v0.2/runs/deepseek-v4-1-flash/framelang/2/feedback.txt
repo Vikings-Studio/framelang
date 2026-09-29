@@ -1,0 +1,1 @@
+{"findings":[{"code":"syntax.integer","severity":"error","location":"$.scenes[1].nodes[9].motion.frames[1].atFrame","message":"syntax.integer at $.scenes[1].events[9].frames[1].atFrame: expected integer 0..36","hint":"Edit the indicated FrameLang source field and run lint again."}]}

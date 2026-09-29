@@ -1,0 +1,12 @@
+{
+  "sourceAttempt": "neutral-authoring-v0.2/runs/glm-5-3/raw/1",
+  "sourceUnedited": true,
+  "decodedFrames": 192,
+  "identicalFrames": 192,
+  "additionalInferenceCalls": 0,
+  "additionalInferenceUSD": 0,
+  "originalGenerationUSD": 0.06987952,
+  "originalGenerationTokens": 17558,
+  "contrastCoverage": "sampled",
+  "rendererFingerprint": "sha256:5b16563150167f73b8eb3b214c731b9fae9917a7ee6e6ef2a10f029355549439"
+}

@@ -80,6 +80,25 @@ test('compact base-first paint layers preserve the model gradient above its opaq
   assert.equal(program.scenes[0].design.background.layers[0].kind,'radial');
   assert.equal(source.scenes[0].design.background.layers[0].kind,'solid');
 });
+test('shared named styles preserve model typography without oversized defaults', () => {
+  const source = draft(); source.styles = { title: source.scenes[0].nodes[1].style };
+  source.scenes[0].nodes[1].style = 'title'; delete source.scenes[0].design.scale;
+  const program = expandCreative(source,bundle);
+  assert.equal(program.scenes[0].design.scale,'standard');
+  assert.equal(program.scenes[0].content[1].style.size,170);
+  assert.equal(validate(program,bundle),true);
+  source.scenes[0].nodes[1].style='missing'; assert.throws(()=>expandCreative(source,bundle),/unknown named style/);
+});
+test('decorative progress graphics may intersect while functional text and explicit avoid stay protected', () => {
+  const source=draft(); source.scenes[0].nodes.push(
+    {id:'track',kind:'shape',primitive:'rule',rect:[0,900,1000,8],fill:'foreground'},
+    {id:'progress',kind:'shape',primitive:'rule',rect:[0,900,400,8],fill:'accent'},
+    {id:'handle',kind:'shape',primitive:'circle',rect:[390,880,40,40],fill:'accent'});
+  assert.equal(lintProgram(expandCreative(source,bundle),bundle).ok,true);
+  source.scenes[0].nodes.at(-1).overlap='avoid'; assert.equal(lintProgram(expandCreative(source,bundle),bundle).ok,false);
+  delete source.scenes[0].nodes.at(-1).overlap;
+  source.scenes[0].nodes.at(-1).rect=[0,0,1000,500]; assert.equal(lintProgram(expandCreative(source,bundle),bundle).ok,false);
+});
 test('essential text cannot disappear through an opacity or scale keyframe at the final hold', () => {
   for (const value of [{ opacity: 0 }, { scale: 0 }]) {
     const source = draft(); const key = Object.keys(value)[0];
@@ -96,4 +115,15 @@ test('rich components reject undersized authored rectangles before browser rende
 test('paint diagnostics refer to the authored base-first layer index', () => {
   const source=draft();source.scenes[0].design.background={kind:'layers',layers:[{kind:'solid',color:'#INVALID'},{kind:'solid',color:'background'}]};
   assert.throws(()=>expandCreative(source,bundle),error=>error.location==='$.scenes[0].design.background.layers[0].color');
+});
+
+test('decorative motion can continue through the readable hold; text receives precise repair feedback', () => {
+  const source=draft(); source.scenes[0].nodes[2].motion={atFrame:0,durationFrames:96,ease:'none',frames:[{atFrame:0,value:{rotation:0}},{atFrame:96,value:{rotation:20}}]};
+  assert.equal(validate(expandCreative(source,bundle),bundle),true);
+  source.scenes[0].nodes[1].motion={atFrame:30,durationFrames:60,ease:'none',frames:[{atFrame:0,value:{opacity:0}},{atFrame:60,value:{opacity:1}}]};
+  const program=expandCreative(source,bundle),finding=lintProgram(program,bundle).findings.find(f=>f.code==='semantic.hold');
+  assert.ok(finding);
+  assert.match(finding.message,/by frame 81/);
+  assert.match(finding.message,/final atFrame/);
+  assert.equal(authoredLocation(finding.location,source.language,source,program),'$.scenes[0].nodes[1].motion');
 });

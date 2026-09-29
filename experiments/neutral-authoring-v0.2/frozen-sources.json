@@ -1,0 +1,11 @@
+{
+  "src/compiler.mjs": "4f51d63500f262aee0c1ea48958660f99453473909ac4eb3febf6bc319d4dbea",
+  "src/cli.mjs": "1df412a2df71d014712c202575585d1a9a170c691e4a8688ef9e5e005d23d010",
+  "src/check-policy.mjs": "50d9dde891c182bc817efd1f45bc62ddded643a73027c7952e79859835ab3061",
+  "src/feedback.mjs": "fb56ba842751dcaf2e10b63d3d2afa94d5f8fc9f1e6aef5c4f740684e7c0978d",
+  "src/repair-patch.mjs": "da09799cbfa5800ebca5c3a81dafb130561169f8045cd8e14ec84590ca179b2b",
+  "experiments/neutral-authoring-v0.2/brief.txt": "b4e4fd8d53480e0f48bd149226e4c16d8eedbcf12c9391f15dd2ea1c499808ae",
+  "experiments/neutral-authoring-v0.2/framelang.txt": "0f717911b1461b21b34289949f6fd5ea2aaf9c5460cc5b9ece3a96599493dfba",
+  "experiments/neutral-authoring-v0.2/raw.txt": "eab787a78d239833f4e8ca0b98252e336888fd04acee4a53c3e312a1b680fa17",
+  "experiments/neutral-authoring-v0.2/run.mjs": "24a610f35421d348fe44d543952679be9ccf559631c04e05a4d0e6b66be6fc7c"
+}

@@ -1,0 +1,429 @@
+{
+  "language": "framelang/creative-v0.1",
+  "profiles": [
+    "landscape-1920x1080"
+  ],
+  "scenes": [
+    {
+      "id": "s1-open",
+      "durationFrames": 48,
+      "design": {
+        "background": "#09090B",
+        "decoration": "none",
+        "ambient": "drift",
+        "chrome": "none"
+      },
+      "nodes": [
+        {
+          "id": "s1-headline",
+          "rect": [
+            0,
+            330,
+            1000,
+            170
+          ],
+          "role": "headline",
+          "text": "Paste a product URL.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 20
+          },
+          "style": {
+            "size": 110,
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "#FAFAFA",
+            "align": "left"
+          }
+        },
+        {
+          "id": "s1-rule",
+          "kind": "shape",
+          "primitive": "rule",
+          "rect": [
+            0,
+            530,
+            160,
+            10
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "preset": "slide",
+            "atFrame": 6,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "s1-body",
+          "rect": [
+            0,
+            580,
+            760,
+            60
+          ],
+          "role": "body",
+          "text": "One link in. A first cut out.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 8,
+            "durationFrames": 20
+          },
+          "style": {
+            "size": 38,
+            "weight": 500,
+            "lineHeight": "normal",
+            "color": "#FAFAFA",
+            "align": "left"
+          }
+        },
+        {
+          "id": "s1-panel",
+          "kind": "shape",
+          "primitive": "panel",
+          "rect": [
+            0,
+            700,
+            620,
+            110
+          ],
+          "fill": "#FAFAFA",
+          "corner": "pill",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 10,
+            "durationFrames": 20
+          }
+        },
+        {
+          "id": "s1-placeholder",
+          "rect": [
+            48,
+            730,
+            520,
+            52
+          ],
+          "role": "label",
+          "text": "your product link",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 16,
+            "durationFrames": 14
+          },
+          "style": {
+            "size": 36,
+            "weight": 500,
+            "color": "#09090B",
+            "align": "left"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2-script",
+      "durationFrames": 48,
+      "design": {
+        "background": "#09090B",
+        "decoration": "grid-glow",
+        "ambient": "drift",
+        "chrome": "none"
+      },
+      "nodes": [
+        {
+          "id": "s2-headline",
+          "rect": [
+            0,
+            290,
+            620,
+            230
+          ],
+          "role": "headline",
+          "text": "AI writes the script.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 20
+          },
+          "style": {
+            "size": 96,
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "#FAFAFA",
+            "align": "left"
+          }
+        },
+        {
+          "id": "s2-body",
+          "rect": [
+            0,
+            540,
+            600,
+            140
+          ],
+          "role": "body",
+          "text": "Then your visuals cut to the music.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 8,
+            "durationFrames": 20
+          },
+          "style": {
+            "size": 38,
+            "weight": 500,
+            "lineHeight": "relaxed",
+            "color": "#FAFAFA",
+            "align": "left"
+          }
+        },
+        {
+          "id": "s2-frame",
+          "kind": "shape",
+          "primitive": "panel",
+          "rect": [
+            660,
+            240,
+            340,
+            520
+          ],
+          "fill": "#18181B",
+          "corner": "soft",
+          "stroke": {
+            "color": "#3F3F46",
+            "width": 2
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 4,
+            "durationFrames": 22
+          }
+        },
+        {
+          "id": "s2-play",
+          "kind": "shape",
+          "primitive": "circle",
+          "rect": [
+            790,
+            460,
+            80,
+            80
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "preset": "pop",
+            "atFrame": 16,
+            "durationFrames": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "s3-export",
+      "durationFrames": 48,
+      "design": {
+        "background": "#09090B",
+        "decoration": "rules",
+        "ambient": "none",
+        "chrome": "none"
+      },
+      "nodes": [
+        {
+          "id": "s3-headline",
+          "rect": [
+            0,
+            320,
+            1000,
+            170
+          ],
+          "role": "headline",
+          "text": "Review the cut. Export MP4.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 20
+          },
+          "style": {
+            "size": 104,
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "#FAFAFA",
+            "align": "center"
+          }
+        },
+        {
+          "id": "s3-track",
+          "kind": "shape",
+          "primitive": "rule",
+          "rect": [
+            0,
+            620,
+            1000,
+            6
+          ],
+          "fill": "#3F3F46",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 2,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "s3-progress",
+          "kind": "shape",
+          "primitive": "rule",
+          "rect": [
+            0,
+            620,
+            420,
+            6
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "preset": "slide",
+            "atFrame": 6,
+            "durationFrames": 22
+          }
+        },
+        {
+          "id": "s3-handle",
+          "kind": "shape",
+          "primitive": "circle",
+          "rect": [
+            400,
+            600,
+            46,
+            46
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "preset": "pop",
+            "atFrame": 20,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "s3-label-a",
+          "rect": [
+            0,
+            555,
+            300,
+            50
+          ],
+          "role": "label",
+          "text": "first cut",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 10,
+            "durationFrames": 16
+          },
+          "style": {
+            "size": 32,
+            "weight": 600,
+            "color": "#A1A1AA",
+            "align": "left"
+          }
+        },
+        {
+          "id": "s3-label-b",
+          "rect": [
+            700,
+            555,
+            300,
+            50
+          ],
+          "role": "label",
+          "text": "MP4",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 12,
+            "durationFrames": 16
+          },
+          "style": {
+            "size": 32,
+            "weight": 600,
+            "color": "#FAFAFA",
+            "align": "right"
+          }
+        }
+      ]
+    },
+    {
+      "id": "s4-hold",
+      "durationFrames": 48,
+      "design": {
+        "background": "#09090B",
+        "decoration": "none",
+        "ambient": "drift",
+        "chrome": "none"
+      },
+      "nodes": [
+        {
+          "id": "s4-wordmark",
+          "rect": [
+            0,
+            360,
+            1000,
+            150
+          ],
+          "role": "headline",
+          "text": "MakeMyDemo.com",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 22
+          },
+          "style": {
+            "size": 120,
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "#FAFAFA",
+            "align": "center"
+          }
+        },
+        {
+          "id": "s4-rule",
+          "kind": "shape",
+          "primitive": "rule",
+          "rect": [
+            430,
+            540,
+            140,
+            8
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 10,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "s4-body",
+          "rect": [
+            0,
+            600,
+            1000,
+            60
+          ],
+          "role": "body",
+          "text": "Paste a link. Get a first cut.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 14,
+            "durationFrames": 20
+          },
+          "style": {
+            "size": 40,
+            "weight": 500,
+            "lineHeight": "normal",
+            "color": "#FAFAFA",
+            "align": "center"
+          }
+        }
+      ]
+    }
+  ]
+}

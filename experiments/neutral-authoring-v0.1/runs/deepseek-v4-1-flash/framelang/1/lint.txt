@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s3-export",
+      "profile": "landscape-1920x1080",
+      "nodes": [
+        "s3-track",
+        "s3-progress"
+      ],
+      "locations": [
+        "$.scenes[2].nodes[1]",
+        "$.scenes[2].nodes[2]"
+      ],
+      "rects": [
+        [
+          0,
+          620,
+          1000,
+          6
+        ],
+        [
+          0,
+          620,
+          420,
+          6
+        ]
+      ],
+      "intersection": [
+        0,
+        620,
+        420,
+        6
+      ],
+      "message": "Nodes s3-track and s3-progress overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection, or declare intentional overlap on both decorative and content placements if the composition requires it."
+    },
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s3-export",
+      "profile": "landscape-1920x1080",
+      "nodes": [
+        "s3-track",
+        "s3-handle"
+      ],
+      "locations": [
+        "$.scenes[2].nodes[1]",
+        "$.scenes[2].nodes[3]"
+      ],
+      "rects": [
+        [
+          0,
+          620,
+          1000,
+          6
+        ],
+        [
+          400,
+          600,
+          46,
+          46
+        ]
+      ],
+      "intersection": [
+        400,
+        620,
+        46,
+        6
+      ],
+      "message": "Nodes s3-track and s3-handle overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection, or declare intentional overlap on both decorative and content placements if the composition requires it."
+    },
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s3-export",
+      "profile": "landscape-1920x1080",
+      "nodes": [
+        "s3-progress",
+        "s3-handle"
+      ],
+      "locations": [
+        "$.scenes[2].nodes[2]",
+        "$.scenes[2].nodes[3]"
+      ],
+      "rects": [
+        [
+          0,
+          620,
+          420,
+          6
+        ],
+        [
+          400,
+          600,
+          46,
+          46
+        ]
+      ],
+      "intersection": [
+        400,
+        620,
+        20,
+        6
+      ],
+      "message": "Nodes s3-progress and s3-handle overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection, or declare intentional overlap on both decorative and content placements if the composition requires it."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:818d78562a7d9e1a76efe71b63123b56a65bb4455896bad72f1d849d059bdfb6"
+}

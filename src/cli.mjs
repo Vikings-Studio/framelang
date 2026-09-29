@@ -7,6 +7,7 @@ import { createRequire } from 'node:module';
 import { authoredLocation, canonical, compile, FrameLangError, lintProgram, loadProgram } from './compiler.mjs';
 import { assessCheck, frameTimes } from './check-policy.mjs';
 import { checkFeedback } from './feedback.mjs';
+import { adopt, assetInventory } from './adopt.mjs';
 
 const require = createRequire(import.meta.url);
 const hf = require.resolve('hyperframes/bin/hyperframes.mjs');
@@ -26,10 +27,23 @@ async function reportFor(dir) {
   const file = path.join(dir, 'compile-report.json');
   return { file, report: JSON.parse(await readFile(file, 'utf8')) };
 }
+async function verificationPin() {
+  const files = ['cli.mjs', 'adopt.mjs', 'check-policy.mjs', 'feedback.mjs'];
+  const hashes = {};
+  for (const name of files) hashes[name] = digest(await readFile(new URL(name, import.meta.url)));
+  hashes.hyperframes = digest(await readFile(hf));
+  hashes.lockfile = digest(await readFile(new URL('../package-lock.json', import.meta.url)));
+  return digest(JSON.stringify({ node: process.version, hashes }));
+}
 async function verifyOutputs(dir, report) {
+  if (report.verificationPin && report.verificationPin !== await verificationPin()) throw new Error('checker or runtime changed; re-adopt or recompile before checking');
   for (const [profile, entry] of Object.entries(report.outputs)) {
     const html = await readFile(path.join(dir, profile, 'index.html'));
     if (digest(html) !== entry.htmlHash) throw new Error(`compiled ${profile} HTML changed after compilation`);
+    if (report.language === 'framelang/trusted-hyperframes-v0.1') {
+      const actual = (await assetInventory(path.join(dir, entry.directory, 'assets'))).map(asset => asset.relative).sort();
+      if (JSON.stringify(actual) !== JSON.stringify(Object.keys(entry.assetHashes || {}).sort())) throw new Error('asset inventory changed; re-adopt and recheck before rendering');
+    }
     for (const [file, expected] of Object.entries(entry.assetHashes || {})) {
       const asset = await readFile(path.join(dir, profile, 'assets', file));
       if (digest(asset) !== expected) throw new Error(`compiled ${profile} asset ${file} changed after compilation`);
@@ -52,13 +66,23 @@ async function main() {
     if (!feedback.ok) process.exitCode = 1;
     return;
   }
-  if (command === 'compile') {
-    if (!first || !second) throw new Error('usage: compile <program.json> <out-dir>');
-    const report = await compile(path.resolve(first), path.resolve(second));
+  if (command === 'adopt') {
+    if (!first || !second) throw new Error('usage: adopt <trusted-html-dir> <out-dir>');
+    const report = await adopt(path.resolve(first), path.resolve(second));
+    report.verificationPin = await verificationPin();
+    await writeFile(path.join(path.resolve(second), 'compile-report.json'), `${JSON.stringify(report, null, 2)}\n`);
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
     return;
   }
-  if (!['check', 'render'].includes(command) || !first) throw new Error('usage: lint <program.json> | compile <program.json> <out-dir> | check|render <out-dir>');
+  if (command === 'compile') {
+    if (!first || !second) throw new Error('usage: compile <program.json> <out-dir>');
+    const report = await compile(path.resolve(first), path.resolve(second));
+    report.verificationPin = await verificationPin();
+    await writeFile(path.join(path.resolve(second), 'compile-report.json'), `${JSON.stringify(report, null, 2)}\n`);
+    process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+    return;
+  }
+  if (!['check', 'render'].includes(command) || !first) throw new Error('usage: lint <program.json> | compile <program.json> <out-dir> | adopt <trusted-html-dir> <out-dir> | check|render <out-dir>');
   const dir = path.resolve(first);
   const { file, report } = await reportFor(dir);
   await verifyOutputs(dir, report);

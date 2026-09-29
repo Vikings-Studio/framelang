@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:590024f6fc994aa667141b4159b17b582d31840cc5b9501a9ad435793053333e",
+  "recipe": null,
+  "ok": false,
+  "findings": [
+    {
+      "code": "font_family_without_font_face",
+      "severity": "error",
+      "message": "Font family used without @font-face declaration: inter.ttf. These are not in the auto-resolved font list, so the renderer cannot supply them automatically. Text will fall back to a generic font, producing incorrect typography in the video.",
+      "selector": "[data-composition-id]",
+      "dataAttributes": {},
+      "sourceFile": "/private/tmp/framelang-adopt-deepseek-rejection/source-1920x1080/index.html",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "time": 0,
+      "fixHint": "Add @font-face { font-family: '...'; src: url('capture/assets/fonts/...woff2'); } for each font family, pointing to the captured .woff2 files. For an OS-bundled system font (e.g. Hiragino Sans, Microsoft YaHei) that has no downloadable file, use src: local('Exact Font Name') instead — the declaration alone satisfies this check without needing a font file.",
+      "profile": "source-1920x1080",
+      "hint": "Revise the indicated source field and rerun check."
+    },
+    {
+      "code": "verification.missingFrames",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "message": "Not every requested frame timestamp was checked",
+      "hint": "Rerun check and inspect the browser checker output."
+    },
+    {
+      "code": "verification.noLayout",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "message": "Browser layout audit did not run",
+      "hint": "Rerun check and inspect the browser checker output."
+    }
+  ],
+  "instruction": "Revise the FrameLang source using these findings, then compile and check again. Do not render until every profile passes."
+}

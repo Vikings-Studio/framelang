@@ -1,0 +1,254 @@
+{
+  "ok": false,
+  "exitCode": 1,
+  "layoutRan": false,
+  "allFramesObserved": false,
+  "geometryClear": true,
+  "runtimeClear": true,
+  "hardWarnings": [],
+  "report": {
+    "ok": false,
+    "strict": false,
+    "lint": {
+      "ok": false,
+      "errorCount": 1,
+      "warningCount": 10,
+      "infoCount": 0,
+      "findings": [
+        {
+          "code": "timed_element_missing_clip_class",
+          "severity": "warning",
+          "message": "<section id=\"scene-intro\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+          "selector": "#scene-intro",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+        },
+        {
+          "code": "timed_element_missing_clip_class",
+          "severity": "warning",
+          "message": "<section id=\"scene-paste\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+          "selector": "#scene-paste",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+        },
+        {
+          "code": "timed_element_missing_clip_class",
+          "severity": "warning",
+          "message": "<section id=\"scene-script\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+          "selector": "#scene-script",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+        },
+        {
+          "code": "timed_element_missing_clip_class",
+          "severity": "warning",
+          "message": "<section id=\"scene-assemble\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+          "selector": "#scene-assemble",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+        },
+        {
+          "code": "timed_element_missing_clip_class",
+          "severity": "warning",
+          "message": "<section id=\"scene-export\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+          "selector": "#scene-export",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+        },
+        {
+          "code": "font_family_without_font_face",
+          "severity": "error",
+          "message": "Font family used without @font-face declaration: inter.ttf. These are not in the auto-resolved font list, so the renderer cannot supply them automatically. Text will fall back to a generic font, producing incorrect typography in the video.",
+          "selector": "[data-composition-id]",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Add @font-face { font-family: '...'; src: url('capture/assets/fonts/...woff2'); } for each font family, pointing to the captured .woff2 files. For an OS-bundled system font (e.g. Hiragino Sans, Microsoft YaHei) that has no downloadable file, use src: local('Exact Font Name') instead — the declaration alone satisfies this check without needing a font file."
+        },
+        {
+          "code": "nested_structure_needs_subcomposition",
+          "severity": "warning",
+          "message": "<section id=\"scene-intro\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+          "selector": "#scene-intro",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Move <section id=\"scene-intro\"> and its contents into a sub-composition file and mount it with data-composition-src."
+        },
+        {
+          "code": "nested_structure_needs_subcomposition",
+          "severity": "warning",
+          "message": "<section id=\"scene-paste\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+          "selector": "#scene-paste",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Move <section id=\"scene-paste\"> and its contents into a sub-composition file and mount it with data-composition-src."
+        },
+        {
+          "code": "nested_structure_needs_subcomposition",
+          "severity": "warning",
+          "message": "<section id=\"scene-script\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+          "selector": "#scene-script",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Move <section id=\"scene-script\"> and its contents into a sub-composition file and mount it with data-composition-src."
+        },
+        {
+          "code": "nested_structure_needs_subcomposition",
+          "severity": "warning",
+          "message": "<section id=\"scene-assemble\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+          "selector": "#scene-assemble",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Move <section id=\"scene-assemble\"> and its contents into a sub-composition file and mount it with data-composition-src."
+        },
+        {
+          "code": "nested_structure_needs_subcomposition",
+          "severity": "warning",
+          "message": "<section id=\"scene-export\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+          "selector": "#scene-export",
+          "dataAttributes": {},
+          "sourceFile": "/private/tmp/framelang/experiments/neutral-authoring-v0.2/runs/deepseek-v4-1-flash/raw/2/compiled/index.html",
+          "bbox": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "time": 0,
+          "fixHint": "Move <section id=\"scene-export\"> and its contents into a sub-composition file and mount it with data-composition-src."
+        }
+      ],
+      "filesScanned": 1
+    },
+    "runtime": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0,
+      "infoCount": 0,
+      "findings": []
+    },
+    "layout": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0,
+      "infoCount": 0,
+      "findings": [],
+      "duration": 0,
+      "samples": [],
+      "transitionSamples": [],
+      "transitionSamplesDropped": 0,
+      "tolerance": 2,
+      "totalIssueCount": 0,
+      "truncated": false
+    },
+    "motion": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0,
+      "infoCount": 0,
+      "findings": [],
+      "enabled": false,
+      "samples": 0
+    },
+    "contrast": {
+      "ok": true,
+      "errorCount": 0,
+      "warningCount": 0,
+      "infoCount": 0,
+      "findings": [],
+      "enabled": true,
+      "samples": [],
+      "checked": 0,
+      "passed": 0
+    },
+    "hdr": {
+      "autoPromotion": null,
+      "inspection": "available"
+    },
+    "snapshots": {
+      "enabled": false,
+      "files": [],
+      "times": [],
+      "findingFiles": []
+    },
+    "_meta": {
+      "version": "0.8.92",
+      "latestVersion": "0.8.92",
+      "updateAvailable": false
+    }
+  }
+}

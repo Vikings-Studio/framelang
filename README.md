@@ -29,6 +29,18 @@ For routine generation, a [versioned compact recipe](spec/V0_1_RECIPES.md)
 can expand into a reviewed cinematic or editorial scene. The model writes three lead lines
 instead of repeating layouts, hashes, assets, and animation boilerplate.
 
+## Preserve model-owned visuals
+
+[Trusted HyperFrames admission](spec/TRUSTED_HYPERFRAMES.md) accepts existing
+HTML/CSS/SVG/GSAP compositions unchanged, then gates export on every-frame
+geometry checks and sealed source/assets. It avoids schema conversion inference.
+This experimental path runs trusted JavaScript; it does not have the typed
+language's deterministic constraints or provide an untrusted-code sandbox.
+
+The [neutral authoring pilot](experiments/neutral-authoring-v0.2/RESULTS.md)
+records failures and per-video costs. The typed format has **not demonstrated a
+general creativity or cost advantage** over raw models.
+
 ## Creative model authoring
 
 Use [creative v0.1](spec/V0_1_CREATIVE_AUTHORING.md) for model-chosen composition,
