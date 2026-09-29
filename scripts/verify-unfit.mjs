@@ -45,5 +45,13 @@ try {
     'checker did not report the specific text-fit failure');
   process.stdout.write('Impossible text rejected by browser check.\n');
 } finally {
-  await rm(temporary, { recursive: true, force: true });
+  try {
+    await rm(temporary, { recursive: true, force: true, maxRetries: 15, retryDelay: 300 });
+  } catch (error) {
+    // A just-closed Chrome process can hold a file handle briefly on Windows.
+    // The temporary runner is discarded after CI; cleanup does not change the
+    // already asserted browser rejection result.
+    if (!['EBUSY', 'EPERM'].includes(error.code)) throw error;
+    process.stderr.write(`Temporary browser files remained locked: ${error.code}\n`);
+  }
 }
