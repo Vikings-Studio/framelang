@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:0b39376cf2f699685937435e78f243ca9d2e49e3c777480727ece4641112708d",
+  "recipe": null,
+  "ok": true,
+  "findings": [
+    {
+      "code": "nested_structure_needs_subcomposition",
+      "severity": "error",
+      "message": "<section id=\"fl-s1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+      "selector": "#fl-s1",
+      "dataAttributes": {},
+      "sourceFile": "/private/tmp/framelang/experiments/creative-authoring-v0.1/runs/hy4-preview/1/compiled/landscape-1920x1080/index.html",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "time": 0,
+      "fixHint": "Move <section id=\"fl-s1\"> and its contents into a sub-composition file and mount it with data-composition-src.",
+      "profile": "landscape-1920x1080",
+      "hint": "Revise the indicated source field and rerun check."
+    },
+    {
+      "code": "nested_structure_needs_subcomposition",
+      "severity": "error",
+      "message": "<section id=\"fl-s2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+      "selector": "#fl-s2",
+      "dataAttributes": {},
+      "sourceFile": "/private/tmp/framelang/experiments/creative-authoring-v0.1/runs/hy4-preview/1/compiled/landscape-1920x1080/index.html",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "time": 0,
+      "fixHint": "Move <section id=\"fl-s2\"> and its contents into a sub-composition file and mount it with data-composition-src.",
+      "profile": "landscape-1920x1080",
+      "hint": "Revise the indicated source field and rerun check."
+    },
+    {
+      "code": "nested_structure_needs_subcomposition",
+      "severity": "error",
+      "message": "<section id=\"fl-s1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+      "selector": "#fl-s1",
+      "dataAttributes": {},
+      "sourceFile": "/private/tmp/framelang/experiments/creative-authoring-v0.1/runs/hy4-preview/1/compiled/portrait-1080x1920/index.html",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "time": 0,
+      "fixHint": "Move <section id=\"fl-s1\"> and its contents into a sub-composition file and mount it with data-composition-src.",
+      "profile": "portrait-1080x1920",
+      "hint": "Revise the indicated source field and rerun check."
+    },
+    {
+      "code": "nested_structure_needs_subcomposition",
+      "severity": "error",
+      "message": "<section id=\"fl-s2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+      "selector": "#fl-s2",
+      "dataAttributes": {},
+      "sourceFile": "/private/tmp/framelang/experiments/creative-authoring-v0.1/runs/hy4-preview/1/compiled/portrait-1080x1920/index.html",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "time": 0,
+      "fixHint": "Move <section id=\"fl-s2\"> and its contents into a sub-composition file and mount it with data-composition-src.",
+      "profile": "portrait-1080x1920",
+      "hint": "Revise the indicated source field and rerun check."
+    }
+  ],
+  "instruction": "Browser layout checks passed. Render may proceed."
+}

@@ -1,0 +1,10 @@
+{
+  "brand": {
+    "name": "MakeMyDemo",
+    "background": "#09090B",
+    "foreground": "#FAFAFA",
+    "accent": "#DFE104",
+    "font": "Inter"
+  },
+  "assets": {}
+}

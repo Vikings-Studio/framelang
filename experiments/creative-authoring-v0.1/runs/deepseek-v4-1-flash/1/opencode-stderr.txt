@@ -1,0 +1,2 @@
+timestamp=2026-09-29T18:03:22.938Z level=WARN run=aae1cbdb message="server unavailable" key=firecrawl type=local status=failed
+timestamp=2026-09-29T18:03:23.027Z level=WARN run=aae1cbdb message="server unavailable" key=tokensave type=local status=failed

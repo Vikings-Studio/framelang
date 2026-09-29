@@ -1,0 +1,21 @@
+{
+  "number": 6,
+  "model": "opencode-go/glm-5.3",
+  "variant": "low",
+  "status": "check rejected",
+  "durationMs": 36185,
+  "exitCode": 0,
+  "signal": null,
+  "tokens": {
+    "total": 6956,
+    "input": 5011,
+    "output": 1749,
+    "reasoning": 188,
+    "cache": {
+      "read": 8,
+      "write": 0
+    }
+  },
+  "cost": 0.01554028,
+  "formatViolation": true
+}

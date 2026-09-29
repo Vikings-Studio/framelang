@@ -1,0 +1,12 @@
+{
+  "number": 3,
+  "model": "opencode-go/glm-5.3",
+  "variant": "low",
+  "status": "Local OpenCode launch failed",
+  "durationMs": 508,
+  "exitCode": 1,
+  "signal": null,
+  "tokens": null,
+  "cost": null,
+  "classificationEvidence": "stderr: FileSystem.open OpenCode log path; no provider events emitted"
+}

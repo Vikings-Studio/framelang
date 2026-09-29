@@ -1,0 +1,150 @@
+{
+  "language": "framelang/v1",
+  "sourceLanguage": "framelang/creative-v0.1",
+  "pilot": true,
+  "inputHash": "sha256:c3a10443651eb49b452afe2abe3f8891e1a85dfe4b290ff2251c52a01121be78",
+  "expandedHash": "sha256:97f4e9acad062e5748684771218e7e6d3d51acb0b521cd3f7da5cbb716b04b4e",
+  "recipe": null,
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "bundleRefs": {
+    "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+    "assetsRef": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "sourceMap": {
+    "#fl-s1-s1-kicker": {
+      "sceneId": "s1",
+      "nodeId": "s1-kicker",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 4,
+      "location": "$.scenes[0].nodes[0]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[0]",
+        "portrait-1080x1920": "$.scenes[0].nodes[0].portrait"
+      }
+    },
+    "#fl-s1-s1-headline": {
+      "sceneId": "s1",
+      "nodeId": "s1-headline",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 4,
+      "location": "$.scenes[0].nodes[1]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[1]",
+        "portrait-1080x1920": "$.scenes[0].nodes[1].portrait"
+      }
+    },
+    "#fl-s1-s1-bar": {
+      "sceneId": "s1",
+      "nodeId": "s1-bar",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 4,
+      "location": "$.scenes[0].nodes[2]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[2]",
+        "portrait-1080x1920": "$.scenes[0].nodes[2].portrait"
+      }
+    },
+    "#fl-s1-s1-dot": {
+      "sceneId": "s1",
+      "nodeId": "s1-dot",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 4,
+      "location": "$.scenes[0].nodes[3]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[3]",
+        "portrait-1080x1920": "$.scenes[0].nodes[3].portrait"
+      }
+    },
+    "#fl-s1-s1-url": {
+      "sceneId": "s1",
+      "nodeId": "s1-url",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 4,
+      "location": "$.scenes[0].nodes[4]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[4]",
+        "portrait-1080x1920": "$.scenes[0].nodes[4].portrait"
+      }
+    },
+    "#fl-s1-s1-caret": {
+      "sceneId": "s1",
+      "nodeId": "s1-caret",
+      "componentPrefixes": [],
+      "startTime": 0,
+      "endTime": 4,
+      "location": "$.scenes[0].nodes[5]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[5]",
+        "portrait-1080x1920": "$.scenes[0].nodes[5].portrait"
+      }
+    },
+    "#fl-s2-s2-headline": {
+      "sceneId": "s2",
+      "nodeId": "s2-headline",
+      "componentPrefixes": [],
+      "startTime": 4,
+      "endTime": 8,
+      "location": "$.scenes[1].nodes[0]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[0]",
+        "portrait-1080x1920": "$.scenes[1].nodes[0].portrait"
+      }
+    },
+    "#fl-s2-s2-flow": {
+      "sceneId": "s2",
+      "nodeId": "s2-flow",
+      "componentPrefixes": [
+        ".fl-chain-",
+        ".fl-flow-"
+      ],
+      "startTime": 4,
+      "endTime": 8,
+      "location": "$.scenes[1].nodes[1]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[1]",
+        "portrait-1080x1920": "$.scenes[1].nodes[1].portrait"
+      }
+    },
+    "#fl-s2-s2-label": {
+      "sceneId": "s2",
+      "nodeId": "s2-label",
+      "componentPrefixes": [],
+      "startTime": 4,
+      "endTime": 8,
+      "location": "$.scenes[1].nodes[2]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[2]",
+        "portrait-1080x1920": "$.scenes[1].nodes[2].portrait"
+      }
+    }
+  },
+  "outputs": {
+    "landscape-1920x1080": {
+      "directory": "landscape-1920x1080",
+      "htmlHash": "sha256:eaccb207f24e954e4c523e495623745f4b0af68f350045024ffad5b90478c649",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      }
+    },
+    "portrait-1080x1920": {
+      "directory": "portrait-1080x1920",
+      "htmlHash": "sha256:a37655f474d3b9181bf7cf966fa9644ed8a0d9062901c6909d11fc486b6fc1ad",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false
+}

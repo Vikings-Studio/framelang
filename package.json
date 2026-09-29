@@ -27,10 +27,14 @@
     "recipe:v2:compile": "node src/cli.mjs compile examples/makemydemo-recipe-v2.json out/makemydemo-recipe-v2",
     "recipe:v2:check": "node src/cli.mjs check out/makemydemo-recipe-v2",
     "recipe:v2:render": "node src/cli.mjs render out/makemydemo-recipe-v2",
-    "verify:unfit-rejection": "node scripts/verify-unfit.mjs"
+    "verify:unfit-rejection": "node scripts/verify-unfit.mjs",
+    "creative:compile": "node src/cli.mjs compile examples/makemydemo-creative/program.json out/creative",
+    "creative:check": "node src/cli.mjs check out/creative",
+    "creative:render": "node src/cli.mjs render out/creative",
+    "verify:line-fit": "node scripts/verify-line-fit.mjs"
   },
   "dependencies": {
     "gsap": "3.15.0",
-    "hyperframes": "0.8.82"
+    "hyperframes": "0.8.92"
   }
 }

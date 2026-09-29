@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "landscape-1920x1080",
+      "node": "s2-badge",
+      "location": "$.scenes[1].nodes[3].rect",
+      "rect": [
+        820,
+        600,
+        240,
+        90
+      ],
+      "message": "Node s2-badge exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "landscape-1920x1080",
+      "node": "s2-badge-text",
+      "location": "$.scenes[1].nodes[4].rect",
+      "rect": [
+        820,
+        600,
+        240,
+        90
+      ],
+      "message": "Node s2-badge-text exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:214ea9ec4d831d91b69dcabcb474b5095b3b2fb536951149fa0f36ecff0b5792"
+}

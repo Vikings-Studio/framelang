@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:664a856ae32f7d50c3576ac37f666ae8048f6d122720d808e2af766e9035e5a0",
+  "recipe": null,
+  "ok": false,
+  "findings": [
+    {
+      "code": "geometry.textFit",
+      "severity": "error",
+      "profile": "landscape-1920x1080",
+      "sceneId": "s2",
+      "nodeId": "s2-cta",
+      "location": "$.scenes[1].nodes[4]",
+      "message": "FrameLang text fit failed: fl-s2-s2-cta",
+      "time": 0,
+      "hint": "Shorten this text or enlarge its canvas rectangle; preserve required meaning, then recompile and check."
+    },
+    {
+      "code": "geometry.textFit",
+      "severity": "error",
+      "profile": "portrait-1080x1920",
+      "sceneId": "s2",
+      "nodeId": "s2-cta",
+      "location": "$.scenes[1].nodes[4].portrait",
+      "message": "FrameLang text fit failed: fl-s2-s2-cta",
+      "time": 0,
+      "hint": "Shorten this text or enlarge its canvas rectangle; preserve required meaning, then recompile and check."
+    }
+  ],
+  "instruction": "Revise the FrameLang source using these findings, then compile and check again. Do not render until every profile passes."
+}

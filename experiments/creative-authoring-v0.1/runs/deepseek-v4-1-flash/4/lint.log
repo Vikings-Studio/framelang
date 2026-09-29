@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "syntax.required",
+      "severity": "error",
+      "location": "$.scenes[1].nodes[2].phase",
+      "message": "syntax.required at $.scenes[1].content[2].phase: required field",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:bbf12a8262097e6f2cb9cd38f3943cad5221f6d3eb43f76eb3f8c8b29ff61e8a"
+}

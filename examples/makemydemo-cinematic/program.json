@@ -355,7 +355,8 @@
             "Product visuals",
             "Music"
           ],
-          "outcome": "Video first cut"
+          "outcome": "Video first cut",
+          "variant": "chain"
         },
         {
           "id": "artifact",

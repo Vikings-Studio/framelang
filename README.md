@@ -29,6 +29,21 @@ For routine generation, a [versioned compact recipe](spec/V0_1_RECIPES.md)
 can expand into a reviewed cinematic or editorial scene. The model writes three lead lines
 instead of repeating layouts, hashes, assets, and animation boilerplate.
 
+## Creative model authoring
+
+Use [creative v0.1](spec/V0_1_CREATIVE_AUTHORING.md) for model-chosen composition,
+typography, emphasis, gradients, shapes, relative placement and animation.
+It omits compiler-owned hashes, states and event boilerplate, enables every-frame
+geometry checks, and reports repairs in the model's authored node coordinates.
+The [five-model creative study](experiments/creative-authoring-v0.1/README.md)
+includes actual landscape/portrait videos, all attempts, token usage and costs.
+
+```text
+npm run creative:compile
+npm run creative:check
+npm run creative:render
+```
+
 ## Requirements
 
 - Node.js 22 or newer
@@ -36,8 +51,8 @@ instead of repeating layouts, hashes, assets, and animation boilerplate.
 - FFmpeg for rendering
 - A Chromium runtime supported by the pinned HyperFrames CLI
 
-No OS-specific shell scripts, absolute paths, Homebrew requirement, or bundled
-system fonts are part of the repo. The same Node commands run on macOS, Linux,
+Runtime commands have no OS-specific shell scripts, fixed absolute paths or
+Homebrew requirement; fonts are staged from verified local assets. The same Node commands run on macOS, Linux,
 and Windows. CI runs install, compile, check, and render smoke jobs on all
 three platforms; equivalent semantics are the goal, not identical native
 pixels across operating systems.
@@ -122,3 +137,7 @@ It keeps model inference cost separate from rendering and human review.
 The repository name is `framelang` under Vikings Studio. `FrameLang`
 is the scene language; MakeMyDemo's existing `frame.md` is a different brand
 specification and may supply tokens to a future integration.
+
+## Model-owned creative authoring
+
+Use [`framelang/creative-v0.1`](spec/V0_1_CREATIVE_AUTHORING.md) when models should choose composition, typography, backgrounds and motion. It removes internal-state boilerplate while keeping the compiler lint and per-frame render gate. Original comparison trials and designer-authored recipes remain separate evidence.

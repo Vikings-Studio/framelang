@@ -1,0 +1,20 @@
+{
+  "number": 1,
+  "model": "opencode-go/glm-5.2",
+  "status": "lint rejected",
+  "durationMs": 430949,
+  "exitCode": 0,
+  "signal": null,
+  "tokens": {
+    "total": 26354,
+    "input": 3197,
+    "output": 1723,
+    "reasoning": 21422,
+    "cache": {
+      "read": 12,
+      "write": 0
+    }
+  },
+  "cost": 0.10631692,
+  "formatViolation": false
+}

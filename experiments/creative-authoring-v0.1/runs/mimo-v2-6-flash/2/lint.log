@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "spec-rule-3",
+      "location": "$.scenes[0].nodes[9].portrait.rect",
+      "rect": [
+        70,
+        1005,
+        860,
+        2
+      ],
+      "message": "Node spec-rule-3 exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "spec-3",
+      "location": "$.scenes[0].nodes[10].portrait.rect",
+      "rect": [
+        70,
+        1025,
+        860,
+        55
+      ],
+      "message": "Node spec-3 exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "spec-rule-4",
+      "location": "$.scenes[0].nodes[11].portrait.rect",
+      "rect": [
+        70,
+        1095,
+        860,
+        6
+      ],
+      "message": "Node spec-rule-4 exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "pipeline",
+      "location": "$.scenes[0].nodes[12].portrait.rect",
+      "rect": [
+        70,
+        1160,
+        860,
+        620
+      ],
+      "message": "Node pipeline exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "portrait-1080x1920",
+      "node": "mp4",
+      "location": "$.scenes[1].nodes[3].portrait.rect",
+      "rect": [
+        70,
+        950,
+        300,
+        120
+      ],
+      "message": "Node mp4 exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "portrait-1080x1920",
+      "node": "first-cut",
+      "location": "$.scenes[1].nodes[4].portrait.rect",
+      "rect": [
+        630,
+        950,
+        300,
+        120
+      ],
+      "message": "Node first-cut exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "portrait-1080x1920",
+      "node": "review-flow",
+      "location": "$.scenes[1].nodes[7].portrait.rect",
+      "rect": [
+        70,
+        1130,
+        860,
+        640
+      ],
+      "message": "Node review-flow exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:b13e82dc0b1c1911cb88a691b74afebf576afb5f028de8cd1c98476609bc8937"
+}

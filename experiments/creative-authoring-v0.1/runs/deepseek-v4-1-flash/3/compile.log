@@ -1,0 +1,120 @@
+{
+  "language": "framelang/v1",
+  "sourceLanguage": "framelang/creative-v0.1",
+  "pilot": true,
+  "inputHash": "sha256:9b4638e14a228de4f4eddeabc3495d2e299e41afbd4d32900a3069a092c6fd70",
+  "expandedHash": "sha256:633658dd51ea33bc2b26453e281b2efeb5e02f7492d25144c13f24561b463f0c",
+  "recipe": null,
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "bundleRefs": {
+    "brandRef": "sha256:7efb39093ea57442ff871c8da719e0ce1ae68575e8c7e514df5c8d903dff1ad5",
+    "assetsRef": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "sourceMap": {
+    "#fl-s1-s1-label": {
+      "sceneId": "s1",
+      "nodeId": "s1-label",
+      "location": "$.scenes[0].nodes[0]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[0]",
+        "portrait-1080x1920": "$.scenes[0].nodes[0].portrait"
+      }
+    },
+    "#fl-s1-s1-headline": {
+      "sceneId": "s1",
+      "nodeId": "s1-headline",
+      "location": "$.scenes[0].nodes[1]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[1]",
+        "portrait-1080x1920": "$.scenes[0].nodes[1].portrait"
+      }
+    },
+    "#fl-s1-s1-flow": {
+      "sceneId": "s1",
+      "nodeId": "s1-flow",
+      "location": "$.scenes[0].nodes[2]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[0].nodes[2]",
+        "portrait-1080x1920": "$.scenes[0].nodes[2].portrait"
+      }
+    },
+    "#fl-s2-s2-rule": {
+      "sceneId": "s2",
+      "nodeId": "s2-rule",
+      "location": "$.scenes[1].nodes[0]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[0]",
+        "portrait-1080x1920": "$.scenes[1].nodes[0]"
+      }
+    },
+    "#fl-s2-s2-headline": {
+      "sceneId": "s2",
+      "nodeId": "s2-headline",
+      "location": "$.scenes[1].nodes[1]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[1]",
+        "portrait-1080x1920": "$.scenes[1].nodes[1]"
+      }
+    },
+    "#fl-s2-s2-body": {
+      "sceneId": "s2",
+      "nodeId": "s2-body",
+      "location": "$.scenes[1].nodes[2]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[2]",
+        "portrait-1080x1920": "$.scenes[1].nodes[2]"
+      }
+    },
+    "#fl-s2-s2-tag-1": {
+      "sceneId": "s2",
+      "nodeId": "s2-tag-1",
+      "location": "$.scenes[1].nodes[3]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[3]",
+        "portrait-1080x1920": "$.scenes[1].nodes[3]"
+      }
+    },
+    "#fl-s2-s2-tag-2": {
+      "sceneId": "s2",
+      "nodeId": "s2-tag-2",
+      "location": "$.scenes[1].nodes[4]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[4]",
+        "portrait-1080x1920": "$.scenes[1].nodes[4]"
+      }
+    },
+    "#fl-s2-s2-tag-3": {
+      "sceneId": "s2",
+      "nodeId": "s2-tag-3",
+      "location": "$.scenes[1].nodes[5]",
+      "layoutLocations": {
+        "landscape-1920x1080": "$.scenes[1].nodes[5]",
+        "portrait-1080x1920": "$.scenes[1].nodes[5]"
+      }
+    }
+  },
+  "outputs": {
+    "landscape-1920x1080": {
+      "directory": "landscape-1920x1080",
+      "htmlHash": "sha256:1ed4ca38855c64c8d6ddabda5ac5f50fe7dfbcc5193f7846d1e3babdd9a45ee9",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      }
+    },
+    "portrait-1080x1920": {
+      "directory": "portrait-1080x1920",
+      "htmlHash": "sha256:740f133db705b90c221dbddd2dc5a4abd72f46ec6245fcbd2af86bf8ea798d93",
+      "assetHashes": {
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb",
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false
+}

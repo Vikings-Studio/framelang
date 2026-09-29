@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "stage": "static",
+  "ok": false,
+  "findings": [
+    {
+      "code": "syntax.object",
+      "location": "$.scenes[0].nodes[0].portrait",
+      "message": "syntax.object at $.scenes[0].nodes[0].portrait: expected object",
+      "severity": "error",
+      "hint": "Revise the indicated FrameLang source, then rerun lint."
+    }
+  ],
+  "instruction": "Revise the FrameLang source and rerun lint before compiling."
+}

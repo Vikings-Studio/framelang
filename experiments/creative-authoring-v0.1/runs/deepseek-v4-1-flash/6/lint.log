@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.componentFit",
+      "severity": "error",
+      "location": "$.scenes[1].nodes[3]",
+      "message": "semantic.componentFit at $.scenes[1].layouts.landscape-1920x1080.children[3]: vertical flow s2-flow needs at least 537 thousandths of safe-canvas height for readable steps; enlarge its rectangle or use fewer steps",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:4f1707aa1e0a72574004be8616247d870d0a54179ca9faca1a5626f560d14cdf"
+}

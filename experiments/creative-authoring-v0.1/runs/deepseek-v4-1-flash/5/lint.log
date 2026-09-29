@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "syntax.videoArtifact",
+      "severity": "error",
+      "location": "$.scenes[1].nodes[2].phase",
+      "message": "syntax.videoArtifact at $.scenes[1].content[2].phase: expected preview or export",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:1a1ea94a15aa0f0e57bdade6724e734bd29e39d948b5294cded40cf4dccefda9"
+}

@@ -1,0 +1,191 @@
+{
+  "language": "framelang/creative-v0.1",
+  "scenes": [
+    {
+      "id": "s1",
+      "durationFrames": 96,
+      "design": {
+        "decoration": "grid-glow",
+        "ambient": "drift",
+        "chrome": "none",
+        "background": {
+          "kind": "layers",
+          "layers": [
+            {
+              "kind": "linear",
+              "angle": 180,
+              "stops": [
+                { "at": 0, "color": "#09090B" },
+                { "at": 100, "color": "#0C0C10" }
+              ]
+            },
+            {
+              "kind": "radial",
+              "center": [82, 12],
+              "stops": [
+                { "at": 0, "color": "#DFE104", "opacity": 12 },
+                { "at": 100, "color": "#09090B", "opacity": 0 }
+              ]
+            }
+          ]
+        }
+      },
+      "nodes": [
+        {
+          "id": "s1-label",
+          "kind": "text",
+          "role": "label",
+          "rect": [64, 96, 340, 44],
+          "portrait": [72, 110, 520, 48],
+          "text": "Input",
+          "style": {
+            "size": 30,
+            "minSize": 24,
+            "maxLines": 1,
+            "align": "left",
+            "weight": 600,
+            "tracking": "extraWide",
+            "lineHeight": "normal",
+            "color": "#DFE104",
+            "case": "uppercase"
+          },
+          "motion": { "preset": "fade", "atFrame": 0, "durationFrames": 12 }
+        },
+        {
+          "id": "s1-headline",
+          "kind": "text",
+          "role": "headline",
+          "rect": [64, 168, 872, 330],
+          "portrait": [72, 182, 856, 380],
+          "segments": [
+            { "text": "Paste a " },
+            { "text": "public URL", "tone": "accent" },
+            { "text": "." }
+          ],
+          "style": {
+            "size": 150,
+            "minSize": 64,
+            "maxLines": 3,
+            "align": "left",
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "#FAFAFA"
+          },
+          "motion": { "preset": "rise", "atFrame": 2, "durationFrames": 20 }
+        },
+        {
+          "id": "s1-body",
+          "kind": "text",
+          "role": "body",
+          "rect": [64, 530, 872, 130],
+          "portrait": [72, 610, 856, 180],
+          "text": "MakeMyDemo turns a public product URL into a video first cut.",
+          "style": {
+            "size": 42,
+            "minSize": 32,
+            "maxLines": 3,
+            "align": "left",
+            "weight": 400,
+            "tracking": "normal",
+            "lineHeight": "relaxed",
+            "color": "#FAFAFA"
+          },
+          "motion": { "preset": "rise", "atFrame": 8, "durationFrames": 20 }
+        },
+        {
+          "id": "s1-input",
+          "kind": "inputCard",
+          "placeholder": "MakeMyDemo.com",
+          "label": "Paste a public URL",
+          "rect": [64, 700, 872, 220],
+          "portrait": [72, 800, 856, 180],
+          "motion": "paste"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "durationFrames": 96,
+      "design": {
+        "decoration": "rules",
+        "ambient": "none",
+        "chrome": "editorial",
+        "background": {
+          "kind": "linear",
+          "angle": 200,
+          "stops": [
+            { "at": 0, "color": "#09090B" },
+            { "at": 100, "color": "#111114" }
+          ]
+        }
+      },
+      "nodes": [
+        {
+          "id": "s2-label",
+          "kind": "text",
+          "role": "label",
+          "rect": [64, 96, 340, 44],
+          "portrait": [72, 80, 520, 44],
+          "text": "Output",
+          "style": {
+            "size": 30,
+            "minSize": 24,
+            "maxLines": 1,
+            "align": "left",
+            "weight": 600,
+            "tracking": "extraWide",
+            "lineHeight": "normal",
+            "color": "#DFE104",
+            "case": "uppercase"
+          },
+          "motion": { "preset": "fade", "atFrame": 0, "durationFrames": 12 }
+        },
+        {
+          "id": "s2-headline",
+          "kind": "text",
+          "role": "headline",
+          "rect": [64, 168, 872, 330],
+          "portrait": [72, 140, 856, 300],
+          "segments": [
+            { "text": "Review.", "breakAfter": true },
+            { "text": "Export " },
+            { "text": "MP4", "tone": "accent" },
+            { "text": "." }
+          ],
+          "style": {
+            "size": 150,
+            "minSize": 64,
+            "maxLines": 2,
+            "align": "left",
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "#FAFAFA"
+          },
+          "motion": { "preset": "rise", "atFrame": 2, "durationFrames": 20 }
+        },
+        {
+          "id": "s2-artifact",
+          "kind": "videoArtifact",
+          "phase": "review",
+          "title": "Video first cut",
+          "action": "Export MP4",
+          "rect": [64, 520, 540, 360],
+          "portrait": [72, 470, 856, 170],
+          "motion": "reveal"
+        },
+        {
+          "id": "s2-flow",
+          "kind": "flow",
+          "steps": ["AI script", "Product visuals", "Music"],
+          "outcome": "Video first cut",
+          "variant": "chain",
+          "rect": [640, 520, 296, 360],
+          "portrait": [72, 650, 856, 350],
+          "motion": "stagger"
+        }
+      ]
+    }
+  ]
+}

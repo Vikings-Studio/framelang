@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "syntax.shape",
+      "severity": "error",
+      "location": "$.scenes[0].nodes[7].corner",
+      "message": "syntax.shape at $.scenes[0].content[7].corner: circle has a fixed round corner",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:51d18743fa82e3353be7a6199877c985198c857b29daceb01ec6ae299df9fe7d"
+}

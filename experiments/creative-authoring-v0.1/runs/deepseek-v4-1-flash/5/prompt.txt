@@ -1,0 +1,218 @@
+Design a polished, silent 8-second MakeMyDemo.com teaser: exactly two 96-frame scenes at24fps, landscape and portrait. Facts only: paste a public product URL; receive a video first cut with an AI-written script, product visuals and music; review and export MP4. No invented claims or URLs. Brand background#09090B foreground#FAFAFA accent#DFE104, Inter. Choose strong hierarchy, generous headline type, accent emphasis, supporting graphics, composition and staged motion. Return JSON only; no tools.
+
+Document: {"language":"framelang/creative-v0.1","scenes":[{"id":"s1","durationFrames":96,"design":{},"nodes":[]},{"id":"s2","durationFrames":96,"design":{},"nodes":[]}]}
+Design optional: decoration none|rules|grid-glow, ambient none|drift (grid-glow only), chrome none|editorial, background paint. Paint: brand token or hex; {kind:"linear",angle:0..359,stops:[{at:0,color:hex,opacity:0..100},{at:100,color:hex}]}; radial uses center:[0..100,0..100]; layers uses {kind:"layers",layers:[basePaint,overlayPaint]} bottom-to-top.
+Nodes: id,rect:[x,y,w,h],portrait:[x,y,w,h]. Coordinates integer thousandths of safe canvas; nonnegative and x+w,y+h<=1000. Keep functional rectangles separate. Fully containing decorative panel underlays are safe; partial overlaps fail. IDs lowercase/hyphens.
+Text (default kind): role headline|body|label; text OR segments:[{text,breakAfter?,tone?:foreground|accent|accentBlock}]; style optional {size:24..240,minSize:24..160,maxLines:1..8,align:left|center|right,weight:400..900,tracking:tight|normal|wide|extraWide,lineHeight:tight|normal|relaxed,color:brandToken|hex,italic:boolean,case:preserve|uppercase}. Headline minimum64px, body32px,label24px. Prefer150–190px headlines; fit does not shrink below minimum. Allocate sufficient portrait height.
+Other kinds: flow {steps:[2..4 short labels],outcome:"max36chars",variant:"chain"}; inputCard {placeholder:"MakeMyDemo.com",label:"Paste a public URL"}; videoArtifact {title:"Video first cut",action:"Export MP4"}; shape {primitive:panel|circle|rule,fill:paint|none,stroke?:{color,width:1..12},corner?:square|soft|pill}. Circle corner is fixed, omit corner. Shapes decorative/static, behind text. Portrait flow needs at least350..420 height depending steps; leave space for headings.
+Motion optional: none|rise|slide|fade|pop, flow stagger, inputCard paste, videoArtifact reveal; or {preset,atFrame:0..50,durationFrames:1..40}. First headline reveal starts byframe10. All motion finishes byframe81. Default text starts byframe10 for18frames. No arbitrary HTML/CSS/JS or assets. Compiler owns scene cuts, hashes, states, fitting and verification. Different scenes should have distinct visual composition; useful graphics matter more than extra labels.
+
+Your previous JSON failed validation. Preserve your design and fix this feedback; return the full JSON only.
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "syntax.required",
+      "severity": "error",
+      "location": "$.scenes[1].nodes[2].phase",
+      "message": "syntax.required at $.scenes[1].content[2].phase: required field",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:bbf12a8262097e6f2cb9cd38f3943cad5221f6d3eb43f76eb3f8c8b29ff61e8a"
+}
+
+Previous JSON:
+{
+  "language": "framelang/creative-v0.1",
+  "scenes": [
+    {
+      "id": "s1",
+      "durationFrames": 96,
+      "design": {
+        "decoration": "grid-glow",
+        "ambient": "drift",
+        "chrome": "none",
+        "background": {
+          "kind": "layers",
+          "layers": [
+            {
+              "kind": "linear",
+              "angle": 180,
+              "stops": [
+                { "at": 0, "color": "#09090B" },
+                { "at": 100, "color": "#0C0C10" }
+              ]
+            },
+            {
+              "kind": "radial",
+              "center": [82, 12],
+              "stops": [
+                { "at": 0, "color": "#DFE104", "opacity": 12 },
+                { "at": 100, "color": "#09090B", "opacity": 0 }
+              ]
+            }
+          ]
+        }
+      },
+      "nodes": [
+        {
+          "id": "s1-label",
+          "kind": "text",
+          "role": "label",
+          "rect": [64, 96, 340, 44],
+          "portrait": [72, 110, 520, 48],
+          "text": "Input",
+          "style": {
+            "size": 30,
+            "minSize": 24,
+            "maxLines": 1,
+            "align": "left",
+            "weight": 600,
+            "tracking": "extraWide",
+            "lineHeight": "normal",
+            "color": "#DFE104",
+            "case": "uppercase"
+          },
+          "motion": { "preset": "fade", "atFrame": 0, "durationFrames": 12 }
+        },
+        {
+          "id": "s1-headline",
+          "kind": "text",
+          "role": "headline",
+          "rect": [64, 168, 872, 330],
+          "portrait": [72, 182, 856, 380],
+          "segments": [
+            { "text": "Paste a " },
+            { "text": "public URL", "tone": "accent" },
+            { "text": "." }
+          ],
+          "style": {
+            "size": 150,
+            "minSize": 64,
+            "maxLines": 3,
+            "align": "left",
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "#FAFAFA"
+          },
+          "motion": { "preset": "rise", "atFrame": 2, "durationFrames": 20 }
+        },
+        {
+          "id": "s1-body",
+          "kind": "text",
+          "role": "body",
+          "rect": [64, 530, 872, 130],
+          "portrait": [72, 610, 856, 180],
+          "text": "MakeMyDemo turns a public product URL into a video first cut.",
+          "style": {
+            "size": 42,
+            "minSize": 32,
+            "maxLines": 3,
+            "align": "left",
+            "weight": 400,
+            "tracking": "normal",
+            "lineHeight": "relaxed",
+            "color": "#FAFAFA"
+          },
+          "motion": { "preset": "rise", "atFrame": 8, "durationFrames": 20 }
+        },
+        {
+          "id": "s1-input",
+          "kind": "inputCard",
+          "placeholder": "MakeMyDemo.com",
+          "label": "Paste a public URL",
+          "rect": [64, 700, 872, 220],
+          "portrait": [72, 800, 856, 180],
+          "motion": "paste"
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "durationFrames": 96,
+      "design": {
+        "decoration": "rules",
+        "ambient": "none",
+        "chrome": "editorial",
+        "background": {
+          "kind": "linear",
+          "angle": 200,
+          "stops": [
+            { "at": 0, "color": "#09090B" },
+            { "at": 100, "color": "#111114" }
+          ]
+        }
+      },
+      "nodes": [
+        {
+          "id": "s2-label",
+          "kind": "text",
+          "role": "label",
+          "rect": [64, 96, 340, 44],
+          "portrait": [72, 80, 520, 44],
+          "text": "Output",
+          "style": {
+            "size": 30,
+            "minSize": 24,
+            "maxLines": 1,
+            "align": "left",
+            "weight": 600,
+            "tracking": "extraWide",
+            "lineHeight": "normal",
+            "color": "#DFE104",
+            "case": "uppercase"
+          },
+          "motion": { "preset": "fade", "atFrame": 0, "durationFrames": 12 }
+        },
+        {
+          "id": "s2-headline",
+          "kind": "text",
+          "role": "headline",
+          "rect": [64, 168, 872, 330],
+          "portrait": [72, 140, 856, 300],
+          "segments": [
+            { "text": "Review.", "breakAfter": true },
+            { "text": "Export " },
+            { "text": "MP4", "tone": "accent" },
+            { "text": "." }
+          ],
+          "style": {
+            "size": 150,
+            "minSize": 64,
+            "maxLines": 2,
+            "align": "left",
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "#FAFAFA"
+          },
+          "motion": { "preset": "rise", "atFrame": 2, "durationFrames": 20 }
+        },
+        {
+          "id": "s2-artifact",
+          "kind": "videoArtifact",
+          "title": "Video first cut",
+          "action": "Export MP4",
+          "rect": [64, 520, 540, 360],
+          "portrait": [72, 470, 856, 170],
+          "motion": "reveal"
+        },
+        {
+          "id": "s2-flow",
+          "kind": "flow",
+          "steps": ["AI script", "Product visuals", "Music"],
+          "outcome": "Video first cut",
+          "variant": "chain",
+          "rect": [640, 520, 296, 360],
+          "portrait": [72, 650, 856, 350],
+          "motion": "stagger"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "number": 7,
+  "model": "opencode-go/deepseek-v4.1-flash",
+  "variant": "low",
+  "status": "check rejected",
+  "durationMs": 46686,
+  "exitCode": 0,
+  "signal": null,
+  "tokens": {
+    "total": 10972,
+    "input": 2099,
+    "output": 1706,
+    "reasoning": 4223,
+    "cache": {
+      "read": 2944,
+      "write": 0
+    }
+  },
+  "cost": 0.003881082,
+  "formatViolation": false
+}
