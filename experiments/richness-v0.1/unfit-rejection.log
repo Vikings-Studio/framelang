@@ -1,0 +1,5 @@
+
+> framelang@0.1.0 verify:unfit-rejection
+> node scripts/verify-unfit.mjs
+
+Impossible text rejected by browser check.

@@ -1,0 +1,18 @@
+{
+  "brand": {
+    "name": "MakeMyDemo",
+    "background": "#09090B",
+    "foreground": "#FAFAFA",
+    "accent": "#DFE104",
+    "font": "Inter"
+  },
+  "assets": {
+    "orbit-mark": {
+      "kind": "svg",
+      "path": "assets/orbit-mark.svg",
+      "sha256": "sha256:a190290727cc64174dcd01bca8816e23cf2f902c7ee3d2b0e3c79f53f448d812",
+      "displayAllowed": true,
+      "license": "CC0-1.0"
+    }
+  }
+}

@@ -13,7 +13,7 @@ const ID = /^[a-z][a-z0-9-]{0,39}$/;
 const SHA = /^sha256:[0-9a-f]{64}$/;
 const SCENE_KEYS = ['id', 'role', 'blueprint', 'durationFrames', 'essential', 'content', 'layouts', 'initialState', 'resolvedState', 'states', 'events', 'design'];
 const SCENE_REQUIRED = SCENE_KEYS.filter(key => key !== 'design');
-const DOCUMENT_KEYS = ['language', 'fps', 'profiles', 'brandRef', 'assetsRef', 'seed', 'scenes'];
+const DOCUMENT_KEYS = ['language', 'fps', 'profiles', 'brandRef', 'assetsRef', 'seed', 'scenes', 'verification'];
 
 export class FrameLangError extends Error {
   constructor(code, location, message) {
@@ -98,7 +98,7 @@ function textCopy(node, location) {
     const at = `${location}.segments[${index}]`;
     keys(segment, ['text', 'tone', 'breakAfter'], ['text'], at);
     plainText(segment.text, `${at}.text`, 120);
-    if (segment.tone !== undefined && !['foreground', 'accent'].includes(segment.tone)) fail('syntax.text', `${at}.tone`, 'invalid tone');
+    if (segment.tone !== undefined && !['foreground', 'accent', 'accentBlock'].includes(segment.tone)) fail('syntax.text', `${at}.tone`, 'invalid tone');
     if (segment.breakAfter !== undefined && typeof segment.breakAfter !== 'boolean') fail('syntax.text', `${at}.breakAfter`, 'expected boolean');
     if (index === segments.length - 1 && segment.breakAfter) fail('syntax.text', `${at}.breakAfter`, 'last segment cannot end with a break');
     copy += segment.text + (segment.breakAfter ? '\n' : '');
@@ -122,6 +122,53 @@ function unique(items, location) {
     if (seen.has(item)) fail('semantic.duplicate', location, `duplicate ${item}`);
     seen.add(item);
   }
+}
+function canvasPlacements(tree, location, known) {
+  const placements = list(tree.children, `${location}.children`, 1);
+  if (placements.length > 16) fail('syntax.layout', `${location}.children`, 'canvas supports at most 16 placements');
+  const resolved = [];
+  const placed = new Map();
+  for (const [index, placement] of placements.entries()) {
+    const at = `${location}.children[${index}]`;
+    keys(placement, ['node', 'rect', 'relative', 'layer', 'align', 'overlap'], ['node'], at);
+    if (typeof placement.node !== 'string' || !known.has(placement.node)) fail('reference.node', `${at}.node`, 'expected known node ID');
+    if ((placement.rect === undefined) === (placement.relative === undefined)) fail('syntax.layout', at, 'choose one of rect or relative');
+    let rect = placement.rect;
+    if (placement.relative !== undefined) {
+      const relative = placement.relative;
+      keys(relative, ['to', 'side', 'gap', 'width', 'height', 'crossAlign'], ['to', 'side', 'gap', 'width', 'height'], `${at}.relative`);
+      const anchor = placed.get(relative.to);
+      if (!anchor) fail('reference.layout', `${at}.relative.to`, 'relative anchor must be an earlier placed node');
+      if (!['below', 'above', 'right', 'left'].includes(relative.side)) fail('syntax.layout', `${at}.relative.side`, 'unsupported relative side');
+      if (relative.crossAlign !== undefined && !['start', 'center', 'end'].includes(relative.crossAlign)) fail('syntax.layout', `${at}.relative.crossAlign`, 'unsupported cross alignment');
+      for (const field of ['gap', 'width', 'height']) int(relative[field], `${at}.relative.${field}`, field === 'gap' ? 0 : 1, 1000);
+      const [ax, ay, aw, ah] = anchor;
+      const { gap, width, height } = relative;
+      const cross = relative.crossAlign || 'start';
+      const offset = (span, size) => cross === 'end' ? span - size : cross === 'center' ? Math.floor((span - size) / 2) : 0;
+      if (relative.side === 'below') rect = [ax + offset(aw, width), ay + ah + gap, width, height];
+      if (relative.side === 'above') rect = [ax + offset(aw, width), ay - gap - height, width, height];
+      if (relative.side === 'right') rect = [ax + aw + gap, ay + offset(ah, height), width, height];
+      if (relative.side === 'left') rect = [ax - gap - width, ay + offset(ah, height), width, height];
+    }
+    if (!Array.isArray(rect) || rect.length !== 4) fail('syntax.layout', `${at}.rect`, 'expected [x,y,width,height] in thousandths');
+    const [x, y, width, height] = rect;
+    [x, y, width, height].forEach((value, i) => int(value, `${at}.rect[${i}]`, i < 2 ? 0 : 1, 1000));
+    if (x + width > 1000 || y + height > 1000) fail('semantic.bounds', `${at}.rect`, 'placement exceeds the safe canvas');
+    if (placement.layer !== undefined) int(placement.layer, `${at}.layer`, 0, 9);
+    if (placement.align !== undefined && !['start', 'center', 'end'].includes(placement.align)) fail('syntax.layout', `${at}.align`, 'unsupported alignment');
+    if (placement.overlap !== undefined && !['avoid', 'intentional'].includes(placement.overlap)) fail('syntax.layout', `${at}.overlap`, 'unsupported overlap intent');
+    for (const previous of resolved) {
+      const [px, py, pw, ph] = previous.rect;
+      if (x < px + pw && x + width > px && y < py + ph && y + height > py) {
+        if (placement.overlap !== 'intentional' || previous.placement.overlap !== 'intentional') fail('semantic.overlap', at, `overlaps ${previous.placement.node} without mutual intent`);
+        if (known.get(placement.node).importance !== 'decorative' && known.get(previous.placement.node).importance !== 'decorative') fail('semantic.overlap', at, 'intentional overlap requires a decorative node');
+      }
+    }
+    resolved.push({ placement, rect });
+    placed.set(placement.node, rect);
+  }
+  return resolved;
 }
 function layoutRefs(tree, location, known, refs) {
   if (typeof tree === 'string') {
@@ -154,27 +201,7 @@ function layoutRefs(tree, location, known, refs) {
       break;
     case 'canvas': {
       keys(tree, ['type', 'children'], ['type', 'children'], location);
-      const placements = list(tree.children, `${location}.children`, 1);
-      if (placements.length > 16) fail('syntax.layout', `${location}.children`, 'canvas supports at most 16 placements');
-      const rectangles = [];
-      for (const [index, placement] of placements.entries()) {
-        const at = `${location}.children[${index}]`;
-        keys(placement, ['node', 'rect', 'layer', 'align', 'overlap'], ['node', 'rect'], at);
-        if (typeof placement.node !== 'string') fail('syntax.layout', `${at}.node`, 'expected node ID');
-        layoutRefs(placement.node, `${at}.node`, known, refs);
-        if (!Array.isArray(placement.rect) || placement.rect.length !== 4) fail('syntax.layout', `${at}.rect`, 'expected [x,y,width,height] in thousandths');
-        const [x, y, width, height] = placement.rect;
-        [x, y, width, height].forEach((value, i) => int(value, `${at}.rect[${i}]`, i < 2 ? 0 : 1, 1000));
-        if (x + width > 1000 || y + height > 1000) fail('semantic.bounds', `${at}.rect`, 'placement exceeds the safe canvas');
-        if (placement.layer !== undefined) int(placement.layer, `${at}.layer`, 0, 9);
-        if (placement.align !== undefined && !['start', 'center', 'end'].includes(placement.align)) fail('syntax.layout', `${at}.align`, 'unsupported alignment');
-        if (placement.overlap !== undefined && !['avoid', 'intentional'].includes(placement.overlap)) fail('syntax.layout', `${at}.overlap`, 'unsupported overlap intent');
-        for (const previous of rectangles) {
-          const [px, py, pw, ph] = previous.rect;
-          if (x < px + pw && x + width > px && y < py + ph && y + height > py && (placement.overlap !== 'intentional' || previous.overlap !== 'intentional')) fail('semantic.overlap', at, `overlaps ${previous.node} without mutual intent`);
-        }
-        rectangles.push(placement);
-      }
+      for (const [index, { placement }] of canvasPlacements(tree, location, known).entries()) layoutRefs(placement.node, `${location}.children[${index}].node`, known, refs);
       break;
     }
     default: fail('syntax.layout', location, `unsupported layout ${tree.type}`);
@@ -182,10 +209,14 @@ function layoutRefs(tree, location, known, refs) {
 }
 
 export function validate(program, bundle) {
-  keys(program, DOCUMENT_KEYS, DOCUMENT_KEYS, '$');
+  keys(program, DOCUMENT_KEYS, DOCUMENT_KEYS.filter(key => key !== 'verification'), '$');
   if (program.language !== 'framelang/v1') fail('syntax.version', '$.language', 'expected framelang/v1');
   if (program.fps !== 24) fail('syntax.fps', '$.fps', 'pilot supports 24 fps');
   int(program.seed, '$.seed', 0, 4294967295);
+  if (program.verification !== undefined) {
+    keys(program.verification, ['mode'], ['mode'], '$.verification');
+    if (program.verification.mode !== 'allFrames') fail('syntax.verification', '$.verification.mode', 'unsupported verification mode');
+  }
   for (const field of ['brandRef', 'assetsRef']) if (!SHA.test(program[field])) fail('syntax.hash', `$.${field}`, 'expected sha256 digest');
   const refs = bundleRefs(bundle);
   for (const field of ['brandRef', 'assetsRef']) if (program[field] !== refs[field]) fail('reference.bundle', `$.${field}`, 'frozen bundle hash differs');
@@ -233,23 +264,25 @@ export function validate(program, bundle) {
           if (node.style.color !== undefined) colorRef(node.style.color, `${na}.style.color`);
         }
       } else if (node.kind === 'flow') {
-        keys(node, ['id', 'kind', 'importance', 'steps', 'outcome'], ['id', 'kind', 'importance', 'steps', 'outcome'], na);
+        keys(node, ['id', 'kind', 'importance', 'steps', 'outcome', 'variant'], ['id', 'kind', 'importance', 'steps', 'outcome'], na);
         if (!['product-process/v1', 'workflow-demo/v1'].includes(scene.blueprint)) fail('syntax.flow', na, 'flow requires a process blueprint');
         const steps = list(node.steps, `${na}.steps`, 2);
         if (steps.length > 4) fail('syntax.flow', `${na}.steps`, 'at most four flow steps');
         steps.forEach((step, stepIndex) => plainText(step, `${na}.steps[${stepIndex}]`, 28));
         plainText(node.outcome, `${na}.outcome`, 36);
+        if (node.variant !== undefined && node.variant !== 'chain') fail('syntax.flow', `${na}.variant`, 'unsupported flow variant');
       } else if (node.kind === 'inputCard') {
         keys(node, ['id', 'kind', 'importance', 'label', 'placeholder'], ['id', 'kind', 'importance', 'placeholder'], na);
         if (scene.blueprint !== 'workflow-demo/v1') fail('syntax.inputCard', na, 'input card requires workflow-demo/v1');
         if (node.label !== undefined) plainText(node.label, `${na}.label`, 36);
         plainText(node.placeholder, `${na}.placeholder`, 58);
       } else if (node.kind === 'videoArtifact') {
-        keys(node, ['id', 'kind', 'importance', 'title', 'action', 'phase'], ['id', 'kind', 'importance', 'title', 'action', 'phase'], na);
+        keys(node, ['id', 'kind', 'importance', 'title', 'action', 'phase', 'density'], ['id', 'kind', 'importance', 'title', 'action', 'phase'], na);
         if (scene.blueprint !== 'workflow-demo/v1') fail('syntax.videoArtifact', na, 'video artifact requires workflow-demo/v1');
         plainText(node.title, `${na}.title`, 36);
         plainText(node.action, `${na}.action`, 22);
         if (!['preview', 'export'].includes(node.phase)) fail('syntax.videoArtifact', `${na}.phase`, 'expected preview or export');
+        if (node.density !== undefined && node.density !== 'compact') fail('syntax.videoArtifact', `${na}.density`, 'unsupported artifact density');
       } else if (node.kind === 'productState') {
         keys(node, ['id', 'kind', 'importance', 'stateRef'], ['id', 'kind', 'importance', 'stateRef'], na);
         const asset = bundle.assets?.[node.stateRef];
@@ -275,6 +308,7 @@ export function validate(program, bundle) {
     for (const profile of program.profiles) {
       const tree = scene.layouts[profile] ?? scene.layouts.default;
       if (!tree) fail('semantic.profile', `${at}.layouts`, `missing layout for ${profile}`);
+      if (program.verification?.mode === 'allFrames' && tree.type !== 'canvas') fail('semantic.verification', `${at}.layouts.${profile}`, 'allFrames verification requires a bounded canvas layout');
       const seen = [];
       layoutRefs(tree, `${at}.layouts.${profile}`, byId, seen);
       unique(seen, `${at}.layouts.${profile}`);
@@ -357,6 +391,10 @@ function renderText(node) {
 }
 function renderFlow(node, stagger) {
   const hidden = stagger ? ' style="opacity:0"' : '';
+  if (node.variant === 'chain') {
+    const steps = node.steps.map((step, index) => `<div class="fl-chain-step fl-flow-item" data-flow-order="${index + 1}"${hidden}>${escapeHtml(step)}</div>${index < node.steps.length - 1 ? '<div class="fl-chain-plus" aria-hidden="true">+</div>' : ''}`).join('');
+    return `<div class="fl-chain-steps">${steps}</div><div class="fl-chain-arrow" aria-hidden="true">→</div><div class="fl-chain-outcome fl-flow-item" data-flow-order="${node.steps.length + 1}"${hidden}>${escapeHtml(node.outcome)}</div>`;
+  }
   const steps = node.steps.map((step, index) => `<div class="fl-flow-chip fl-flow-item" data-flow-order="${index + 1}"${hidden}>${escapeHtml(step)}</div>`).join('');
   return `<div class="fl-flow-steps">${steps}</div><div class="fl-flow-arrow fl-flow-item" data-flow-order="${node.steps.length + 1}"${hidden} aria-hidden="true">→</div><div class="fl-flow-outcome fl-flow-item" data-flow-order="${node.steps.length + 2}"${hidden}>${escapeHtml(node.outcome)}</div>`;
 }
@@ -388,10 +426,10 @@ function renderTree(tree, scene, profile, nodes, initial, brand, rect) {
     const node = nodes.get(tree);
     const id = cssId(scene, tree);
     const hidden = initial.includes(tree) ? '' : ' style="opacity:0"';
-    if (node.kind === 'text') { const style = [initial.includes(tree) ? '' : 'opacity:0', textStyle(node, profile, brand, rect)].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-text fl-${node.role}"${style ? ` style="${style}"` : ''}>${renderText(node)}</div>`; }
-    if (node.kind === 'flow') return `<div id="${id}" class="fl-node fl-flow"${hidden}>${renderFlow(node, scene.events.some(event => event.target === node.id && event.preset === 'stagger'))}</div>`;
+    if (node.kind === 'text') { const style = [initial.includes(tree) ? '' : 'opacity:0', textStyle(node, profile, brand, rect)].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-text fl-${node.role}" data-fl-fit="${node.fit}"${style ? ` style="${style}"` : ''}>${renderText(node)}</div>`; }
+    if (node.kind === 'flow') return `<div id="${id}" class="fl-node fl-flow${node.variant === 'chain' ? ' fl-flow-chain' : ''}"${hidden}>${renderFlow(node, scene.events.some(event => event.target === node.id && event.preset === 'stagger'))}</div>`;
     if (node.kind === 'inputCard') return `<div id="${id}" class="fl-node fl-input-card"${hidden}>${renderInputCard(node)}</div>`;
-    if (node.kind === 'videoArtifact') return `<div id="${id}" class="fl-node fl-artifact fl-artifact-${node.phase}"${hidden}>${renderVideoArtifact(node, scene.events.some(event => event.target === node.id && event.preset === 'reveal'))}</div>`;
+    if (node.kind === 'videoArtifact') return `<div id="${id}" class="fl-node fl-artifact fl-artifact-${node.phase}${node.density === 'compact' ? ' fl-artifact-compact' : ''}"${hidden}>${renderVideoArtifact(node, scene.events.some(event => event.target === node.id && event.preset === 'reveal'))}</div>`;
     if (node.kind === 'shape') { const style = [initial.includes(tree) ? '' : 'opacity:0', node.fill ? `background:${cssPaint(node.fill, brand)}` : ''].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-panel${node.primitive === 'circle' ? ' fl-circle' : ''}"${style ? ` style="${style}"` : ''}></div>`; }
     if (node.kind === 'svg') return `<div id="${id}" class="fl-node fl-media fl-svg"${hidden}><img src="assets/${scene.id}-${node.id}.svg" alt="" style="object-fit:${node.fit}" /></div>`;
     return `<div id="${id}" class="fl-node fl-media"${hidden}><img src="assets/${scene.id}-${node.id}.svg" alt="" /></div>`;
@@ -401,7 +439,7 @@ function renderTree(tree, scene, profile, nodes, initial, brand, rect) {
     const [a, b] = tree.ratio.split(':').map(n => Number(n) / 10);
     return `<div class="fl-layout fl-split" style="grid-template-columns:${a}fr ${b}fr">${renderTree(tree.left, scene, profile, nodes, initial, brand)}${renderTree(tree.right, scene, profile, nodes, initial, brand)}</div>`;
   }
-  if (tree.type === 'canvas') return `<div class="fl-layout fl-canvas">${tree.children.map(placement => { const [x, y, width, height] = placement.rect; return `<div class="fl-placement fl-placement-${placement.align || 'start'}" style="left:${x / 10}%;top:${y / 10}%;width:${width / 10}%;height:${height / 10}%;z-index:${placement.layer || 0}">${renderTree(placement.node, scene, profile, nodes, initial, brand, placement.rect)}</div>`; }).join('')}</div>`;
+  if (tree.type === 'canvas') return `<div class="fl-layout fl-canvas">${canvasPlacements(tree, `$.scenes.${scene.id}.layouts.${profile}`, nodes).map(({ placement, rect }) => { const [x, y, width, height] = rect; return `<div class="fl-placement fl-placement-${placement.align || 'start'}" style="left:${x / 10}%;top:${y / 10}%;width:${width / 10}%;height:${height / 10}%;z-index:${placement.layer || 0}">${renderTree(placement.node, scene, profile, nodes, initial, brand, rect)}</div>`; }).join('')}</div>`;
   return `<div class="fl-layout fl-overlay">${renderTree(tree.base, scene, profile, nodes, initial, brand)}${tree.attachments.map(a => `<div class="fl-attachment">${renderTree(a.node, scene, profile, nodes, initial, brand)}</div>`).join('')}</div>`;
 }
 
@@ -435,7 +473,8 @@ function htmlFor(program, bundle, profile) {
         const preset = event.preset || 'rise';
         if (preset === 'stagger') {
           timeline.push(`tl.set('${selector}',{opacity:1},${at.toFixed(6)});`);
-          const children = scene.content.find(n => n.id === event.target).steps.length + 2;
+          const flow = scene.content.find(n => n.id === event.target);
+          const children = flow.steps.length + (flow.variant === 'chain' ? 1 : 2);
           const itemDuration = Math.max(.15, dur / (children + 1));
           for (let child = 0; child < children; child++) timeline.push(`tl.fromTo('${selector} [data-flow-order="${child + 1}"]',{opacity:0,y:20},{opacity:1,y:0,duration:${itemDuration.toFixed(6)},ease:'power2.out'},${(at + child * itemDuration).toFixed(6)});`);
         } else if (preset === 'paste') {
@@ -480,24 +519,26 @@ html,body{margin:0;width:${p.width}px;height:${p.height}px;background:${bundle.b
 .fl-scene{position:absolute;left:${p.insetX}px;right:${p.insetX}px;top:${p.insetY}px;bottom:${p.insetY}px;display:flex;min-width:0;min-height:0;align-items:center;justify-content:center}
 .fl-scene.fl-left{justify-content:flex-start;text-align:left}.fl-scene.fl-chromed{top:${p.insetY + 66}px;bottom:${p.insetY + 76}px}.fl-layout{width:100%;height:100%;min-width:0;min-height:0}.fl-stack{display:flex;justify-content:center;align-items:center}.fl-stack.fl-start{align-items:flex-start}.fl-split{display:grid;align-items:center;gap:48px}.fl-canvas{position:relative}.fl-placement{position:absolute;display:flex;min-width:0;min-height:0}.fl-placement-start{align-items:flex-start}.fl-placement-center{align-items:center}.fl-placement-end{align-items:flex-end}.fl-placement>.fl-node{width:100%;height:100%}
 .fl-node{min-width:0;max-width:100%}.fl-text{font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};overflow-wrap:anywhere;line-height:1.05;font-weight:700}
-.fl-headline{font-size:${p.heading}px;letter-spacing:-.045em}.fl-display .fl-headline{font-size:${p.displayHeading}px;line-height:.98}.fl-body{font-size:${p.body}px;line-height:1.2;font-weight:500}.fl-label{font-size:${Math.round(p.body*.75)}px;color:${bundle.brand.accent};text-transform:uppercase;letter-spacing:.08em}.fl-tone-accent{color:${bundle.brand.accent}}
+.fl-headline{font-size:${p.heading}px;letter-spacing:-.045em}.fl-display .fl-headline{font-size:${p.displayHeading}px;line-height:.98}.fl-body{font-size:${p.body}px;line-height:1.2;font-weight:500}.fl-label{font-size:${Math.round(p.body*.75)}px;color:${bundle.brand.accent};text-transform:uppercase;letter-spacing:.08em}.fl-tone-accent{color:${bundle.brand.accent}}.fl-tone-accentBlock{display:inline-block;background:${bundle.brand.accent};color:${bundle.brand.background};padding:0 .12em .06em;margin-left:.12em;white-space:nowrap}
 .fl-flow{display:flex;align-items:center;gap:24px;font-family:FrameLangInter,sans-serif;font-size:${p.flow}px;font-weight:700;color:${bundle.brand.foreground}}
 .fl-flow-steps{display:flex;flex-wrap:wrap;align-items:center;gap:16px}.fl-flow-chip{border:2px solid ${bundle.brand.foreground}66;padding:18px 25px;background:${bundle.brand.foreground}0d;white-space:nowrap}.fl-flow-arrow{font-size:${p.flow + 14}px;color:${bundle.brand.accent}}.fl-flow-outcome{background:${bundle.brand.accent};color:${bundle.brand.background};padding:20px 30px;white-space:nowrap}
 .fl-canvas .fl-flow{flex-direction:column;align-items:stretch;width:100%;gap:12px}.fl-canvas .fl-flow-steps{flex-direction:column;align-items:stretch;width:100%;gap:11px}.fl-canvas .fl-flow-chip{white-space:normal}.fl-canvas .fl-flow-arrow{transform:rotate(90deg);align-self:center}.fl-canvas .fl-flow-outcome{text-align:center;white-space:normal}
 ${portrait ? '.fl-flow{flex-direction:column;align-items:stretch;width:100%;gap:18px}.fl-flow-steps{flex-direction:column;align-items:stretch;width:100%;gap:13px}.fl-flow-chip{text-align:left;white-space:normal}.fl-flow-arrow{transform:rotate(90deg);align-self:center}.fl-flow-outcome{text-align:center}.fl-chromed .fl-stack{justify-content:space-evenly}' : ''}
+.fl-canvas .fl-flow-chain{display:flex;flex-direction:${portrait ? 'column' : 'row'};align-items:${portrait ? 'stretch' : 'center'};justify-content:center;gap:${portrait ? 17 : 24}px;width:100%;height:100%;font-size:${portrait ? 34 : 32}px}.fl-canvas .fl-chain-steps{display:flex;flex:1;min-width:0;align-items:stretch;gap:${portrait ? 12 : 15}px;flex-direction:${portrait ? 'column' : 'row'}}.fl-chain-step{display:flex;align-items:center;justify-content:center;min-width:0;flex:1;text-align:center;padding:${portrait ? '16px 22px' : '19px 20px'};border:2px solid ${bundle.brand.foreground}77;background:${bundle.brand.foreground}0c;line-height:1.1}.fl-chain-plus,.fl-chain-arrow{display:grid;place-items:center;flex:none;color:${bundle.brand.accent};font-weight:900}.fl-chain-arrow{font-size:${portrait ? 51 : 52}px;transform:${portrait ? 'rotate(90deg)' : 'none'}}.fl-chain-outcome{display:grid;place-items:center;flex:none;text-align:center;padding:${portrait ? '20px 28px' : '20px 36px'};background:${bundle.brand.accent};color:${bundle.brand.background};font-weight:900}.fl-canvas .fl-chain-plus{font-size:${portrait ? 30 : 38}px}
 .fl-grid{position:absolute;inset:0;background-image:linear-gradient(90deg,${bundle.brand.foreground}0b 1px,transparent 1px);background-size:160px 100%;pointer-events:none}.fl-glow{position:absolute;width:880px;height:880px;right:-220px;top:-300px;background:radial-gradient(circle,${bundle.brand.accent}22,transparent 65%);pointer-events:none}.fl-rule{position:absolute;left:${p.insetX}px;right:${p.insetX}px;height:2px;background:${bundle.brand.foreground}2a;pointer-events:none}.fl-rule-top{top:${p.insetY}px}.fl-rule-bottom{bottom:${p.insetY}px}
 .fl-chrome-top,.fl-chrome-bottom{position:absolute;left:${p.insetX}px;right:${p.insetX}px;display:flex;align-items:center;justify-content:space-between;font-family:FrameLangInter,sans-serif;font-size:${portrait ? 27 : 25}px;font-weight:700;letter-spacing:.12em;color:${bundle.brand.foreground}a8}.fl-chrome-top{top:${p.insetY + 5}px}.fl-chrome-bottom{bottom:${p.insetY + 15}px}.fl-chrome-top span:first-child{color:${bundle.brand.accent}}.fl-progress{position:absolute;left:${p.insetX}px;right:${p.insetX}px;bottom:${p.insetY - 19}px;height:5px;background:${bundle.brand.foreground}38;overflow:hidden}.fl-progress span{display:block;height:100%;background:${bundle.brand.accent};transform-origin:left}
 .fl-input-card{width:100%;height:${portrait ? 620 : 400}px;padding:${portrait ? 44 : 38}px;border:2px solid ${bundle.brand.foreground}75;background:#131315;box-shadow:22px 28px 0 ${bundle.brand.accent}26,0 35px 100px #0009;font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};display:flex;flex-direction:column;justify-content:space-between}
 .fl-input-top,.fl-input-foot{display:flex;align-items:center;gap:24px;font-size:${portrait ? 28 : 24}px;letter-spacing:.12em;font-weight:700}.fl-input-top{color:${bundle.brand.foreground}9c}.fl-input-dots{display:flex;gap:10px;margin-right:15px}.fl-input-dots i{display:block;width:14px;height:14px;border:2px solid ${bundle.brand.foreground}78;border-radius:50%}.fl-input-index{margin-left:auto;color:${bundle.brand.accent}}.fl-input-label{font-size:${portrait ? 30 : 28}px;font-weight:800;letter-spacing:.12em;color:${bundle.brand.accent}}
 .fl-input-field{display:flex;align-items:center;gap:15px;min-height:${portrait ? 160 : 124}px;padding:20px 24px;border:2px solid ${bundle.brand.accent};background:${bundle.brand.accent}0c;font-size:${portrait ? 48 : 50}px;font-weight:600;letter-spacing:-.035em;box-shadow:inset 0 0 50px ${bundle.brand.accent}12}.fl-input-link{overflow-wrap:anywhere}.fl-input-caret{width:4px;height:1.2em;background:${bundle.brand.accent};flex:none}.fl-input-go{margin-left:auto;display:grid;place-items:center;flex:none;width:${portrait ? 82 : 76}px;height:${portrait ? 82 : 76}px;background:${bundle.brand.accent};color:${bundle.brand.background};font-size:58px;line-height:1}.fl-input-foot{color:${bundle.brand.foreground}9c}.fl-input-rule{flex:1;height:2px;background:${bundle.brand.accent}8c}
 .fl-artifact{width:100%;height:${portrait ? 900 : 550}px;padding:${portrait ? 34 : 30}px;border:2px solid ${bundle.brand.foreground}6d;background:#141416;box-shadow:18px 24px 0 ${bundle.brand.accent}21,0 35px 100px #0008;font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};display:flex;flex-direction:column;gap:19px}.fl-art-top,.fl-art-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:${portrait ? 26 : 22}px;font-weight:800;letter-spacing:.1em}.fl-art-top{color:${bundle.brand.foreground}a8}.fl-art-indicator{display:flex;align-items:center;gap:12px;color:${bundle.brand.accent}}.fl-art-indicator i{display:block;width:15px;height:15px;border-radius:50%;background:${bundle.brand.accent};box-shadow:0 0 22px ${bundle.brand.accent}}
-.fl-art-body{flex:1;min-height:0;display:flex;flex-direction:column;gap:17px}.fl-art-screen{position:relative;flex:1;overflow:hidden;border:2px solid ${bundle.brand.foreground}65;background:radial-gradient(circle at 72% 25%,${bundle.brand.accent}24,transparent 43%),#0A0A0C}.fl-art-frame{position:absolute;width:42%;height:57%;top:19%;border:3px solid ${bundle.brand.foreground}e0;background:#222226;box-shadow:15px 20px 40px #000a;overflow:hidden}.fl-art-frame-a{left:7%;background:linear-gradient(145deg,#292A2D,#111114)}.fl-art-frame-b{left:29%;top:14%;background:linear-gradient(135deg,#3B3C20,#1B1B1B)}.fl-art-frame-c{left:51%;top:9%;background:linear-gradient(155deg,#18191A,#323317)}.fl-art-orbit{position:absolute;left:19%;top:15%;width:60%;aspect-ratio:1;border:12px solid ${bundle.brand.accent};border-radius:50%;box-shadow:0 0 45px ${bundle.brand.accent}64}.fl-art-sun{position:absolute;right:15%;top:15%;width:41%;aspect-ratio:1;border-radius:50%;background:${bundle.brand.accent};box-shadow:0 0 58px ${bundle.brand.accent}95}.fl-art-bars{position:absolute;inset:29% 12%;background:repeating-linear-gradient(90deg,${bundle.brand.accent} 0 12px,transparent 12px 24px);clip-path:polygon(0 45%,10% 45%,10% 20%,20% 20%,20% 70%,30% 70%,30% 5%,40% 5%,40% 85%,50% 85%,50% 30%,60% 30%,60% 63%,70% 63%,70% 10%,80% 10%,80% 77%,90% 77%,90% 42%,100% 42%,100% 100%,0 100%)}.fl-art-play{position:absolute;left:48%;top:38%;display:grid;place-items:center;width:${portrait ? 110 : 94}px;height:${portrait ? 110 : 94}px;border:3px solid ${bundle.brand.foreground};border-radius:50%;background:#111d;font-size:${portrait ? 42 : 35}px;color:${bundle.brand.accent};box-shadow:0 0 50px #000c}.fl-art-screen-label{position:absolute;left:22px;bottom:20px;padding:10px 15px;background:#09090Bde;font-size:${portrait ? 25 : 24}px;font-weight:800;letter-spacing:.08em;color:${bundle.brand.accent}}
+.fl-art-body{flex:1;min-height:0;display:flex;flex-direction:column;gap:17px}.fl-art-screen{position:relative;flex:1;overflow:hidden;border:2px solid ${bundle.brand.foreground}65;background:radial-gradient(circle at 72% 25%,${bundle.brand.accent}24,transparent 43%),#0A0A0C}.fl-art-frame{position:absolute;width:42%;height:57%;top:19%;border:3px solid ${bundle.brand.foreground}e0;background:#222226;box-shadow:15px 20px 40px #000a;overflow:hidden}.fl-art-frame-a{left:7%;background:linear-gradient(145deg,#292A2D,#111114)}.fl-art-frame-b{left:29%;top:14%;background:linear-gradient(135deg,#3B3C20,#1B1B1B)}.fl-art-frame-c{left:51%;top:9%;background:linear-gradient(155deg,#18191A,#323317)}.fl-art-orbit{position:absolute;left:19%;top:15%;width:60%;aspect-ratio:1;border:12px solid ${bundle.brand.accent};border-radius:50%;box-shadow:0 0 45px ${bundle.brand.accent}64}.fl-art-sun{position:absolute;right:15%;top:15%;width:41%;aspect-ratio:1;border-radius:50%;background:${bundle.brand.accent};box-shadow:0 0 58px ${bundle.brand.accent}95}.fl-art-bars{position:absolute;inset:29% 12%;background:repeating-linear-gradient(90deg,${bundle.brand.accent} 0 12px,transparent 12px 24px);clip-path:polygon(0 45%,10% 45%,10% 20%,20% 20%,20% 70%,30% 70%,30% 5%,40% 5%,40% 85%,50% 85%,50% 30%,60% 30%,60% 63%,70% 63%,70% 10%,80% 10%,80% 77%,90% 77%,90% 42%,100% 42%,100% 100%,0 100%)}.fl-art-play{position:absolute;left:48%;top:27%;display:grid;place-items:center;width:${portrait ? 110 : 94}px;height:${portrait ? 110 : 94}px;border:3px solid ${bundle.brand.foreground};border-radius:50%;background:#111d;font-size:${portrait ? 42 : 35}px;color:${bundle.brand.accent};box-shadow:0 0 50px #000c}.fl-art-screen-label{position:absolute;left:22px;bottom:20px;padding:10px 15px;background:#09090Bde;font-size:${portrait ? 25 : 24}px;font-weight:800;letter-spacing:.08em;color:${bundle.brand.accent}}
 .fl-art-timeline{height:${portrait ? 130 : 80}px;padding:16px 20px;border:2px solid ${bundle.brand.foreground}5c;background:#0B0B0D;position:relative}.fl-art-ticks{display:flex;gap:7px;height:100%}.fl-art-ticks i{flex:1;background:linear-gradient(135deg,${bundle.brand.accent}7a,${bundle.brand.foreground}35);border:1px solid ${bundle.brand.foreground}4a}.fl-art-ticks i:nth-child(2n){background:linear-gradient(145deg,${bundle.brand.foreground}45,${bundle.brand.accent}45)}.fl-art-playhead{position:absolute;left:20px;top:8px;bottom:8px;width:4px;background:${bundle.brand.accent};box-shadow:0 0 14px ${bundle.brand.accent}}
+.fl-artifact-compact{padding:${portrait ? 20 : 14}px;gap:8px}.fl-artifact-compact .fl-art-top,.fl-artifact-compact .fl-art-bottom{font-size:${portrait ? 25 : 16}px}.fl-artifact-compact .fl-art-body{gap:8px}.fl-artifact-compact .fl-art-timeline{height:${portrait ? 66 : 42}px;padding:6px 10px}.fl-artifact-compact .fl-art-bottom{min-height:${portrait ? 42 : 34}px}.fl-artifact-compact .fl-art-play{top:19%;width:${portrait ? 72 : 60}px;height:${portrait ? 72 : 60}px;font-size:${portrait ? 28 : 24}px}.fl-artifact-compact .fl-art-screen-label{font-size:${portrait ? 24 : 15}px;bottom:8px}.fl-artifact-compact .fl-art-action{padding:6px 12px}
 .fl-art-bottom{min-height:${portrait ? 75 : 56}px}.fl-art-action{padding:12px 22px;border:2px solid ${bundle.brand.accent};color:${bundle.brand.accent};white-space:nowrap}.fl-art-action-live{background:${bundle.brand.accent};color:${bundle.brand.background}}.fl-art-action b{font-size:1.3em}
 ${portrait ? '.fl-chrome-bottom{font-size:22px}.fl-art-top{flex-wrap:wrap}.fl-input-top{flex-wrap:wrap}.fl-input-field{font-size:44px}.fl-art-screen-label{max-width:80%}' : ''}
 .fl-media{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.fl-media img{display:block;width:100%;height:100%;object-fit:contain}
 .fl-panel{background:${bundle.brand.accent};border-radius:24px;min-height:120px;width:100%}.fl-circle{border-radius:50%;aspect-ratio:1}.fl-overlay{position:relative}.fl-overlay>.fl-node{width:100%;height:100%}.fl-attachment{position:absolute;inset:0}.fl-attachment>.fl-node{width:100%;height:100%}
-</style></head><body><div id="root" data-composition-id="main" data-start="0" data-width="${p.width}" data-height="${p.height}" data-fps="${program.fps}" data-duration="${total.toFixed(6)}">${clips.join('')}</div><script src="assets/gsap.min.js"></script><script>const tl=gsap.timeline({paused:true});${timeline.join('')}window.__timelines['main']=tl;window.__renderReady=true;</script></body></html>`;
+</style></head><body><div id="root" data-composition-id="main" data-start="0" data-width="${p.width}" data-height="${p.height}" data-fps="${program.fps}" data-duration="${total.toFixed(6)}">${clips.join('')}</div><script src="assets/gsap.min.js"></script><script>const tl=gsap.timeline({paused:true});${timeline.join('')}window.__renderReady=false;document.fonts.ready.then(()=>{for(const el of document.querySelectorAll('.fl-placement>.fl-text[data-fl-fit="wrapThenShrink"]')){const original=parseFloat(getComputedStyle(el).fontSize);const min=22;const fits=()=>el.scrollWidth<=el.clientWidth+1&&el.scrollHeight<=el.clientHeight+1;if(!fits()){let lo=min,hi=original;if(lo>hi){window.__framelangFitError=el.id;console.error('FrameLang text fit failed: '+el.id);return}el.style.fontSize=lo+'px';if(!fits()){window.__framelangFitError=el.id;console.error('FrameLang text fit failed: '+el.id);return}for(let i=0;i<14;i++){const mid=(lo+hi)/2;el.style.fontSize=mid+'px';if(fits())lo=mid;else hi=mid}el.style.fontSize=Math.floor(lo*10)/10+'px'}}window.__timelines['main']=tl;window.__renderReady=true}).catch(error=>{window.__framelangFitError=String(error);console.error('FrameLang text fit failed: '+error)});</script></body></html>`;
 }
 
 function verifySvg(bytes, location) {
@@ -518,14 +559,15 @@ export async function compile(programPath, outDir) {
   let recipe = null;
   if (authored.recipe !== undefined && authored.language === undefined) {
     keys(authored, ['recipe', 'hook', 'assembly', 'handoff'], ['recipe', 'hook', 'assembly', 'handoff'], '$');
-    if (authored.recipe !== 'makemydemo-workflow/v1') fail('syntax.recipe', '$.recipe', 'unknown vetted recipe');
+    const recipeDirs = { 'makemydemo-workflow/v1': 'makemydemo-cinematic', 'makemydemo-workflow/v2': 'makemydemo-editorial' };
+    if (!(authored.recipe in recipeDirs)) fail('syntax.recipe', '$.recipe', 'unknown vetted recipe');
     const fields = ['hook', 'assembly', 'handoff'];
     const limits = { hook: 32, assembly: 36, handoff: 30 };
     for (const field of fields) plainText(authored[field], `$.${field}`, limits[field]);
     if (!/\bpublic\b/i.test(authored.hook) || !/\burl\b/i.test(authored.hook)) fail('semantic.copy', '$.hook', 'hook must identify a public URL');
     if (!/script/i.test(authored.assembly) || !/visual/i.test(authored.assembly) || !/music/i.test(authored.assembly)) fail('semantic.copy', '$.assembly', 'assembly must name script, visuals, and music');
     if (!/review/i.test(authored.handoff) || /export|mp4/i.test(authored.handoff)) fail('semantic.copy', '$.handoff', 'handoff must cover review; the fixed accent covers MP4 export');
-    inputDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'examples', 'makemydemo-cinematic');
+    inputDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'examples', recipeDirs[authored.recipe]);
     program = JSON.parse(await readFile(path.join(inputDir, 'program.json'), 'utf8'));
     for (const [sceneId, lead] of [
       ['source', 'hook'],
@@ -568,7 +610,7 @@ export async function compile(programPath, outDir) {
       .filter(node => node.kind === 'productState' || node.kind === 'svg').map(node => `${scene.id}-${node.id}.svg`))];
     for (const file of stagedFiles) outputs[profile].assetHashes[file] = hash(await readFile(path.join(target, 'assets', file)));
   }
-  const report = { language: program.language, pilot: true, inputHash: hash(canonical(authored)), expandedHash: hash(canonical(program)), recipe, bundleRefs: bundleRefs(bundle), outputs, checked: false, degraded: false };
+  const report = { language: program.language, pilot: true, inputHash: hash(canonical(authored)), expandedHash: hash(canonical(program)), recipe, verification: program.verification ? { ...program.verification, fps: program.fps, totalFrames: program.scenes.reduce((total, scene) => total + scene.durationFrames, 0) } : null, bundleRefs: bundleRefs(bundle), outputs, checked: false, degraded: false };
   await writeFile(path.join(outDir, 'compile-report.json'), `${JSON.stringify(report, null, 2)}\n`);
   return report;
 }
