@@ -39,7 +39,7 @@ export async function adopt(sourceDir, outDir) {
   if (![width, height].every(n => Number.isInteger(n) && n >= 16 && n <= 4096) || !Number.isInteger(fps) || fps < 1 || fps > 60 || !(duration > 0) || totalFrames < 1 || totalFrames > 18000 || Math.abs(totalFrames - fps * duration) > 1e-6) throw new Error('explicit dimensions, fps and a whole-frame duration are required (max 18000 frames)');
   if (!attr(root, 'data-composition-id')) throw new Error('root data-composition-id is required');
   if ((await lstat(path.join(source, 'assets'))).isSymbolicLink()) throw new Error('assets directory symlinks are unsupported');
-  const localAssets = await assetInventory(path.join(source, 'assets')); 
+  const localAssets = await assetInventory(path.join(source, 'assets'));
   const available = new Set(localAssets.map(a => `assets/${a.relative}`));
   function reference(value) {
     if (value.startsWith('#')) return;

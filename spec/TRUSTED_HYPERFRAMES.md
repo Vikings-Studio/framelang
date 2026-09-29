@@ -21,8 +21,9 @@ resource references in HTML, CSS and SVG; stylesheet imports and symlinks are
 unsupported. `check` requests every output frame for geometry, checks runtime
 findings and runs HyperFrames' sampled contrast/lint audits. `feedback.json`
 contains selectors, source locations, bounding boxes and time ranges for repair.
-`render` requires a passing check, unchanged source/assets and asset inventory,
-and the recorded checker/runtime fingerprint. There is no visual fallback or
+`render` requires a passing check, unchanged source/assets and asset and composition input inventories,
+and the recorded checker/runtime fingerprint. Render output is stored outside
+the sealed composition in `renders/<profile>/video.mp4`. There is no visual fallback or
 silent layout rewrite. A rejected source needs a model or author repair.
 
 ## Scope of the guarantee
@@ -33,8 +34,9 @@ packaging check, not a security filter: dynamic JavaScript, escaped CSS resource
 clock dependence and mutation can evade declarative checks. Run only trusted
 compositions. Do not expose this command directly to public uploads. A future
 untrusted tier requires an AST allowlist and network-denied isolated renderer.
-The fingerprint covers Node, lockfile, HyperFrames entrypoint and check code;
-it does not pin the OS or browser executable. A passing frame audit is measured
+The fingerprint covers Node, lockfile, entire installed HyperFrames package and check code;
+it does not pin the OS, browser executable or installed transitive dependency
+contents (the lockfile records their expected versions). A passing frame audit is measured
 evidence, not a universal guarantee against all visual or semantic defects.
 
 The CLI records no model cost because it makes no model calls. A video's

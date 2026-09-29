@@ -39,8 +39,9 @@ test('transitive CSS and SVG references must resolve to packaged local assets', 
 }));
 
 test('export rejects newly added assets and modified source before invoking the renderer', () => fixture(async(source,dir) => {
-  const out=path.join(dir,'out');await adopt(source,out);
+  const out=path.join(dir,'out');
   const cli=fileURLToPath(new URL('../src/cli.mjs',import.meta.url));
+  const imported=spawnSync(process.execPath,[cli,'adopt',source,out],{encoding:'utf8'});assert.equal(imported.status,0,imported.stderr);
   await writeFile(path.join(out,'source-1920x1080/assets/added.js'),'change');
   let result=spawnSync(process.execPath,[cli,'render',out],{encoding:'utf8'});
   assert.notEqual(result.status,0);assert.match(result.stderr,/asset inventory changed/);
@@ -48,4 +49,11 @@ test('export rejects newly added assets and modified source before invoking the 
   await writeFile(path.join(out,'source-1920x1080/index.html'),html+'changed');
   result=spawnSync(process.execPath,[cli,'render',out],{encoding:'utf8'});
   assert.notEqual(result.status,0);assert.match(result.stderr,/HTML changed/);
+}));
+
+test('unfinalized API reports cannot bypass the mandatory trusted runtime pin', () => fixture(async(source,dir) => {
+ const out=path.join(dir,'out');await adopt(source,out);
+ const cli=fileURLToPath(new URL('../src/cli.mjs',import.meta.url));
+ const result=spawnSync(process.execPath,[cli,'check',out],{encoding:'utf8'});
+ assert.notEqual(result.status,0);assert.match(result.stderr,/requires a runtime pin/);
 }));

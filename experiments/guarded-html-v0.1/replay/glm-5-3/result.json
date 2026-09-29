@@ -1,0 +1,12 @@
+{
+  "sourceAttempt": "../../runs/glm-5-3/raw/1",
+  "status": "Rendered after harness correction",
+  "sourceEdits": 0,
+  "originalModelCalls": 1,
+  "originalGenerationUSD": 0.03440132,
+  "originalGenerationTokens": 9550,
+  "additionalReplayInferenceCalls": 0,
+  "additionalReplayInferenceUSD": 0,
+  "checkedFrames": 192,
+  "contrastCoverage": "sampled"
+}

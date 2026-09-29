@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 import { createHash } from 'node:crypto';
 import { spawn } from 'node:child_process';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { authoredLocation, canonical, compile, FrameLangError, lintProgram, loadProgram } from './compiler.mjs';
 import { assessCheck, frameTimes } from './check-policy.mjs';
 import { checkFeedback } from './feedback.mjs';
 import { adopt, assetInventory } from './adopt.mjs';
+import { treeFingerprint, verifyCompositionInventory } from './provenance.mjs';
 
 const require = createRequire(import.meta.url);
 const hf = require.resolve('hyperframes/bin/hyperframes.mjs');
@@ -28,19 +29,21 @@ async function reportFor(dir) {
   return { file, report: JSON.parse(await readFile(file, 'utf8')) };
 }
 async function verificationPin() {
-  const files = ['cli.mjs', 'adopt.mjs', 'check-policy.mjs', 'feedback.mjs'];
+  const files = ['cli.mjs', 'adopt.mjs', 'provenance.mjs', 'check-policy.mjs', 'feedback.mjs'];
   const hashes = {};
   for (const name of files) hashes[name] = digest(await readFile(new URL(name, import.meta.url)));
-  hashes.hyperframes = digest(await readFile(hf));
+  hashes.hyperframes = await treeFingerprint(path.resolve(path.dirname(hf), '..'));
   hashes.lockfile = digest(await readFile(new URL('../package-lock.json', import.meta.url)));
   return digest(JSON.stringify({ node: process.version, hashes }));
 }
 async function verifyOutputs(dir, report) {
+  if (report.language === 'framelang/trusted-hyperframes-v0.1' && !report.verificationPin) throw new Error('trusted source requires a runtime pin; use the CLI adopt command');
   if (report.verificationPin && report.verificationPin !== await verificationPin()) throw new Error('checker or runtime changed; re-adopt or recompile before checking');
   for (const [profile, entry] of Object.entries(report.outputs)) {
     const html = await readFile(path.join(dir, profile, 'index.html'));
     if (digest(html) !== entry.htmlHash) throw new Error(`compiled ${profile} HTML changed after compilation`);
     if (report.language === 'framelang/trusted-hyperframes-v0.1') {
+      await verifyCompositionInventory(path.join(dir, entry.directory));
       const actual = (await assetInventory(path.join(dir, entry.directory, 'assets'))).map(asset => asset.relative).sort();
       if (JSON.stringify(actual) !== JSON.stringify(Object.keys(entry.assetHashes || {}).sort())) throw new Error('asset inventory changed; re-adopt and recheck before rendering');
     }
@@ -112,7 +115,8 @@ async function main() {
   if (!report.checked || !Object.values(report.checks || {}).every(v => v.ok)) throw new Error('render requires a passing check of every profile');
   for (const [profile, entry] of Object.entries(report.outputs)) {
     const cwd = path.join(dir, entry.directory);
-    const output = path.join(cwd, 'video.mp4');
+    const output = report.language === 'framelang/trusted-hyperframes-v0.1' ? path.join(dir, 'renders', profile, 'video.mp4') : path.join(cwd, 'video.mp4');
+    await mkdir(path.dirname(output), { recursive: true });
     const result = await run(['render', '--quality', 'draft', '--output', output, cwd], cwd);
     if (result.code !== 0) throw new Error(`render failed for ${profile}`);
   }

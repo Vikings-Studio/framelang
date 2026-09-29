@@ -1,0 +1,95 @@
+{
+  "language": "framelang/trusted-hyperframes-v0.1",
+  "sourceLanguage": "hyperframes/html",
+  "pilot": true,
+  "guarantees": "source-preserving, measured frame checks; trusted JavaScript, no deterministic or security guarantee",
+  "inputHash": "sha256:0ccc46b50730c49ab4fcb586473f6e60df65df962d144780c213cd88a7f99e27",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "sourceMap": {
+    "#root": {
+      "nodeId": "root",
+      "location": "index.html:35"
+    },
+    "#scene1": {
+      "nodeId": "scene1",
+      "location": "index.html:37"
+    },
+    "#s1h": {
+      "nodeId": "s1h",
+      "location": "index.html:39"
+    },
+    "#urlbar": {
+      "nodeId": "urlbar",
+      "location": "index.html:40"
+    },
+    "#urltext": {
+      "nodeId": "urltext",
+      "location": "index.html:41"
+    },
+    "#caret": {
+      "nodeId": "caret",
+      "location": "index.html:42"
+    },
+    "#scene2": {
+      "nodeId": "scene2",
+      "location": "index.html:47"
+    },
+    "#s2h": {
+      "nodeId": "s2h",
+      "location": "index.html:49"
+    },
+    "#frame": {
+      "nodeId": "frame",
+      "location": "index.html:51"
+    },
+    "#t1": {
+      "nodeId": "t1",
+      "location": "index.html:55"
+    },
+    "#t2": {
+      "nodeId": "t2",
+      "location": "index.html:56"
+    },
+    "#t3": {
+      "nodeId": "t3",
+      "location": "index.html:57"
+    },
+    "#scene3": {
+      "nodeId": "scene3",
+      "location": "index.html:63"
+    },
+    "#s3h": {
+      "nodeId": "s3h",
+      "location": "index.html:65"
+    },
+    "#logo": {
+      "nodeId": "logo",
+      "location": "index.html:66"
+    },
+    "#dot": {
+      "nodeId": "dot",
+      "location": "index.html:66"
+    },
+    "#logobar": {
+      "nodeId": "logobar",
+      "location": "index.html:67"
+    }
+  },
+  "outputs": {
+    "source-1920x1080": {
+      "directory": "source-1920x1080",
+      "htmlHash": "sha256:0ccc46b50730c49ab4fcb586473f6e60df65df962d144780c213cd88a7f99e27",
+      "assetHashes": {
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false,
+  "verificationPin": "sha256:d2ee6be8c24b1c8b7dc1e252f46d9690e8974da19911bb7257d9be0de39003e6"
+}
