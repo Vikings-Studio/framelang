@@ -59,3 +59,23 @@ can have blind spots, and different rendering infrastructure can fail; visual
 review remains required for hierarchy, pacing, meaning, and factual fidelity.
 The `allFrames` mode covers rendered frame times, not continuous time between
 frames.
+
+## LLM repair feedback
+
+`framelang lint <program.json>` is the low-cost first pass. It emits JSON with
+`ok`, `findings`, and a short instruction. It collects static canvas collisions
+across scenes and profiles, including the intersecting rectangle, both node
+IDs, and exact source paths. It exits nonzero on a finding, so an agent can
+submit the JSON to its model, revise the source, and lint again before paying
+for browser checking. Bounds violations are reported in the same format.
+
+After a valid program compiles, `framelang check <out-dir>` writes
+`<out-dir>/feedback.json` even when a profile fails. Browser layout findings
+are grouped by code and selector, with first/last observed times and an
+occurrence count to keep repair prompts small. The compiler's selector map
+points findings back to FrameLang scene, node, and profile layout locations.
+Missing frame samples and runtime warnings also become findings. The full
+checker report stays in `compile-report.json` for debugging; the feedback file
+is the model-facing input. The model must recompile and recheck each revision.
+No geometric edit is applied automatically, and rendering remains gated on
+passing checks in every profile.

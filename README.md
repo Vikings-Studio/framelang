@@ -68,6 +68,23 @@ node src/cli.mjs check out/my-video
 node src/cli.mjs render out/my-video
 ```
 
+For an LLM revision loop, run static lint before compiling:
+
+```text
+node src/cli.mjs lint path/to/program.json
+```
+
+`lint` prints one JSON object to stdout and exits with code 1 when it finds an
+error. Canvas overlap findings identify the scene, profile, two node IDs,
+source locations, rectangles, intersection, and a repair hint. Pass that JSON
+back to the model as feedback, have it revise the authored FrameLang file, and
+run lint again. `check` then writes `out/my-video/feedback.json` with compact
+browser findings grouped across frames. Pass that file back for a further
+revision if the check fails. The model never needs the full HyperFrames log or
+generated HTML. A recipe can be linted too; its visual template is fixed, so
+layout repairs require editing the full scene template. Neither lint nor check
+silently changes the authored layout.
+
 `check` must pass before `render`; the CLI records the exact compiled source
 hash and check result. The pilot never silently edits or shortens essential
 copy. Invalid programs return a typed error and do not create a render-ready

@@ -4,8 +4,9 @@ import { spawn } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { compile, FrameLangError } from './compiler.mjs';
+import { canonical, compile, FrameLangError, lintProgram, loadProgram } from './compiler.mjs';
 import { assessCheck, frameTimes } from './check-policy.mjs';
+import { checkFeedback } from './feedback.mjs';
 
 const require = createRequire(import.meta.url);
 const hf = require.resolve('hyperframes/bin/hyperframes.mjs');
@@ -36,13 +37,24 @@ async function verifyOutputs(dir, report) {
   }
 }
 async function main() {
+  if (command === 'lint') {
+    if (!first) throw new Error('usage: lint <program.json>');
+    const { authored, program, bundle, recipe } = await loadProgram(path.resolve(first));
+    const feedback = lintProgram(program, bundle);
+    feedback.stage = 'static';
+    feedback.inputHash = digest(canonical(authored));
+    if (recipe) feedback.recipe = recipe.id;
+    process.stdout.write(`${JSON.stringify(feedback, null, 2)}\n`);
+    if (!feedback.ok) process.exitCode = 1;
+    return;
+  }
   if (command === 'compile') {
     if (!first || !second) throw new Error('usage: compile <program.json> <out-dir>');
     const report = await compile(path.resolve(first), path.resolve(second));
     process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
     return;
   }
-  if (!['check', 'render'].includes(command) || !first) throw new Error('usage: check|render <out-dir>');
+  if (!['check', 'render'].includes(command) || !first) throw new Error('usage: lint <program.json> | compile <program.json> <out-dir> | check|render <out-dir>');
   const dir = path.resolve(first);
   const { file, report } = await reportFor(dir);
   await verifyOutputs(dir, report);
@@ -65,7 +77,8 @@ async function main() {
     }
     report.checked = Object.values(report.checks).every(v => v.ok);
     await writeFile(file, `${JSON.stringify(report, null, 2)}\n`);
-    if (!report.checked) throw new Error('one or more HyperFrames profile checks failed');
+    await writeFile(path.join(dir, 'feedback.json'), `${JSON.stringify(checkFeedback(report), null, 2)}\n`);
+    if (!report.checked) throw new Error('one or more HyperFrames profile checks failed; see feedback.json');
     return;
   }
   if (!report.checked || !Object.values(report.checks || {}).every(v => v.ok)) throw new Error('render requires a passing check of every profile');
@@ -79,7 +92,10 @@ async function main() {
 main().catch(error => {
   const payload = error instanceof FrameLangError
     ? { code: error.code, location: error.location, message: error.message }
+    : error instanceof SyntaxError ? { code: 'syntax.json', message: error.message }
     : { code: 'operation.failed', message: error.message };
-  process.stderr.write(`${JSON.stringify(payload)}\n`);
+  if (command === 'lint') {
+    process.stdout.write(`${JSON.stringify({ version: 1, stage: 'static', ok: false, findings: [{ ...payload, severity: 'error', hint: 'Revise the indicated FrameLang source, then rerun lint.' }], instruction: 'Revise the FrameLang source and rerun lint before compiling.' }, null, 2)}\n`);
+  } else process.stderr.write(`${JSON.stringify(payload)}\n`);
   process.exitCode = 1;
 });
