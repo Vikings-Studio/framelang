@@ -1,0 +1,37 @@
+{
+  "inputHash": "sha256:17bd4e818895cbd4a0867d34bdc80de0c72e2be9daabca17a21a974d9a728f7a",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 276
+  },
+  "checked": true,
+  "profiles": {
+    "landscape-1920x1080": {
+      "ok": true,
+      "allFramesObserved": true,
+      "samples": 348,
+      "layoutFindings": 0,
+      "runtimeFindings": 0,
+      "contrastErrors": 0
+    },
+    "portrait-1080x1920": {
+      "ok": true,
+      "allFramesObserved": true,
+      "samples": 348,
+      "layoutFindings": 0,
+      "runtimeFindings": 0,
+      "contrastErrors": 0
+    }
+  },
+  "preview": {
+    "landscape": {
+      "sha256": "sha256:1e6d8094c21331e60b5d1dd9c3b2d7d39f57071e71c4cb9020e4e40e6a9c6ea0",
+      "bytes": 1923104
+    },
+    "portrait": {
+      "sha256": "sha256:215dbeb79a5cb5b332b20121c2d1897c65640cfcbe7e05001d3f4d43da62df6f",
+      "bytes": 1974357
+    }
+  }
+}

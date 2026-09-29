@@ -51,8 +51,16 @@ function colorRef(value, location) {
   if (['background', 'foreground', 'accent'].includes(value)) return;
   color(value, location);
 }
-function paint(value, location) {
-  keys(value, ['kind', 'color', 'angle', 'center', 'stops'], ['kind'], location);
+function paint(value, location, nested = false) {
+  keys(value, ['kind', 'color', 'angle', 'center', 'stops', 'layers'], ['kind'], location);
+  if (value.kind === 'layers') {
+    if (nested) fail('syntax.paint', location, 'paint layers cannot nest');
+    keys(value, ['kind', 'layers'], ['kind', 'layers'], location);
+    const layers = list(value.layers, `${location}.layers`, 2);
+    if (layers.length > 4) fail('syntax.paint', `${location}.layers`, 'at most four paint layers');
+    layers.forEach((layer, index) => paint(layer, `${location}.layers[${index}]`, true));
+    return;
+  }
   if (value.kind === 'solid') {
     keys(value, ['kind', 'color'], ['kind', 'color'], location);
     colorRef(value.color, `${location}.color`);
@@ -61,29 +69,42 @@ function paint(value, location) {
   if (!['linear', 'radial'].includes(value.kind)) fail('syntax.paint', `${location}.kind`, 'expected solid, linear, or radial');
   if (value.kind === 'linear') {
     keys(value, ['kind', 'angle', 'stops'], ['kind', 'angle', 'stops'], location);
-    if (![0, 45, 90, 135, 180, 225, 270, 315].includes(value.angle)) fail('syntax.paint', `${location}.angle`, 'unsupported angle');
+    int(value.angle, `${location}.angle`, 0, 359);
   } else {
     keys(value, ['kind', 'center', 'stops'], ['kind', 'center', 'stops'], location);
-    if (!['center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'].includes(value.center)) fail('syntax.paint', `${location}.center`, 'unsupported radial center');
+    if (Array.isArray(value.center)) {
+      if (value.center.length !== 2) fail('syntax.paint', `${location}.center`, 'expected [x,y] percentages');
+      value.center.forEach((coordinate, index) => int(coordinate, `${location}.center[${index}]`, 0, 100));
+    } else if (!['center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'].includes(value.center)) fail('syntax.paint', `${location}.center`, 'unsupported radial center');
   }
   const stops = list(value.stops, `${location}.stops`, 2);
   if (stops.length > 5) fail('syntax.paint', `${location}.stops`, 'at most five color stops');
   let previous = -1;
   for (const [index, stop] of stops.entries()) {
     const at = `${location}.stops[${index}]`;
-    keys(stop, ['at', 'color'], ['at', 'color'], at);
+    keys(stop, ['at', 'color', 'opacity'], ['at', 'color'], at);
     int(stop.at, `${at}.at`, 0, 100);
     if (stop.at <= previous) fail('syntax.paint', `${at}.at`, 'stops must increase strictly');
     previous = stop.at;
     colorRef(stop.color, `${at}.color`);
+    if (stop.opacity !== undefined) int(stop.opacity, `${at}.opacity`, 0, 100);
   }
 }
 function cssColor(value, brand) { return brand[value] || value; }
+function cssStop(stop, brand) {
+  const color = cssColor(stop.color, brand);
+  const alpha = stop.opacity === undefined ? '' : Math.round(stop.opacity * 255 / 100).toString(16).padStart(2, '0');
+  return `${color}${alpha} ${stop.at}%`;
+}
 function cssPaint(value, brand) {
+  if (value.kind === 'layers') return value.layers.map(layer => layer.kind === 'solid'
+    ? `linear-gradient(${cssColor(layer.color, brand)},${cssColor(layer.color, brand)})`
+    : cssPaint(layer, brand)).join(',');
   if (value.kind === 'solid') return cssColor(value.color, brand);
-  const stops = value.stops.map(stop => `${cssColor(stop.color, brand)} ${stop.at}%`).join(',');
+  const stops = value.stops.map(stop => cssStop(stop, brand)).join(',');
   if (value.kind === 'linear') return `linear-gradient(${value.angle}deg,${stops})`;
-  return `radial-gradient(circle at ${value.center.replace('-', ' ')},${stops})`;
+  const center = Array.isArray(value.center) ? `${value.center[0]}% ${value.center[1]}%` : value.center.replace('-', ' ');
+  return `radial-gradient(circle at ${center},${stops})`;
 }
 function plainText(value, location, max = 240) {
   if (typeof value !== 'string' || !value.trim() || value.length > max || /[<>\u0000-\u001f]/.test(value)) fail('syntax.text', location, `nonempty plain text up to ${max} characters required`);
@@ -248,6 +269,19 @@ function layoutRefs(tree, location, known, refs) {
   }
 }
 
+const MOTION_FIELDS = ['x', 'y', 'scale', 'scaleX', 'scaleY', 'rotation', 'opacity'];
+const MOTION_EASES = ['none', 'power2.out', 'power3.out', 'power2.inOut', 'back.out(1.5)'];
+function motionValue(value, location) {
+  keys(value, MOTION_FIELDS, [], location);
+  const properties = Object.keys(value).sort();
+  if (!properties.length) fail('syntax.motion', location, 'motion value must name at least one property');
+  for (const property of properties) {
+    const [min, max] = property === 'opacity' ? [0, 1] : ['scale', 'scaleX', 'scaleY'].includes(property) ? [0, 4] : property === 'rotation' ? [-360, 360] : [-1000, 1000];
+    if (typeof value[property] !== 'number' || !Number.isFinite(value[property]) || value[property] < min || value[property] > max) fail('syntax.motion', `${location}.${property}`, `expected number ${min}..${max}`);
+  }
+  return properties;
+}
+
 export function validate(program, bundle) {
   keys(program, DOCUMENT_KEYS, DOCUMENT_KEYS.filter(key => key !== 'verification'), '$');
   if (program.language !== 'framelang/v1') fail('syntax.version', '$.language', 'expected framelang/v1');
@@ -297,11 +331,15 @@ export function validate(program, bundle) {
         textCopy(node, na);
         if (node.language !== 'en') fail('syntax.text', `${na}.language`, 'pilot supports English only');
         if (node.style !== undefined) {
-          keys(node.style, ['align', 'size', 'weight', 'color'], [], `${na}.style`);
+          keys(node.style, ['align', 'size', 'weight', 'color', 'tracking', 'case', 'lineHeight', 'italic'], [], `${na}.style`);
           if (node.style.align !== undefined && !['left', 'center', 'right'].includes(node.style.align)) fail('syntax.text', `${na}.style.align`, 'unsupported text alignment');
           if (node.style.size !== undefined && !['compact', 'base', 'large', 'hero'].includes(node.style.size)) fail('syntax.text', `${na}.style.size`, 'unsupported type size');
           if (node.style.weight !== undefined && ![400, 500, 600, 700, 800, 900].includes(node.style.weight)) fail('syntax.text', `${na}.style.weight`, 'unsupported font weight');
           if (node.style.color !== undefined) colorRef(node.style.color, `${na}.style.color`);
+          if (node.style.tracking !== undefined && !['tight', 'normal', 'wide', 'extraWide'].includes(node.style.tracking)) fail('syntax.text', `${na}.style.tracking`, 'unsupported tracking');
+          if (node.style.case !== undefined && !['preserve', 'uppercase'].includes(node.style.case)) fail('syntax.text', `${na}.style.case`, 'unsupported text case');
+          if (node.style.lineHeight !== undefined && !['tight', 'normal', 'relaxed'].includes(node.style.lineHeight)) fail('syntax.text', `${na}.style.lineHeight`, 'unsupported line height');
+          if (node.style.italic !== undefined && typeof node.style.italic !== 'boolean') fail('syntax.text', `${na}.style.italic`, 'expected boolean');
         }
       } else if (node.kind === 'flow') {
         keys(node, ['id', 'kind', 'importance', 'steps', 'outcome', 'variant'], ['id', 'kind', 'importance', 'steps', 'outcome'], na);
@@ -334,9 +372,17 @@ export function validate(program, bundle) {
         if (!asset || asset.kind !== 'svg' || asset.displayAllowed !== true || !SHA.test(asset.sha256 || '') || typeof asset.license !== 'string' || !asset.license.trim()) fail('reference.asset', `${na}.assetRef`, 'missing verified displayable SVG with license');
         if (!['contain', 'cover'].includes(node.fit)) fail('syntax.svg', `${na}.fit`, 'unsupported SVG fit');
       } else if (node.kind === 'shape') {
-        keys(node, ['id', 'kind', 'importance', 'primitive', 'fill'], ['id', 'kind', 'importance', 'primitive'], na);
-        if (!['panel', 'circle'].includes(node.primitive)) fail('syntax.shape', na, 'unsupported shape');
-        if (node.fill !== undefined) paint(node.fill, `${na}.fill`);
+        keys(node, ['id', 'kind', 'importance', 'primitive', 'fill', 'stroke', 'corner', 'origin'], ['id', 'kind', 'importance', 'primitive'], na);
+        if (!['panel', 'circle', 'rule'].includes(node.primitive)) fail('syntax.shape', na, 'unsupported shape');
+        if (node.fill !== undefined && node.fill !== 'none') paint(node.fill, `${na}.fill`);
+        if (node.stroke !== undefined) {
+          keys(node.stroke, ['color', 'width'], ['color', 'width'], `${na}.stroke`);
+          colorRef(node.stroke.color, `${na}.stroke.color`);
+          int(node.stroke.width, `${na}.stroke.width`, 1, 12);
+        }
+        if (node.corner !== undefined && !['square', 'soft', 'pill'].includes(node.corner)) fail('syntax.shape', `${na}.corner`, 'unsupported corner');
+        if (node.primitive === 'circle' && node.corner !== undefined) fail('syntax.shape', `${na}.corner`, 'circle has a fixed round corner');
+        if (node.origin !== undefined && !['left', 'center', 'right'].includes(node.origin)) fail('syntax.shape', `${na}.origin`, 'unsupported transform origin');
       } else fail('syntax.node', na, `unsupported node ${node.kind}`);
       byId.set(node.id, node);
     }
@@ -373,7 +419,8 @@ export function validate(program, bundle) {
     const resolvedVisible = stateMap.get(scene.resolvedState).visible;
     for (const [i, event] of events.entries()) {
       const ea = `${at}.events[${i}]`;
-      keys(event, ['atFrame', 'durationFrames', 'effect', 'target', 'from', 'to', 'preset', 'ease'], ['atFrame', 'durationFrames', 'effect'], ea);
+      keys(event, ['atFrame', 'durationFrames', 'effect', 'target', 'from', 'to', 'preset', 'ease', 'frames'], ['atFrame', 'durationFrames', 'effect'], ea);
+      if (event.frames !== undefined && event.effect !== 'keyframes') fail('syntax.motion', `${ea}.frames`, 'frames require the keyframes effect');
       int(event.atFrame, `${ea}.atFrame`, 0, scene.durationFrames - 1);
       int(event.durationFrames, `${ea}.durationFrames`, 1, scene.durationFrames);
       if (event.atFrame < latest || event.atFrame + event.durationFrames > scene.durationFrames) fail('semantic.timing', ea, 'events out of order or past scene end');
@@ -399,15 +446,30 @@ export function validate(program, bundle) {
         if (!byId.has(event.target) || !initialVisible.includes(event.target) || !resolvedVisible.includes(event.target)) fail('semantic.motion', ea, 'tween target must be visible throughout scene');
         for (const profile of program.profiles) if (!layoutVisible.get(profile).has(event.target)) fail('semantic.layout', ea, `animated ${event.target} is missing from ${profile}`);
         if (event.preset !== undefined) fail('syntax.motion', `${ea}.preset`, 'tween uses from/to, not preset');
-        if (!['none', 'power2.out', 'power3.out', 'power2.inOut', 'back.out(1.5)'].includes(event.ease)) fail('syntax.motion', `${ea}.ease`, 'unsupported easing');
-        keys(event.from, ['x', 'y', 'scale', 'rotation', 'opacity'], [], `${ea}.from`);
-        keys(event.to, ['x', 'y', 'scale', 'rotation', 'opacity'], [], `${ea}.to`);
-        const properties = Object.keys(event.from);
-        if (!properties.length || canonical(properties.slice().sort()) !== canonical(Object.keys(event.to).sort())) fail('syntax.motion', ea, 'from/to must name the same nonempty properties');
-        for (const property of properties) {
-          const [min, max] = property === 'opacity' ? [0, 1] : property === 'scale' ? [0, 4] : property === 'rotation' ? [-360, 360] : [-1000, 1000];
-          for (const end of ['from', 'to']) if (typeof event[end][property] !== 'number' || !Number.isFinite(event[end][property]) || event[end][property] < min || event[end][property] > max) fail('syntax.motion', `${ea}.${end}.${property}`, `expected number ${min}..${max}`);
+        if (!MOTION_EASES.includes(event.ease)) fail('syntax.motion', `${ea}.ease`, 'unsupported easing');
+        if (canonical(motionValue(event.from, `${ea}.from`)) !== canonical(motionValue(event.to, `${ea}.to`))) fail('syntax.motion', ea, 'from/to must name the same properties');
+        if (written.has(event.target)) fail('semantic.motion', ea, 'node receives multiple writes');
+        written.add(event.target);
+      } else if (event.effect === 'keyframes') {
+        keys(event, ['atFrame', 'durationFrames', 'effect', 'target', 'frames', 'ease'], ['atFrame', 'durationFrames', 'effect', 'target', 'frames', 'ease'], ea);
+        if (!byId.has(event.target) || !initialVisible.includes(event.target) || !resolvedVisible.includes(event.target)) fail('semantic.motion', ea, 'keyframe target must remain visible throughout scene');
+        for (const profile of program.profiles) if (!layoutVisible.get(profile).has(event.target)) fail('semantic.layout', ea, `animated ${event.target} is missing from ${profile}`);
+        if (!MOTION_EASES.includes(event.ease)) fail('syntax.motion', `${ea}.ease`, 'unsupported easing');
+        const frames = list(event.frames, `${ea}.frames`, 2);
+        if (frames.length > 5) fail('syntax.motion', `${ea}.frames`, 'at most five keyframes');
+        let previousFrame = -1;
+        let properties = null;
+        for (const [frameIndex, frame] of frames.entries()) {
+          const location = `${ea}.frames[${frameIndex}]`;
+          keys(frame, ['atFrame', 'value'], ['atFrame', 'value'], location);
+          int(frame.atFrame, `${location}.atFrame`, 0, event.durationFrames);
+          if (frame.atFrame <= previousFrame) fail('syntax.motion', `${location}.atFrame`, 'keyframes must increase strictly');
+          previousFrame = frame.atFrame;
+          const current = canonical(motionValue(frame.value, `${location}.value`));
+          if (properties !== null && current !== properties) fail('syntax.motion', location, 'all keyframes must name the same properties');
+          properties = current;
         }
+        if (frames[0].atFrame !== 0 || frames.at(-1).atFrame !== event.durationFrames) fail('syntax.motion', ea, 'keyframes must start at 0 and end at durationFrames');
         if (written.has(event.target)) fail('semantic.motion', ea, 'node receives multiple writes');
         written.add(event.target);
       } else fail('syntax.effect', ea, `unsupported effect ${event.effect}`);
@@ -452,6 +514,10 @@ function textStyle(node, profile, brand, rect) {
   if (node.style?.align) css.push(`text-align:${node.style.align}`);
   if (node.style?.weight) css.push(`font-weight:${node.style.weight}`);
   if (node.style?.color) css.push(`color:${cssColor(node.style.color, brand)}`);
+  if (node.style?.tracking) css.push(`letter-spacing:${{ tight: '-.045em', normal: '0', wide: '.12em', extraWide: '.3em' }[node.style.tracking]}`);
+  if (node.style?.case === 'uppercase') css.push('text-transform:uppercase');
+  if (node.style?.lineHeight) css.push(`line-height:${{ tight: .98, normal: 1.1, relaxed: 1.3 }[node.style.lineHeight]}`);
+  if (node.style?.italic) css.push('font-style:italic');
   const firstLine = node.segments?.[0]?.text || node.text || '';
   const size = node.style?.size || (node.fit === 'wrapThenShrink' && node.role === 'headline' && rect && rect[2] <= 550 && firstLine.length > 20 ? 'compact' : undefined);
   if (size) {
@@ -470,7 +536,16 @@ function renderTree(tree, scene, profile, nodes, initial, brand, rect) {
     if (node.kind === 'flow') return `<div id="${id}" class="fl-node fl-flow${node.variant === 'chain' ? ' fl-flow-chain' : ''}"${hidden}>${renderFlow(node, scene.events.some(event => event.target === node.id && event.preset === 'stagger'))}</div>`;
     if (node.kind === 'inputCard') return `<div id="${id}" class="fl-node fl-input-card"${hidden}>${renderInputCard(node)}</div>`;
     if (node.kind === 'videoArtifact') return `<div id="${id}" class="fl-node fl-artifact fl-artifact-${node.phase}${node.density === 'compact' ? ' fl-artifact-compact' : ''}"${hidden}>${renderVideoArtifact(node, scene.events.some(event => event.target === node.id && event.preset === 'reveal'))}</div>`;
-    if (node.kind === 'shape') { const style = [initial.includes(tree) ? '' : 'opacity:0', node.fill ? `background:${cssPaint(node.fill, brand)}` : ''].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-panel${node.primitive === 'circle' ? ' fl-circle' : ''}"${style ? ` style="${style}"` : ''}></div>`; }
+    if (node.kind === 'shape') {
+      const style = [
+        initial.includes(tree) ? '' : 'opacity:0',
+        node.fill === 'none' ? 'background:transparent' : node.fill ? `background:${cssPaint(node.fill, brand)}` : '',
+        node.stroke ? `border:${node.stroke.width}px solid ${cssColor(node.stroke.color, brand)}` : '',
+        node.corner ? `border-radius:${{ square: '0', soft: '18px', pill: '9999px' }[node.corner]}` : '',
+        node.origin ? `transform-origin:${node.origin} center` : '',
+      ].filter(Boolean).join(';');
+      return `<div id="${id}" class="fl-node fl-panel${node.primitive === 'circle' ? ' fl-circle' : node.primitive === 'rule' ? ' fl-rule-node' : ''}"${style ? ` style="${style}"` : ''}></div>`;
+    }
     if (node.kind === 'svg') return `<div id="${id}" class="fl-node fl-media fl-svg"${hidden}><img src="assets/${scene.id}-${node.id}.svg" alt="" style="object-fit:${node.fit}" /></div>`;
     return `<div id="${id}" class="fl-node fl-media"${hidden}><img src="assets/${scene.id}-${node.id}.svg" alt="" /></div>`;
   }
@@ -546,6 +621,15 @@ function htmlFor(program, bundle, profile) {
         const to = { ...event.to, duration: Number(dur.toFixed(6)), ease: event.ease };
         timeline.push(`tl.fromTo('#${cssId(scene, event.target)}',${JSON.stringify(event.from)},${JSON.stringify(to)},${at.toFixed(6)});`);
       }
+      if (event.effect === 'keyframes') {
+        for (let index = 0; index < event.frames.length - 1; index++) {
+          const from = event.frames[index];
+          const to = event.frames[index + 1];
+          const segment = (to.atFrame - from.atFrame) / program.fps;
+          const position = at + from.atFrame / program.fps;
+          timeline.push(`tl.fromTo('#${cssId(scene, event.target)}',${JSON.stringify(from.value)},${JSON.stringify({ ...to.value, duration: Number(segment.toFixed(6)), ease: event.ease })},${position.toFixed(6)});`);
+        }
+      }
     }
     cursor += scene.durationFrames;
   }
@@ -577,7 +661,7 @@ ${portrait ? '.fl-flow{flex-direction:column;align-items:stretch;width:100%;gap:
 .fl-art-bottom{min-height:${portrait ? 75 : 56}px}.fl-art-action{padding:12px 22px;border:2px solid ${bundle.brand.accent};color:${bundle.brand.accent};white-space:nowrap}.fl-art-action-live{background:${bundle.brand.accent};color:${bundle.brand.background}}.fl-art-action b{font-size:1.3em}
 ${portrait ? '.fl-chrome-bottom{font-size:22px}.fl-art-top{flex-wrap:wrap}.fl-input-top{flex-wrap:wrap}.fl-input-field{font-size:44px}.fl-art-screen-label{max-width:80%}' : ''}
 .fl-media{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.fl-media img{display:block;width:100%;height:100%;object-fit:contain}
-.fl-panel{background:${bundle.brand.accent};border-radius:24px;min-height:120px;width:100%}.fl-circle{border-radius:50%;aspect-ratio:1}.fl-overlay{position:relative}.fl-overlay>.fl-node{width:100%;height:100%}.fl-attachment{position:absolute;inset:0}.fl-attachment>.fl-node{width:100%;height:100%}
+.fl-panel{background:${bundle.brand.accent};border-radius:24px;min-height:120px;width:100%}.fl-rule-node{min-height:0;border-radius:0}.fl-circle{border-radius:50%;aspect-ratio:1}.fl-overlay{position:relative}.fl-overlay>.fl-node{width:100%;height:100%}.fl-attachment{position:absolute;inset:0}.fl-attachment>.fl-node{width:100%;height:100%}
 </style></head><body><div id="root" data-composition-id="main" data-start="0" data-width="${p.width}" data-height="${p.height}" data-fps="${program.fps}" data-duration="${total.toFixed(6)}">${clips.join('')}</div><script src="assets/gsap.min.js"></script><script>const tl=gsap.timeline({paused:true});${timeline.join('')}window.__renderReady=false;document.fonts.ready.then(()=>{for(const el of document.querySelectorAll('.fl-placement>.fl-text[data-fl-fit="wrapThenShrink"]')){const original=parseFloat(getComputedStyle(el).fontSize);const min=22;const fits=()=>el.scrollWidth<=el.clientWidth+1&&el.scrollHeight<=el.clientHeight+1;if(!fits()){let lo=min,hi=original;if(lo>hi){window.__framelangFitError=el.id;console.error('FrameLang text fit failed: '+el.id);return}el.style.fontSize=lo+'px';if(!fits()){window.__framelangFitError=el.id;console.error('FrameLang text fit failed: '+el.id);return}for(let i=0;i<14;i++){const mid=(lo+hi)/2;el.style.fontSize=mid+'px';if(fits())lo=mid;else hi=mid}el.style.fontSize=Math.floor(lo*10)/10+'px'}}window.__timelines['main']=tl;window.__renderReady=true}).catch(error=>{window.__framelangFitError=String(error);console.error('FrameLang text fit failed: '+error)});</script></body></html>`;
 }
 
