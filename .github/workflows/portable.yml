@@ -27,6 +27,7 @@ jobs:
         if: runner.os != 'Linux'
         run: node node_modules/hyperframes/bin/hyperframes.mjs browser ensure
       - run: npm test
+      - run: node src/cli.mjs lint examples/makemydemo-editorial/program.json
       - run: npm run example:compile
       - run: npm run example:check
       - run: npm run example:render

@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
@@ -123,7 +123,7 @@ function unique(items, location) {
     seen.add(item);
   }
 }
-function canvasPlacements(tree, location, known) {
+function canvasPlacements(tree, location, known, findings = null, context = {}) {
   const placements = list(tree.children, `${location}.children`, 1);
   if (placements.length > 16) fail('syntax.layout', `${location}.children`, 'canvas supports at most 16 placements');
   const resolved = [];
@@ -153,22 +153,62 @@ function canvasPlacements(tree, location, known) {
     }
     if (!Array.isArray(rect) || rect.length !== 4) fail('syntax.layout', `${at}.rect`, 'expected [x,y,width,height] in thousandths');
     const [x, y, width, height] = rect;
-    [x, y, width, height].forEach((value, i) => int(value, `${at}.rect[${i}]`, i < 2 ? 0 : 1, 1000));
-    if (x + width > 1000 || y + height > 1000) fail('semantic.bounds', `${at}.rect`, 'placement exceeds the safe canvas');
+    [x, y].forEach((value, i) => int(value, `${at}.rect[${i}]`, -Number.MAX_SAFE_INTEGER));
+    [width, height].forEach((value, i) => int(value, `${at}.rect[${i + 2}]`, 1, 1000));
+    if (x < 0 || y < 0 || x + width > 1000 || y + height > 1000) {
+      if (!findings) fail('semantic.bounds', `${at}.rect`, 'placement exceeds the safe canvas');
+      findings.push({
+        code: 'semantic.bounds', severity: 'error', ...context, node: placement.node,
+        location: `${at}.rect`, rect, message: `Node ${placement.node} exceeds the safe canvas`,
+        hint: 'Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000.',
+      });
+    }
     if (placement.layer !== undefined) int(placement.layer, `${at}.layer`, 0, 9);
     if (placement.align !== undefined && !['start', 'center', 'end'].includes(placement.align)) fail('syntax.layout', `${at}.align`, 'unsupported alignment');
     if (placement.overlap !== undefined && !['avoid', 'intentional'].includes(placement.overlap)) fail('syntax.layout', `${at}.overlap`, 'unsupported overlap intent');
     for (const previous of resolved) {
       const [px, py, pw, ph] = previous.rect;
       if (x < px + pw && x + width > px && y < py + ph && y + height > py) {
-        if (placement.overlap !== 'intentional' || previous.placement.overlap !== 'intentional') fail('semantic.overlap', at, `overlaps ${previous.placement.node} without mutual intent`);
-        if (known.get(placement.node).importance !== 'decorative' && known.get(previous.placement.node).importance !== 'decorative') fail('semantic.overlap', at, 'intentional overlap requires a decorative node');
+        const mutual = placement.overlap === 'intentional' && previous.placement.overlap === 'intentional';
+        const decorative = known.get(placement.node).importance === 'decorative' || known.get(previous.placement.node).importance === 'decorative';
+        if (!mutual || !decorative) {
+          if (!findings) fail('semantic.overlap', at, !mutual ? `overlaps ${previous.placement.node} without mutual intent` : 'intentional overlap requires a decorative node');
+          findings.push({
+            code: 'semantic.overlap', severity: 'error', ...context,
+            nodes: [previous.placement.node, placement.node], locations: [previous.location, at],
+            rects: [previous.rect, rect],
+            intersection: [Math.max(x, px), Math.max(y, py), Math.min(x + width, px + pw) - Math.max(x, px), Math.min(y + height, py + ph) - Math.max(y, py)],
+            message: `Nodes ${previous.placement.node} and ${placement.node} overlap${mutual ? ' without a decorative node' : ' without allowed intent'}`,
+            hint: decorative
+              ? 'Move or resize a rectangle to remove the intersection, or declare intentional overlap on both decorative and content placements if the composition requires it.'
+              : 'Move or resize a rectangle to remove the intersection. Two functional nodes cannot opt out of this rule.',
+          });
+        }
       }
     }
-    resolved.push({ placement, rect });
+    resolved.push({ placement, rect, location: at });
     placed.set(placement.node, rect);
   }
   return resolved;
+}
+
+export function lintProgram(program, bundle) {
+  const findings = [];
+  try {
+    for (const [sceneIndex, scene] of (program.scenes || []).entries()) {
+      const known = new Map((scene.content || []).map(node => [node.id, node]));
+      for (const profile of program.profiles || []) {
+        const location = `$.scenes[${sceneIndex}].layouts.${scene.layouts?.[profile] ? profile : 'default'}`;
+        const tree = scene.layouts?.[profile] ?? scene.layouts?.default;
+        if (tree?.type === 'canvas') canvasPlacements(tree, location, known, findings, { sceneId: scene.id, profile });
+      }
+    }
+    if (findings.length === 0) validate(program, bundle);
+  } catch (error) {
+    if (!(error instanceof FrameLangError)) throw error;
+    findings.push({ code: error.code, severity: 'error', location: error.location, message: error.message, hint: 'Edit the indicated FrameLang source field and run lint again.' });
+  }
+  return { version: 1, ok: findings.length === 0, findings, instruction: findings.length ? 'Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.' : 'The static lint passed. Run compile and check to verify browser geometry at rendered frames.' };
 }
 function layoutRefs(tree, location, known, refs) {
   if (typeof tree === 'string') {
@@ -551,7 +591,7 @@ function verifySvg(bytes, location) {
   if (/<!|<\?|&|\bon[a-z]+\s*=|\bhref\s*=|\bstyle\s*=|\b(?:https?|file|data|javascript):|\burl\s*\(|@import/i.test(stripped)) fail('reference.svg', location, 'SVG contains executable or external content');
 }
 
-export async function compile(programPath, outDir) {
+export async function loadProgram(programPath) {
   const source = await readFile(programPath, 'utf8');
   const authored = JSON.parse(source);
   let program = authored;
@@ -582,8 +622,14 @@ export async function compile(programPath, outDir) {
   }
   const bundlePath = path.join(inputDir, 'bundle.json');
   const bundle = JSON.parse(await readFile(bundlePath, 'utf8'));
+  return { authored, program, inputDir, recipe, bundle };
+}
+
+export async function compile(programPath, outDir) {
+  const { authored, program, inputDir, recipe, bundle } = await loadProgram(programPath);
   validate(program, bundle);
   await mkdir(outDir, { recursive: true });
+  await rm(path.join(outDir, 'feedback.json'), { force: true });
   const gsapPath = require.resolve('gsap/dist/gsap.min.js');
   const fontPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'fonts', 'Inter.ttf');
   const outputs = {};
@@ -610,7 +656,14 @@ export async function compile(programPath, outDir) {
       .filter(node => node.kind === 'productState' || node.kind === 'svg').map(node => `${scene.id}-${node.id}.svg`))];
     for (const file of stagedFiles) outputs[profile].assetHashes[file] = hash(await readFile(path.join(target, 'assets', file)));
   }
-  const report = { language: program.language, pilot: true, inputHash: hash(canonical(authored)), expandedHash: hash(canonical(program)), recipe, verification: program.verification ? { ...program.verification, fps: program.fps, totalFrames: program.scenes.reduce((total, scene) => total + scene.durationFrames, 0) } : null, bundleRefs: bundleRefs(bundle), outputs, checked: false, degraded: false };
+  const sourceMap = Object.fromEntries(program.scenes.flatMap((scene, sceneIndex) =>
+    scene.content.map((node, nodeIndex) => [`#${cssId(scene, node.id)}`, {
+      sceneId: scene.id, nodeId: node.id,
+      location: `$.scenes[${sceneIndex}].content[${nodeIndex}]`,
+      layoutLocations: Object.fromEntries(program.profiles.map(profile =>
+        [profile, `$.scenes[${sceneIndex}].layouts.${scene.layouts[profile] ? profile : 'default'}`])),
+    }])));
+  const report = { language: program.language, pilot: true, inputHash: hash(canonical(authored)), expandedHash: hash(canonical(program)), recipe, verification: program.verification ? { ...program.verification, fps: program.fps, totalFrames: program.scenes.reduce((total, scene) => total + scene.durationFrames, 0) } : null, bundleRefs: bundleRefs(bundle), sourceMap, outputs, checked: false, degraded: false };
   await writeFile(path.join(outDir, 'compile-report.json'), `${JSON.stringify(report, null, 2)}\n`);
   return report;
 }

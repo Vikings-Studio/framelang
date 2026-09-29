@@ -16,3 +16,11 @@ test('verified mode requires every requested frame and rejects brief geometry fi
   report.layout.samples = [0, 0.083];
   assert.equal(assessCheck(report, 0, frames).ok, false);
 });
+
+test('ordinary browser checks also reject sampled geometry findings', () => {
+  const report = { ok: true, lint: { findings: [] }, layout: { samples: [0, 1], findings: [{ code: 'element_overlap', severity: 'info', time: 1 }] } };
+  assert.equal(assessCheck(report, 0, null).ok, false);
+  report.layout.findings = [];
+  report.runtime = { findings: [{ code: 'console_warning', severity: 'warning', message: 'FrameLang text fit failed: fl-s1-headline' }] };
+  assert.equal(assessCheck(report, 0, null).ok, false);
+});
