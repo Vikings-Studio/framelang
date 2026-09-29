@@ -11,13 +11,16 @@ states, stack/split/overlay layout, hard cuts, and `replace` events. The
 display typography, left alignment, process flows, decoration, and bounded
 entrance presets. The [expressive core](spec/V0_1_EXPRESSIVE_CORE.md) adds
 typed gradients, positioned canvas layouts, local SVG assets, text styling,
-and bounded keyframe tweens. It rejects
+and bounded keyframe tweens. The later
+[richness and guardrails](spec/RICHNESS_AND_GUARDRAILS.md) update adds model-chosen
+accent blocks, anchored relative placement, a responsive process chain,
+measured canvas text fitting, and an opt-in every-rendered-frame check. It rejects
 unsupported syntax. The RFC's full geometry proof, video clips, sync anchors,
 and production integration are future work. A passing pilot render is evidence
 about this subset, not proof of the full language guarantee.
 
 For routine generation, a [versioned compact recipe](spec/V0_1_RECIPES.md)
-can expand into the reviewed cinematic scene. The model writes three lead lines
+can expand into a reviewed cinematic or editorial scene. The model writes three lead lines
 instead of repeating layouts, hashes, assets, and animation boilerplate.
 
 ## Requirements
@@ -50,6 +53,10 @@ npm run cinematic:render
 npm run recipe:compile
 npm run recipe:check
 npm run recipe:render
+npm run recipe:v2:compile
+npm run recipe:v2:check
+npm run recipe:v2:render
+npm run verify:unfit-rejection
 ```
 
 The example outputs are written under `out/` and are ignored by Git. To compile

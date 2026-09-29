@@ -5,6 +5,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { compile, FrameLangError } from './compiler.mjs';
+import { assessCheck, frameTimes } from './check-policy.mjs';
 
 const require = createRequire(import.meta.url);
 const hf = require.resolve('hyperframes/bin/hyperframes.mjs');
@@ -48,18 +49,19 @@ async function main() {
   if (command === 'check') {
     report.checked = false;
     report.checks = {};
+    const frames = frameTimes(report.verification);
     for (const [profile, entry] of Object.entries(report.outputs)) {
       const cwd = path.join(dir, entry.directory);
-      const result = await run(['check', '--json', '--samples=15', '--at-transitions', cwd], cwd);
+      const args = ['check', '--json', '--samples=15', '--at-transitions'];
+      if (frames) args.push(`--at=${frames.join(',')}`, '--frame-check=severity=error');
+      const result = await run([...args, cwd], cwd);
       let parsed = null;
       try {
         const start = result.stdout.indexOf('{');
         const end = result.stdout.lastIndexOf('}');
         parsed = JSON.parse(result.stdout.slice(start, end + 1));
       } catch { /* non-JSON is a failure */ }
-      const layoutRan = Array.isArray(parsed?.layout?.samples) && parsed.layout.samples.length > 0;
-      const hardWarnings = (parsed?.lint?.findings || []).filter(f => f.code === 'gsap_timeline_set_initial_hide');
-      report.checks[profile] = { ok: result.code === 0 && parsed?.ok === true && layoutRan && hardWarnings.length === 0, exitCode: result.code, layoutRan, hardWarnings, report: parsed };
+      report.checks[profile] = assessCheck(parsed, result.code, frames);
     }
     report.checked = Object.values(report.checks).every(v => v.ok);
     await writeFile(file, `${JSON.stringify(report, null, 2)}\n`);

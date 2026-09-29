@@ -1,0 +1,39 @@
+{
+  "recipe": "makemydemo-workflow/v2",
+  "inputHash": "sha256:2afd093ea0a28bca70dab9a175f7a0c46e6949e0fa74dc5c3c7a01b0e2bdc0b5",
+  "expandedHash": "sha256:be2bc87819e5cac772fbd282f7f110a3d1f1ddc1ab2f09488a0a9f27e6bbf9cd",
+  "templateHash": "sha256:be2bc87819e5cac772fbd282f7f110a3d1f1ddc1ab2f09488a0a9f27e6bbf9cd",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 276
+  },
+  "checks": {
+    "landscape-1920x1080": {
+      "ok": true,
+      "allFramesObserved": true,
+      "geometryClear": true,
+      "runtimeClear": true,
+      "samples": 347,
+      "layoutFindings": 0,
+      "runtimeWarnings": 0,
+      "contrastErrors": 0,
+      "lintWarnings": 3
+    },
+    "portrait-1080x1920": {
+      "ok": true,
+      "allFramesObserved": true,
+      "geometryClear": true,
+      "runtimeClear": true,
+      "samples": 347,
+      "layoutFindings": 0,
+      "runtimeWarnings": 0,
+      "contrastErrors": 0,
+      "lintWarnings": 3
+    }
+  },
+  "preview": {
+    "landscape": "sha256:c2b913023c3311fd66dfa8a8579cd7991f6deef4032f81ec16eee7f5ed54716c",
+    "portrait": "sha256:2f5fd173368edd1fc3d103d2663849a052d6c340dcf1809a00c19df8e1e0ebff"
+  }
+}

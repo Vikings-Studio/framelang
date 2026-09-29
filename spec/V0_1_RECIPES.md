@@ -18,6 +18,16 @@ that the hook names a public URL, assembly names script/visuals/music, and the
 handoff names review without repeating the fixed export line. These simple
 word checks do not prove the copy factual or tasteful.
 
+`makemydemo-workflow/v2` is an editorial successor. Its
+[four-field input](../examples/makemydemo-recipe-v2.json) retains the same
+small model-authored surface while the
+[versioned scene](../examples/makemydemo-editorial/program.json) uses large
+left-aligned type, accent blocks, per-profile relative placement, a responsive
+script + visuals + music → MP4 chain, and a compact video preview. It opts into
+the every-frame export gate described in
+[richness and guardrails](RICHNESS_AND_GUARDRAILS.md). v1 remains available so
+its published trial and hashes can still be reproduced.
+
 The compile report records the authored input hash, expanded program hash,
 recipe ID, template hash, brand and asset hashes, and output hashes. The
 catalog template is tied to the compiler release; a reproducible archived run

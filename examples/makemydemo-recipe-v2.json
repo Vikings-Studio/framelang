@@ -1,0 +1,6 @@
+{
+  "recipe": "makemydemo-workflow/v2",
+  "hook": "Paste a public product URL.",
+  "assembly": "Script. Product visuals. Music.",
+  "handoff": "Review the cut."
+}

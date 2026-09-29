@@ -19,7 +19,12 @@
     "cinematic:render": "node src/cli.mjs render out/makemydemo-cinematic",
     "recipe:compile": "node src/cli.mjs compile examples/makemydemo-recipe.json out/makemydemo-recipe",
     "recipe:check": "node src/cli.mjs check out/makemydemo-recipe",
-    "recipe:render": "node src/cli.mjs render out/makemydemo-recipe"
+    "recipe:render": "node src/cli.mjs render out/makemydemo-recipe",
+    "editorial:compile": "node src/cli.mjs compile examples/makemydemo-editorial/program.json out/makemydemo-editorial",
+    "recipe:v2:compile": "node src/cli.mjs compile examples/makemydemo-recipe-v2.json out/makemydemo-recipe-v2",
+    "recipe:v2:check": "node src/cli.mjs check out/makemydemo-recipe-v2",
+    "recipe:v2:render": "node src/cli.mjs render out/makemydemo-recipe-v2",
+    "verify:unfit-rejection": "node scripts/verify-unfit.mjs"
   },
   "dependencies": {
     "gsap": "3.15.0",

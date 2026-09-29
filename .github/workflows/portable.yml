@@ -34,9 +34,17 @@ jobs:
           HYPERFRAMES_BROWSER_PATH: ${{ runner.os == 'Linux' && steps.chrome.outputs.chrome-path || '' }}
       - run: npm run cinematic:compile
       - run: npm run recipe:compile
+      - run: npm run recipe:v2:compile
       - run: npm run cinematic:check
       - run: npm run recipe:check
+      - run: npm run recipe:v2:check
+      - run: npm run verify:unfit-rejection
+        env:
+          HYPERFRAMES_BROWSER_PATH: ${{ runner.os == 'Linux' && steps.chrome.outputs.chrome-path || '' }}
       - run: npm run cinematic:render
+        env:
+          HYPERFRAMES_BROWSER_PATH: ${{ runner.os == 'Linux' && steps.chrome.outputs.chrome-path || '' }}
+      - run: npm run recipe:v2:render
         env:
           HYPERFRAMES_BROWSER_PATH: ${{ runner.os == 'Linux' && steps.chrome.outputs.chrome-path || '' }}
       - uses: actions/upload-artifact@v4
