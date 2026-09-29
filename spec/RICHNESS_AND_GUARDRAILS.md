@@ -7,6 +7,9 @@ document describes the typed FrameLang controls added in response. The
 [editorial example](../examples/makemydemo-editorial/program.json) and compact
 [`makemydemo-workflow/v2` recipe](../examples/makemydemo-recipe-v2.json) render
 the same scene in landscape and portrait. The v1 recipe is unchanged.
+The later [model-expression audit](MODEL_EXPRESSION_V0_1.md) adds bounded
+layered gradients, type spacing, rule shapes, and keyframes after inspecting
+the saved raw model clips.
 
 ## Model-controlled choices
 

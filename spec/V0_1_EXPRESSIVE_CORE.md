@@ -10,15 +10,21 @@ separates what the current pilot implements from the larger v1 design.
 
 | Capability | Program form | Bound in the compiler |
 | --- | --- | --- |
-| Paint | `scene.design.background` and `shape.fill`: solid, linear, or radial | Hex or frozen brand-token colors; two to five ordered stops; eight linear angles or five radial centers. |
-| Text | Plain `text` or styled `segments`; optional `style` | Alignment left/center/right, four relative sizes, six font weights, foreground/accent/accent-block spans, token or hex color. Copy is escaped. Canvas text is measured after the bundled font loads and shrunk until it fits or rejected below a 22 px floor. |
+| Paint | `scene.design.background` and `shape.fill`: solid, linear, radial, or layered | Hex or frozen brand-token colors; two to five ordered stops, per-stop opacity, integer linear angles, typed radial centers, at most four non-nested layers. |
+| Text | Plain `text` or styled `segments`; optional `style` | Alignment left/center/right, four relative sizes, six font weights, tracking, case, line height, italic, foreground/accent/accent-block spans, token or hex color. Copy is escaped. Canvas text is measured after the bundled font loads and shrunk until it fits or rejected below a 22 px floor. |
 | Position | `canvas` with per-profile `rect` or `relative` placement | Integer thousandths of the inset safe canvas; 1–16 placements; relative anchors must already be placed; bounds must fit. Content boxes cannot overlap unless both declare intent and one is decorative. Stack, split, and overlay remain available. |
 | SVG | `svg` node referencing a local manifest entry | SHA-256 hash, display permission, license, one-megabyte limit, conservative element/content filter; no runtime URL, script, style, external reference, or SMIL. The filter is not a complete XML security parser. The compiler stages the bytes and records their output hash. |
-| Shapes | `panel` or `circle` with optional typed paint | No arbitrary CSS or new stacking context from a program. |
-| Motion | `appear`, `replace`, or `tween` | Integer frames; finite transform/opacity values; allowlisted ease; one writer per node in the pilot; one seekable paused timeline. Typed `paste`, `reveal`, and `stagger` presets are available for the workflow templates. |
+| Shapes | `panel`, `circle`, or `rule` with optional typed paint | Optional bounded stroke, corner, and transform origin; no arbitrary CSS or new stacking context from a program. |
+| Motion | `appear`, `replace`, `tween`, or 2–5 point `keyframes` | Integer frames; finite transform/opacity values including scaleX/Y; allowlisted ease; one writer per node in the pilot; one seekable paused timeline. Typed `paste`, `reveal`, and `stagger` presets are available for the workflow templates. |
 | Scene treatment | Grid/glow/rules, editorial progress rail, ambient drift | Finite compiler-owned motion; decorations are marked as intentionally clipped. |
 | Process diagram | `flow` with `variant: "chain"` | Model supplies two to four steps and an outcome; compiler lays out a horizontal landscape chain and a vertical portrait chain with responsive connectors and typed stagger motion. |
 | Frame sweep | `verification: { "mode": "allFrames" }` | Bounded canvas required in every profile. Check requests every exported 24 fps timestamp, transition boundaries, media frame checks, layout and contrast checks; missing reported timestamps reject the render. |
+
+The [model-expression update](MODEL_EXPRESSION_V0_1.md) further admits up to
+four layered paints with per-stop opacity, model-chosen type tracking and line
+height, outlined or thin rule shapes, and 2–5 point transform/opacity
+keyframes. Its example and negative tests cover those new fields; the browser
+still gates render output in both profiles.
 
 The [cinematic MakeMyDemo example](../examples/makemydemo-cinematic/program.json)
 uses the general paint, canvas, text, SVG, and tween fields alongside typed URL
@@ -103,8 +109,9 @@ making each visual treatment a one-off hardcoded component:
    actual export verification, and human review for factuality and taste.
 
 This is a capability map, **not a claim that every item is implemented**.
-The v0.1 pilot implements the table above. Full media, masks, path animation, audio, shaders, arbitrary SVG
-authoring, and general keyframe arrays remain work to build and test.
+The v0.1 pilot implements the table above. Full media, masks, path animation,
+audio, shaders, arbitrary SVG authoring, and property-specific keyframe easing
+remain work to build and test.
 
 ## Determinism boundary
 

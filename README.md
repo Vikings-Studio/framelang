@@ -19,6 +19,12 @@ unsupported syntax. The RFC's full geometry proof, video clips, sync anchors,
 and production integration are future work. A passing pilot render is evidence
 about this subset, not proof of the full language guarantee.
 
+The [model-expression audit](spec/MODEL_EXPRESSION_V0_1.md) compares the saved
+raw model clips with typed FrameLang controls for layered transparent gradients,
+type spacing, rules and outlines, and multi-point keyframe motion. The
+[example program](examples/makemydemo-editorial/model-options.json) exercises
+those choices in both output profiles.
+
 For routine generation, a [versioned compact recipe](spec/V0_1_RECIPES.md)
 can expand into a reviewed cinematic or editorial scene. The model writes three lead lines
 instead of repeating layouts, hashes, assets, and animation boilerplate.
@@ -56,6 +62,9 @@ npm run recipe:render
 npm run recipe:v2:compile
 npm run recipe:v2:check
 npm run recipe:v2:render
+npm run options:compile
+npm run options:check
+npm run options:render
 npm run verify:unfit-rejection
 ```
 
