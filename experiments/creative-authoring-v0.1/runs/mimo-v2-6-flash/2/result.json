@@ -1,0 +1,20 @@
+{
+  "number": 2,
+  "model": "opencode-go/mimo-v2.6-flash",
+  "status": "lint rejected",
+  "durationMs": 347228,
+  "exitCode": 0,
+  "signal": null,
+  "tokens": {
+    "total": 26441,
+    "input": 3512,
+    "output": 2430,
+    "reasoning": 20499,
+    "cache": {
+      "read": 0,
+      "write": 0
+    }
+  },
+  "cost": 0.0069118,
+  "formatViolation": false
+}

@@ -1,0 +1,29 @@
+Create an 8-second silent 1920x1080 MakeMyDemo.com teaser in exactly two 96-frame scenes at 24fps. Facts: paste a public product URL; get a video first cut with an AI-written script, product visuals and music; review and export MP4. No invented claims, speed metrics, customers, screenshots, capabilities or URLs. Make a polished composition with strong type hierarchy, useful supporting visuals and staged motion. Choose alignment, emphasis, line breaks, background treatment, decoration, supporting content, and animation timing yourself. No need to use every feature. Brand: #09090B background, #FAFAFA foreground, #DFE104 accent, Inter font. Return JSON only, no tools or Markdown.
+
+FrameLang compact grammar:
+{"language":"framelang/creative-v0.1","profiles":["landscape-1920x1080","portrait-1080x1920"],"scenes":[{"id":"s1","durationFrames":96,"design":{},"nodes":[]},{"id":"s2","durationFrames":96,"design":{},"nodes":[]}]}
+You own all scene designs and nodes. IDs lowercase letters/numbers/hyphens.
+Design optional fields: alignment left|center; scale standard|display; decoration none|rules|grid-glow; chrome none|editorial; ambient none|drift (drift only with grid-glow); background typed paint.
+Paint: {kind:"solid",color:"background"|"foreground"|"accent"|hex}; or {kind:"linear",angle:0..359,stops:[{at:0,color:hex,opacity:0..100},{at:100,color:hex}]}; or kind radial with center:[xPercent,yPercent],stops; or {kind:"layers",layers:[2..4 paints]}.
+Each node has id, rect:[x,y,width,height] in integer thousandths of SAFE canvas; x/y>=0, x+width<=1000,y+height<=1000. Nodes must NOT overlap. Optional portrait:{rect:[...]} independently adapts position/size for portrait. Or replace rect with relative:{to:earlierNodeId,side:below|above|left|right,gap:integer,width:integer,height:integer,crossAlign:start|center|end}. Layout dimensions are thousandths. Keep logical alignment and generous headline height. Decorative overlap requires overlap:"intentional" on BOTH participants and one must be a shape. Decorative shapes remain inside safe canvas.
+Text node (kind defaults to text): {id,role:"headline"|"body"|"label",text:"copy",rect,style:{align:left|center|right,size:24..240 OR compact|base|large|hero,weight:400..900 in hundreds,color:brand token|hex,tracking:tight|normal|wide|extraWide,case:preserve|uppercase,lineHeight:tight|normal|relaxed,italic:boolean,minSize:24..160,maxLines:1..8},motion}. All style fields optional. Headlines default hero and cannot shrink below64px; body32px,label24px. Use 150..190px landscape headlines; allocate enough width and height. Alternative to text: segments:[{text:"Paste a public product URL.",breakAfter:true},{text:"Get a video first cut.",tone:"accent"|"accentBlock"|"foreground"}]. Segment text preserves spaces; breakAfter provides intentional line breaks. Do not combine text and segments. No HTML.
+Flow: {id,kind:"flow",steps:[2..4 short labels up to28chars],outcome:"up to36chars",variant:"chain",rect,portrait,motion}; naturally horizontal landscape and vertical portrait; allocate at least200px landscape and500px portrait height. Keep flow text legible.
+Shape: {id,kind:"shape",primitive:panel|circle|rule,fill:paint OR "none",stroke:{color:brandToken|hex,width:1..12},corner:square|soft|pill,origin:left|center|right,rect,motion}. Shapes default decorative and static.
+All nodes can have motion:"none" or "rise"|"slide"|"pop"|"fade"; flow can use "stagger". Or {preset,atFrame:0..70,durationFrames:1..40}. First visible content by frame10, all animation must finish by frame81 (last15% holds). Default text entrance starts at min(nodeIndex*5,10) for18frames. For transform keyframes use motion:{atFrame,durationFrames,ease:"none"|"power2.out"|"power3.out"|"power2.inOut",frames:[{atFrame:0,value:{opacity:0,y:20}},{atFrame:durationFrames,value:{opacity:1,y:0}}]} with2..5 increasing keyframes, identical properties, x/y -1000..1000, opacity0..1, scale/scaleX/scaleY0..4, rotation-360..360. No arbitrary CSS or JS. You don't write hashes, states, events, or layout boilerplate. Design a distinct video, not a copy of a template.
+
+Your previous JSON failed validation. Preserve your design and fix this feedback; return the full JSON only.
+{
+  "version": 1,
+  "stage": "static",
+  "ok": false,
+  "findings": [
+    {
+      "code": "syntax.object",
+      "location": "$.scenes[0].nodes[0].portrait",
+      "message": "syntax.object at $.scenes[0].nodes[0].portrait: expected object",
+      "severity": "error",
+      "hint": "Revise the indicated FrameLang source, then rerun lint."
+    }
+  ],
+  "instruction": "Revise the FrameLang source and rerun lint before compiling."
+}

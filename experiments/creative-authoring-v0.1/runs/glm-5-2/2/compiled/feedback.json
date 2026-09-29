@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:c3a10443651eb49b452afe2abe3f8891e1a85dfe4b290ff2251c52a01121be78",
+  "recipe": null,
+  "ok": true,
+  "findings": [],
+  "instruction": "Browser layout checks passed. Render may proceed."
+}

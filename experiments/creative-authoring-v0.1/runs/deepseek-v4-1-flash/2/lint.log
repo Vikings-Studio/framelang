@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "syntax.object",
+      "severity": "error",
+      "location": "$.scenes[1].nodes[0].fill",
+      "message": "syntax.object at $.scenes[1].content[0].fill: expected object",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:e10bcc102cd3ab94ff72137ee655fc1dfb47521eb7705fa645985b03266ab25e"
+}

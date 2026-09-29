@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "landscape-1920x1080",
+      "nodes": [
+        "s2-body",
+        "s2-badge"
+      ],
+      "locations": [
+        "$.scenes[1].nodes[2]",
+        "$.scenes[1].nodes[3]"
+      ],
+      "rects": [
+        [
+          90,
+          580,
+          700,
+          160
+        ],
+        [
+          700,
+          600,
+          210,
+          90
+        ]
+      ],
+      "intersection": [
+        700,
+        600,
+        90,
+        90
+      ],
+      "message": "Nodes s2-body and s2-badge overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection, or declare intentional overlap on both decorative and content placements if the composition requires it."
+    },
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "landscape-1920x1080",
+      "nodes": [
+        "s2-body",
+        "s2-badge-text"
+      ],
+      "locations": [
+        "$.scenes[1].nodes[2]",
+        "$.scenes[1].nodes[4]"
+      ],
+      "rects": [
+        [
+          90,
+          580,
+          700,
+          160
+        ],
+        [
+          700,
+          600,
+          210,
+          90
+        ]
+      ],
+      "intersection": [
+        700,
+        600,
+        90,
+        90
+      ],
+      "message": "Nodes s2-body and s2-badge-text overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection. Two functional nodes cannot opt out of this rule."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:e129576b4dd256753ddb46a3148efcf6877b4132578c750d45d0582043044278"
+}

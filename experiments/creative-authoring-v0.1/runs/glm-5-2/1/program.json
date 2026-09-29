@@ -1,0 +1,404 @@
+{
+  "language": "framelang/creative-v0.1",
+  "profiles": [
+    "landscape-1920x1080",
+    "portrait-1080x1920"
+  ],
+  "scenes": [
+    {
+      "id": "s1",
+      "durationFrames": 96,
+      "design": {
+        "alignment": "left",
+        "scale": "display",
+        "decoration": "rules",
+        "chrome": "none",
+        "ambient": "none",
+        "background": {
+          "kind": "solid",
+          "color": "background"
+        }
+      },
+      "nodes": [
+        {
+          "id": "s1-label",
+          "role": "label",
+          "text": "MakeMyDemo.com",
+          "rect": [
+            80,
+            118,
+            300,
+            40
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              90,
+              420,
+              44
+            ]
+          },
+          "style": {
+            "align": "left",
+            "weight": 600,
+            "color": "accent",
+            "tracking": "extraWide",
+            "case": "uppercase"
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 0,
+            "durationFrames": 12
+          }
+        },
+        {
+          "id": "s1-headline",
+          "role": "headline",
+          "segments": [
+            {
+              "text": "Paste a public",
+              "breakAfter": true
+            },
+            {
+              "text": "product URL.",
+              "breakAfter": true
+            },
+            {
+              "text": "Get a video first cut.",
+              "tone": "accent"
+            }
+          ],
+          "rect": [
+            80,
+            200,
+            900,
+            480
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              170,
+              860,
+              620
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 150,
+            "weight": 800,
+            "color": "foreground",
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "maxLines": 6
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 6,
+            "durationFrames": 20
+          }
+        },
+        {
+          "id": "s1-bar",
+          "kind": "shape",
+          "primitive": "panel",
+          "fill": {
+            "kind": "solid",
+            "color": "#18181B"
+          },
+          "stroke": {
+            "color": "#3F3F46",
+            "width": 2
+          },
+          "corner": "pill",
+          "origin": "left",
+          "rect": [
+            80,
+            780,
+            500,
+            80
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              830,
+              700,
+              90
+            ]
+          },
+          "overlap": "intentional",
+          "motion": {
+            "preset": "pop",
+            "atFrame": 30,
+            "durationFrames": 14
+          }
+        },
+        {
+          "id": "s1-dot",
+          "kind": "shape",
+          "primitive": "circle",
+          "fill": {
+            "kind": "solid",
+            "color": "accent"
+          },
+          "rect": [
+            112,
+            804,
+            32,
+            32
+          ],
+          "portrait": {
+            "rect": [
+              112,
+              859,
+              32,
+              32
+            ]
+          },
+          "overlap": "intentional",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 38,
+            "durationFrames": 10
+          }
+        },
+        {
+          "id": "s1-url",
+          "role": "label",
+          "text": "https://",
+          "rect": [
+            168,
+            802,
+            170,
+            36
+          ],
+          "portrait": {
+            "rect": [
+              168,
+              857,
+              190,
+              36
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 28,
+            "weight": 500,
+            "color": "#71717A"
+          },
+          "overlap": "intentional",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 42,
+            "durationFrames": 10
+          }
+        },
+        {
+          "id": "s1-caret",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "solid",
+            "color": "accent"
+          },
+          "rect": [
+            348,
+            802,
+            4,
+            36
+          ],
+          "portrait": {
+            "rect": [
+              370,
+              857,
+              4,
+              36
+            ]
+          },
+          "overlap": "intentional",
+          "motion": {
+            "atFrame": 40,
+            "durationFrames": 38,
+            "ease": "power2.inOut",
+            "frames": [
+              {
+                "atFrame": 0,
+                "value": {
+                  "opacity": 0
+                }
+              },
+              {
+                "atFrame": 6,
+                "value": {
+                  "opacity": 1
+                }
+              },
+              {
+                "atFrame": 22,
+                "value": {
+                  "opacity": 0
+                }
+              },
+              {
+                "atFrame": 38,
+                "value": {
+                  "opacity": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "durationFrames": 96,
+      "design": {
+        "alignment": "center",
+        "scale": "display",
+        "decoration": "grid-glow",
+        "chrome": "none",
+        "ambient": "drift",
+        "background": {
+          "kind": "solid",
+          "color": "background"
+        }
+      },
+      "nodes": [
+        {
+          "id": "s2-kicker",
+          "role": "label",
+          "text": "From URL to first cut",
+          "rect": [
+            310,
+            150,
+            380,
+            40
+          ],
+          "portrait": {
+            "rect": [
+              200,
+              120,
+              600,
+              44
+            ]
+          },
+          "style": {
+            "align": "center",
+            "weight": 600,
+            "color": "#A1A1AA",
+            "tracking": "wide",
+            "case": "uppercase"
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 0,
+            "durationFrames": 12
+          }
+        },
+        {
+          "id": "s2-headline",
+          "role": "headline",
+          "segments": [
+            {
+              "text": "Review and",
+              "breakAfter": true
+            },
+            {
+              "text": "export MP4.",
+              "tone": "accent"
+            }
+          ],
+          "rect": [
+            150,
+            210,
+            700,
+            340
+          ],
+          "portrait": {
+            "rect": [
+              60,
+              200,
+              880,
+              220
+            ]
+          },
+          "style": {
+            "align": "center",
+            "size": 160,
+            "weight": 800,
+            "color": "foreground",
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "maxLines": 4
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 6,
+            "durationFrames": 20
+          }
+        },
+        {
+          "id": "s2-flow",
+          "kind": "flow",
+          "steps": [
+            "AI-written script",
+            "Product visuals",
+            "Music"
+          ],
+          "outcome": "Your video first cut",
+          "variant": "chain",
+          "rect": [
+            140,
+            610,
+            720,
+            230
+          ],
+          "portrait": {
+            "rect": [
+              100,
+              470,
+              800,
+              420
+            ]
+          },
+          "motion": {
+            "preset": "stagger",
+            "atFrame": 24,
+            "durationFrames": 36
+          }
+        },
+        {
+          "id": "s2-brand",
+          "role": "label",
+          "text": "MakeMyDemo.com",
+          "rect": [
+            360,
+            900,
+            280,
+            40
+          ],
+          "portrait": {
+            "rect": [
+              310,
+              920,
+              380,
+              44
+            ]
+          },
+          "style": {
+            "align": "center",
+            "weight": 600,
+            "color": "accent",
+            "tracking": "extraWide",
+            "case": "uppercase"
+          },
+          "motion": {
+            "preset": "pop",
+            "atFrame": 56,
+            "durationFrames": 16
+          }
+        }
+      ]
+    }
+  ]
+}

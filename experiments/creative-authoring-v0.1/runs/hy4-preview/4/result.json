@@ -1,0 +1,21 @@
+{
+  "number": 4,
+  "model": "opencode-go/hy4-preview",
+  "variant": "none",
+  "status": "Rendered",
+  "durationMs": 29014,
+  "exitCode": 0,
+  "signal": null,
+  "tokens": {
+    "total": 6373,
+    "input": 2169,
+    "output": 876,
+    "reasoning": 0,
+    "cache": {
+      "read": 3328,
+      "write": 0
+    }
+  },
+  "cost": 0.004139598,
+  "formatViolation": false
+}

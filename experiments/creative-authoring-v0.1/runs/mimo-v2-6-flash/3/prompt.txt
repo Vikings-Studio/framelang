@@ -1,0 +1,930 @@
+Create an 8-second silent 1920x1080 MakeMyDemo.com teaser in exactly two 96-frame scenes at 24fps. Facts: paste a public product URL; get a video first cut with an AI-written script, product visuals and music; review and export MP4. No invented claims, speed metrics, customers, screenshots, capabilities or URLs. Make a polished composition with strong type hierarchy, useful supporting visuals and staged motion. Choose alignment, emphasis, line breaks, background treatment, decoration, supporting content, and animation timing yourself. No need to use every feature. Brand: #09090B background, #FAFAFA foreground, #DFE104 accent, Inter font. Return JSON only, no tools or Markdown.
+
+FrameLang compact grammar:
+{"language":"framelang/creative-v0.1","profiles":["landscape-1920x1080","portrait-1080x1920"],"scenes":[{"id":"s1","durationFrames":96,"design":{},"nodes":[]},{"id":"s2","durationFrames":96,"design":{},"nodes":[]}]}
+You own all scene designs and nodes. IDs lowercase letters/numbers/hyphens.
+Design optional fields: alignment left|center; scale standard|display; decoration none|rules|grid-glow; chrome none|editorial; ambient none|drift (drift only with grid-glow); background typed paint.
+Paint: {kind:"solid",color:"background"|"foreground"|"accent"|hex}; or {kind:"linear",angle:0..359,stops:[{at:0,color:hex,opacity:0..100},{at:100,color:hex}]}; or kind radial with center:[xPercent,yPercent],stops; or {kind:"layers",layers:[2..4 paints]}.
+Each node has id, rect:[x,y,width,height] in integer thousandths of SAFE canvas; x/y>=0, x+width<=1000,y+height<=1000. Nodes must NOT overlap. Optional portrait:{rect:[...]} independently adapts position/size for portrait. Or replace rect with relative:{to:earlierNodeId,side:below|above|left|right,gap:integer,width:integer,height:integer,crossAlign:start|center|end}. Layout dimensions are thousandths. Keep logical alignment and generous headline height. Decorative overlap requires overlap:"intentional" on BOTH participants and one must be a shape. Decorative shapes remain inside safe canvas.
+Text node (kind defaults to text): {id,role:"headline"|"body"|"label",text:"copy",rect,style:{align:left|center|right,size:24..240 OR compact|base|large|hero,weight:400..900 in hundreds,color:brand token|hex,tracking:tight|normal|wide|extraWide,case:preserve|uppercase,lineHeight:tight|normal|relaxed,italic:boolean,minSize:24..160,maxLines:1..8},motion}. All style fields optional. Headlines default hero and cannot shrink below64px; body32px,label24px. Use 150..190px landscape headlines; allocate enough width and height. Alternative to text: segments:[{text:"Paste a public product URL.",breakAfter:true},{text:"Get a video first cut.",tone:"accent"|"accentBlock"|"foreground"}]. Segment text preserves spaces; breakAfter provides intentional line breaks. Do not combine text and segments. No HTML.
+Flow: {id,kind:"flow",steps:[2..4 short labels up to28chars],outcome:"up to36chars",variant:"chain",rect,portrait,motion}; naturally horizontal landscape and vertical portrait; allocate at least200px landscape and500px portrait height. Keep flow text legible.
+Shape: {id,kind:"shape",primitive:panel|circle|rule,fill:paint OR "none",stroke:{color:brandToken|hex,width:1..12},corner:square|soft|pill,origin:left|center|right,rect,motion}. Shapes default decorative and static.
+All nodes can have motion:"none" or "rise"|"slide"|"pop"|"fade"; flow can use "stagger". Or {preset,atFrame:0..70,durationFrames:1..40}. First visible content by frame10, all animation must finish by frame81 (last15% holds). Default text entrance starts at min(nodeIndex*5,10) for18frames. For transform keyframes use motion:{atFrame,durationFrames,ease:"none"|"power2.out"|"power3.out"|"power2.inOut",frames:[{atFrame:0,value:{opacity:0,y:20}},{atFrame:durationFrames,value:{opacity:1,y:0}}]} with2..5 increasing keyframes, identical properties, x/y -1000..1000, opacity0..1, scale/scaleX/scaleY0..4, rotation-360..360. No arbitrary CSS or JS. You don't write hashes, states, events, or layout boilerplate. Design a distinct video, not a copy of a template.
+
+Revise your previous JSON using this validation or visual feedback. Preserve your design and fix the reported issue; return the full JSON only.
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "spec-rule-3",
+      "location": "$.scenes[0].nodes[9].portrait.rect",
+      "rect": [
+        70,
+        1005,
+        860,
+        2
+      ],
+      "message": "Node spec-rule-3 exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "spec-3",
+      "location": "$.scenes[0].nodes[10].portrait.rect",
+      "rect": [
+        70,
+        1025,
+        860,
+        55
+      ],
+      "message": "Node spec-3 exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "spec-rule-4",
+      "location": "$.scenes[0].nodes[11].portrait.rect",
+      "rect": [
+        70,
+        1095,
+        860,
+        6
+      ],
+      "message": "Node spec-rule-4 exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "pipeline",
+      "location": "$.scenes[0].nodes[12].portrait.rect",
+      "rect": [
+        70,
+        1160,
+        860,
+        620
+      ],
+      "message": "Node pipeline exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "portrait-1080x1920",
+      "node": "mp4",
+      "location": "$.scenes[1].nodes[3].portrait.rect",
+      "rect": [
+        70,
+        950,
+        300,
+        120
+      ],
+      "message": "Node mp4 exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "portrait-1080x1920",
+      "node": "first-cut",
+      "location": "$.scenes[1].nodes[4].portrait.rect",
+      "rect": [
+        630,
+        950,
+        300,
+        120
+      ],
+      "message": "Node first-cut exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s2",
+      "profile": "portrait-1080x1920",
+      "node": "review-flow",
+      "location": "$.scenes[1].nodes[7].portrait.rect",
+      "rect": [
+        70,
+        1130,
+        860,
+        640
+      ],
+      "message": "Node review-flow exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:b13e82dc0b1c1911cb88a691b74afebf576afb5f028de8cd1c98476609bc8937"
+}
+
+Previous JSON:
+{
+  "language": "framelang/creative-v0.1",
+  "profiles": [
+    "landscape-1920x1080",
+    "portrait-1080x1920"
+  ],
+  "scenes": [
+    {
+      "id": "s1",
+      "durationFrames": 96,
+      "design": {
+        "alignment": "left",
+        "scale": "display",
+        "decoration": "rules",
+        "chrome": "editorial",
+        "ambient": "none",
+        "background": {
+          "kind": "solid",
+          "color": "background"
+        }
+      },
+      "nodes": [
+        {
+          "id": "dot",
+          "kind": "shape",
+          "primitive": "circle",
+          "fill": {
+            "kind": "solid",
+            "color": "accent"
+          },
+          "rect": [
+            900,
+            70,
+            60,
+            60
+          ],
+          "portrait": {
+            "rect": [
+              850,
+              55,
+              60,
+              60
+            ]
+          },
+          "motion": {
+            "preset": "pop",
+            "atFrame": 2,
+            "durationFrames": 12
+          }
+        },
+        {
+          "id": "brand-label",
+          "role": "label",
+          "text": "MAKEMYDEMO.COM",
+          "rect": [
+            90,
+            80,
+            420,
+            60
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              70,
+              500,
+              55
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 30,
+            "weight": 700,
+            "color": "accent",
+            "tracking": "wide",
+            "case": "uppercase",
+            "lineHeight": "normal",
+            "maxLines": 1
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 12
+          }
+        },
+        {
+          "id": "rule-top",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "linear",
+            "angle": 0,
+            "stops": [
+              {
+                "at": 0,
+                "color": "#FAFAFA",
+                "opacity": 55
+              },
+              {
+                "at": 100,
+                "color": "#FAFAFA"
+              }
+            ]
+          },
+          "rect": [
+            90,
+            155,
+            660,
+            3
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              150,
+              700,
+              3
+            ]
+          },
+          "motion": {
+            "preset": "slide",
+            "atFrame": 6,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "headline",
+          "role": "headline",
+          "segments": [
+            {
+              "text": "Paste a public",
+              "breakAfter": true
+            },
+            {
+              "text": "product URL.",
+              "tone": "accent"
+            }
+          ],
+          "rect": [
+            90,
+            170,
+            660,
+            430
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              190,
+              860,
+              420
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 152,
+            "weight": 800,
+            "color": "foreground",
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "maxLines": 2
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 8,
+            "durationFrames": 26
+          }
+        },
+        {
+          "id": "body",
+          "role": "body",
+          "text": "An AI-written script, product visuals and music.",
+          "rect": [
+            90,
+            630,
+            540,
+            120
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              650,
+              700,
+              130
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 40,
+            "weight": 400,
+            "color": "foreground",
+            "tracking": "normal",
+            "lineHeight": "normal",
+            "maxLines": 3
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 40,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "spec-rule-1",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "solid",
+            "color": "accent"
+          },
+          "rect": [
+            780,
+            195,
+            180,
+            8
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              820,
+              860,
+              6
+            ]
+          },
+          "motion": {
+            "preset": "slide",
+            "atFrame": 22,
+            "durationFrames": 12
+          }
+        },
+        {
+          "id": "spec-1",
+          "role": "label",
+          "text": "AI-WRITTEN SCRIPT",
+          "rect": [
+            780,
+            230,
+            180,
+            70
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              845,
+              860,
+              55
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 26,
+            "weight": 600,
+            "color": "foreground",
+            "tracking": "wide",
+            "case": "uppercase",
+            "lineHeight": "normal",
+            "maxLines": 2
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 26,
+            "durationFrames": 14
+          }
+        },
+        {
+          "id": "spec-rule-2",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "linear",
+            "angle": 0,
+            "stops": [
+              {
+                "at": 0,
+                "color": "#FAFAFA",
+                "opacity": 45
+              },
+              {
+                "at": 100,
+                "color": "#FAFAFA"
+              }
+            ]
+          },
+          "rect": [
+            780,
+            315,
+            180,
+            2
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              915,
+              860,
+              2
+            ]
+          },
+          "motion": {
+            "preset": "slide",
+            "atFrame": 32,
+            "durationFrames": 10
+          }
+        },
+        {
+          "id": "spec-2",
+          "role": "label",
+          "text": "PRODUCT VISUALS",
+          "rect": [
+            780,
+            340,
+            180,
+            70
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              935,
+              860,
+              55
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 26,
+            "weight": 600,
+            "color": "foreground",
+            "tracking": "wide",
+            "case": "uppercase",
+            "lineHeight": "normal",
+            "maxLines": 2
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 36,
+            "durationFrames": 14
+          }
+        },
+        {
+          "id": "spec-rule-3",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "linear",
+            "angle": 0,
+            "stops": [
+              {
+                "at": 0,
+                "color": "#FAFAFA",
+                "opacity": 45
+              },
+              {
+                "at": 100,
+                "color": "#FAFAFA"
+              }
+            ]
+          },
+          "rect": [
+            780,
+            425,
+            180,
+            2
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              1005,
+              860,
+              2
+            ]
+          },
+          "motion": {
+            "preset": "slide",
+            "atFrame": 42,
+            "durationFrames": 10
+          }
+        },
+        {
+          "id": "spec-3",
+          "role": "label",
+          "text": "MUSIC",
+          "rect": [
+            780,
+            450,
+            180,
+            70
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              1025,
+              860,
+              55
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 26,
+            "weight": 600,
+            "color": "foreground",
+            "tracking": "wide",
+            "case": "uppercase",
+            "lineHeight": "normal",
+            "maxLines": 2
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 46,
+            "durationFrames": 14
+          }
+        },
+        {
+          "id": "spec-rule-4",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "solid",
+            "color": "accent"
+          },
+          "rect": [
+            780,
+            535,
+            180,
+            8
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              1095,
+              860,
+              6
+            ]
+          },
+          "motion": {
+            "preset": "slide",
+            "atFrame": 52,
+            "durationFrames": 12
+          }
+        },
+        {
+          "id": "pipeline",
+          "kind": "flow",
+          "steps": [
+            "Paste a public product URL",
+            "AI-written script",
+            "Product visuals and music"
+          ],
+          "outcome": "A video first cut",
+          "variant": "chain",
+          "rect": [
+            90,
+            780,
+            830,
+            200
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              1160,
+              860,
+              620
+            ]
+          },
+          "motion": {
+            "preset": "stagger",
+            "atFrame": 56,
+            "durationFrames": 24
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "durationFrames": 96,
+      "design": {
+        "alignment": "center",
+        "scale": "display",
+        "decoration": "grid-glow",
+        "chrome": "editorial",
+        "ambient": "drift",
+        "background": {
+          "kind": "layers",
+          "layers": [
+            {
+              "kind": "solid",
+              "color": "background"
+            },
+            {
+              "kind": "radial",
+              "center": [
+                50,
+                38
+              ],
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#DFE104",
+                  "opacity": 14
+                },
+                {
+                  "at": 100,
+                  "color": "#09090B"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "nodes": [
+        {
+          "id": "kicker",
+          "role": "label",
+          "text": "SCRIPT · VISUALS · MUSIC",
+          "rect": [
+            350,
+            100,
+            300,
+            60
+          ],
+          "portrait": {
+            "rect": [
+              250,
+              90,
+              600,
+              60
+            ]
+          },
+          "style": {
+            "align": "center",
+            "size": 28,
+            "weight": 600,
+            "color": "accent",
+            "tracking": "extraWide",
+            "case": "uppercase",
+            "lineHeight": "normal",
+            "maxLines": 1
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 12
+          }
+        },
+        {
+          "id": "headline-2",
+          "role": "headline",
+          "segments": [
+            {
+              "text": "Review and",
+              "breakAfter": true
+            },
+            {
+              "text": "export MP4.",
+              "tone": "accent"
+            }
+          ],
+          "rect": [
+            180,
+            190,
+            640,
+            400
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              200,
+              860,
+              520
+            ]
+          },
+          "style": {
+            "align": "center",
+            "size": 160,
+            "weight": 800,
+            "color": "foreground",
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "maxLines": 2
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 6,
+            "durationFrames": 28
+          }
+        },
+        {
+          "id": "body-2",
+          "role": "body",
+          "text": "Get a video first cut, then review and export MP4.",
+          "rect": [
+            280,
+            615,
+            440,
+            115
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              760,
+              860,
+              150
+            ]
+          },
+          "style": {
+            "align": "center",
+            "size": 40,
+            "weight": 400,
+            "color": "foreground",
+            "tracking": "normal",
+            "lineHeight": "normal",
+            "maxLines": 3
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 38,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "mp4",
+          "role": "label",
+          "text": "MP4",
+          "rect": [
+            90,
+            625,
+            170,
+            105
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              950,
+              300,
+              120
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 72,
+            "weight": 800,
+            "color": "accent",
+            "tracking": "tight",
+            "case": "uppercase",
+            "lineHeight": "tight",
+            "maxLines": 1
+          },
+          "motion": {
+            "preset": "pop",
+            "atFrame": 34,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "first-cut",
+          "role": "label",
+          "text": "FIRST CUT",
+          "rect": [
+            740,
+            625,
+            190,
+            105
+          ],
+          "portrait": {
+            "rect": [
+              630,
+              950,
+              300,
+              120
+            ]
+          },
+          "style": {
+            "align": "right",
+            "size": 32,
+            "weight": 600,
+            "color": "foreground",
+            "tracking": "wide",
+            "case": "uppercase",
+            "lineHeight": "normal",
+            "maxLines": 1
+          },
+          "motion": {
+            "preset": "pop",
+            "atFrame": 38,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "edge-left",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "linear",
+            "angle": 90,
+            "stops": [
+              {
+                "at": 0,
+                "color": "#DFE104",
+                "opacity": 0
+              },
+              {
+                "at": 100,
+                "color": "#DFE104"
+              }
+            ]
+          },
+          "rect": [
+            55,
+            250,
+            6,
+            400
+          ],
+          "portrait": {
+            "rect": [
+              40,
+              260,
+              6,
+              380
+            ]
+          },
+          "motion": {
+            "preset": "slide",
+            "atFrame": 46,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "edge-right",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "linear",
+            "angle": 90,
+            "stops": [
+              {
+                "at": 0,
+                "color": "#DFE104",
+                "opacity": 100
+              },
+              {
+                "at": 100,
+                "color": "#DFE104"
+              }
+            ]
+          },
+          "rect": [
+            939,
+            250,
+            6,
+            400
+          ],
+          "portrait": {
+            "rect": [
+              954,
+              260,
+              6,
+              380
+            ]
+          },
+          "motion": {
+            "preset": "slide",
+            "atFrame": 50,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "review-flow",
+          "kind": "flow",
+          "steps": [
+            "Watch the first cut",
+            "Read the AI-written script",
+            "Check visuals and music"
+          ],
+          "outcome": "Export MP4",
+          "variant": "chain",
+          "rect": [
+            130,
+            770,
+            740,
+            200
+          ],
+          "portrait": {
+            "rect": [
+              70,
+              1130,
+              860,
+              640
+            ]
+          },
+          "motion": {
+            "preset": "stagger",
+            "atFrame": 54,
+            "durationFrames": 26
+          }
+        }
+      ]
+    }
+  ]
+}

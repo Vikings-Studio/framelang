@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "ok": true,
+  "findings": [],
+  "instruction": "The static lint passed. Run compile and check to verify browser geometry at rendered frames.",
+  "stage": "static",
+  "inputHash": "sha256:0b39376cf2f699685937435e78f243ca9d2e49e3c777480727ece4641112708d"
+}

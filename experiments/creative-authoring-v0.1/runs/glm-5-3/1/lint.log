@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.componentFit",
+      "severity": "error",
+      "location": "$.scenes[0].nodes[2].portrait",
+      "message": "semantic.componentFit at $.scenes[0].layouts.portrait-1080x1920.children[2]: portrait flow s1-flow needs at least 350 thousandths of safe-canvas height for readable steps; enlarge its rectangle or use fewer steps",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:e7ac713853f70d192bf6ddd30d663b5e623b915457b5b5791c6a8c3f852c2388"
+}

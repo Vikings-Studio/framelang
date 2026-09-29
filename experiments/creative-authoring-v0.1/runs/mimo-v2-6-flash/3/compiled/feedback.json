@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:519966a8d5f6d3cd73d3391c737de9f207ae2c9b3c00030fe0953b483a28807f",
+  "recipe": null,
+  "ok": false,
+  "findings": [
+    {
+      "code": "geometry.textFit",
+      "severity": "error",
+      "profile": "landscape-1920x1080",
+      "sceneId": "s1",
+      "nodeId": "brand-label",
+      "location": "$.scenes[0].nodes[1]",
+      "message": "FrameLang text fit failed: fl-s1-brand-label",
+      "time": 0,
+      "hint": "Shorten this text or enlarge its canvas rectangle; preserve required meaning, then recompile and check."
+    },
+    {
+      "code": "geometry.textFit",
+      "severity": "error",
+      "profile": "portrait-1080x1920",
+      "sceneId": "s1",
+      "nodeId": "brand-label",
+      "location": "$.scenes[0].nodes[1].portrait",
+      "message": "FrameLang text fit failed: fl-s1-brand-label",
+      "time": 0,
+      "hint": "Shorten this text or enlarge its canvas rectangle; preserve required meaning, then recompile and check."
+    }
+  ],
+  "instruction": "Revise the FrameLang source using these findings, then compile and check again. Do not render until every profile passes."
+}

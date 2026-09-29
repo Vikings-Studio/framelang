@@ -1,0 +1,10 @@
+{
+  "number": 2,
+  "model": "opencode-go/glm-5.3",
+  "status": "Harness deadline",
+  "durationMs": 480055,
+  "exitCode": null,
+  "signal": "SIGTERM",
+  "tokens": null,
+  "cost": null
+}

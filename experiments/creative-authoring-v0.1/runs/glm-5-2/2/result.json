@@ -1,0 +1,20 @@
+{
+  "number": 2,
+  "model": "opencode-go/glm-5.2",
+  "status": "Rendered",
+  "durationMs": 466095,
+  "exitCode": 0,
+  "signal": null,
+  "tokens": {
+    "total": 32556,
+    "input": 3992,
+    "output": 1570,
+    "reasoning": 26984,
+    "cache": {
+      "read": 10,
+      "write": 0
+    }
+  },
+  "cost": 0.131229,
+  "formatViolation": false
+}

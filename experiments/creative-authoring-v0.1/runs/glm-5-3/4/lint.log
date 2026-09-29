@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.bounds",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "node": "s1-flow",
+      "location": "$.scenes[0].nodes[2].portrait.rect",
+      "rect": [
+        80,
+        660,
+        840,
+        360
+      ],
+      "message": "Node s1-flow exceeds the safe canvas",
+      "hint": "Move or resize this rectangle so x and y are nonnegative, and x + width and y + height are at most 1000."
+    },
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "nodes": [
+        "s1-headline",
+        "s1-flow"
+      ],
+      "locations": [
+        "$.scenes[0].nodes[1]",
+        "$.scenes[0].nodes[2].portrait"
+      ],
+      "rects": [
+        [
+          80,
+          160,
+          840,
+          560
+        ],
+        [
+          80,
+          660,
+          840,
+          360
+        ]
+      ],
+      "intersection": [
+        80,
+        660,
+        840,
+        60
+      ],
+      "message": "Nodes s1-headline and s1-flow overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection. Two functional nodes cannot opt out of this rule."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:a031de887a65ff71a3ba514215422b94b39aa690f2c357295f5d6821eebc2cba"
+}

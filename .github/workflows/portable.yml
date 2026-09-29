@@ -36,11 +36,14 @@ jobs:
       - run: npm run cinematic:compile
       - run: npm run recipe:compile
       - run: npm run recipe:v2:compile
+      - run: npm run creative:compile
       - run: npm run options:compile
       - run: npm run cinematic:check
       - run: npm run recipe:check
       - run: npm run recipe:v2:check
+      - run: npm run creative:check
       - run: npm run options:check
+      - run: npm run verify:line-fit
       - run: npm run verify:unfit-rejection
         env:
           HYPERFRAMES_BROWSER_PATH: ${{ runner.os == 'Linux' && steps.chrome.outputs.chrome-path || '' }}

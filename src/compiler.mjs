@@ -331,14 +331,23 @@ export function validate(program, bundle) {
         textCopy(node, na);
         if (node.language !== 'en') fail('syntax.text', `${na}.language`, 'pilot supports English only');
         if (node.style !== undefined) {
-          keys(node.style, ['align', 'size', 'weight', 'color', 'tracking', 'case', 'lineHeight', 'italic'], [], `${na}.style`);
+          keys(node.style, ['align', 'size', 'minSize', 'maxLines', 'weight', 'color', 'tracking', 'case', 'lineHeight', 'italic', 'verticalAlign'], [], `${na}.style`);
           if (node.style.align !== undefined && !['left', 'center', 'right'].includes(node.style.align)) fail('syntax.text', `${na}.style.align`, 'unsupported text alignment');
-          if (node.style.size !== undefined && !['compact', 'base', 'large', 'hero'].includes(node.style.size)) fail('syntax.text', `${na}.style.size`, 'unsupported type size');
+          if (typeof node.style.size === 'number') int(node.style.size, `${na}.style.size`, 24, 240);
+          else if (node.style.size !== undefined && !['compact', 'base', 'large', 'hero'].includes(node.style.size)) fail('syntax.text', `${na}.style.size`, 'unsupported type size');
+          if (node.style.minSize !== undefined) int(node.style.minSize, `${na}.style.minSize`, 24, 160);
+          if (node.style.maxLines !== undefined) int(node.style.maxLines, `${na}.style.maxLines`, 1, 8);
+          if (node.style.minSize !== undefined) for (const profile of program.profiles) {
+            const base = node.role === 'headline' ? PROFILE[profile].heading : node.role === 'body' ? PROFILE[profile].body : Math.round(PROFILE[profile].body * .75);
+            const requested = typeof node.style.size === 'number' ? node.style.size : node.style.size ? Math.round(base * ({ compact: .75, base: 1, large: 1.25, hero: 1.5 }[node.style.size])) : node.role === 'headline' && scene.design?.scale === 'display' ? PROFILE[profile].displayHeading : base;
+            if (node.style.minSize > requested) fail('syntax.text', `${na}.style.minSize`, `minimum size exceeds requested size in ${profile}`);
+          }
           if (node.style.weight !== undefined && ![400, 500, 600, 700, 800, 900].includes(node.style.weight)) fail('syntax.text', `${na}.style.weight`, 'unsupported font weight');
           if (node.style.color !== undefined) colorRef(node.style.color, `${na}.style.color`);
           if (node.style.tracking !== undefined && !['tight', 'normal', 'wide', 'extraWide'].includes(node.style.tracking)) fail('syntax.text', `${na}.style.tracking`, 'unsupported tracking');
           if (node.style.case !== undefined && !['preserve', 'uppercase'].includes(node.style.case)) fail('syntax.text', `${na}.style.case`, 'unsupported text case');
           if (node.style.lineHeight !== undefined && !['tight', 'normal', 'relaxed'].includes(node.style.lineHeight)) fail('syntax.text', `${na}.style.lineHeight`, 'unsupported line height');
+          if (node.style.verticalAlign !== undefined && !['start', 'center', 'end'].includes(node.style.verticalAlign)) fail('syntax.text', `${na}.style.verticalAlign`, 'unsupported vertical alignment');
           if (node.style.italic !== undefined && typeof node.style.italic !== 'boolean') fail('syntax.text', `${na}.style.italic`, 'expected boolean');
         }
       } else if (node.kind === 'flow') {
@@ -398,6 +407,16 @@ export function validate(program, bundle) {
       const seen = [];
       layoutRefs(tree, `${at}.layouts.${profile}`, byId, seen);
       unique(seen, `${at}.layouts.${profile}`);
+      if (tree.type === 'canvas') for (const { placement, rect } of canvasPlacements(tree, `${at}.layouts.${profile}`, byId)) {
+        const node = byId.get(placement.node);
+        if (node.kind === 'flow' && node.variant === 'chain' && verticalChain(profile, rect)) {
+          const p = PROFILE[profile];
+          const safeHeight = p.height - 2 * p.insetY - (scene.design?.chrome === 'editorial' ? 142 : 0);
+          const minimumHeight = 100 * (node.steps.length + 1);
+          if (safeHeight * rect[3] / 1000 < minimumHeight) fail('semantic.componentFit', `${at}.layouts.${profile}.children[${tree.children.findIndex(item => item.node === node.id)}]`, `vertical flow ${node.id} needs at least ${Math.ceil(minimumHeight / safeHeight * 1000)} thousandths of safe-canvas height for readable steps; enlarge its rectangle or use fewer steps`);
+        }
+      }
+
       layoutVisible.set(profile, new Set(seen));
       for (const node of nodes.filter(n => n.importance !== 'decorative')) if (!seen.includes(node.id)) fail('semantic.layout', `${at}.layouts.${profile}`, `missing ${node.id}`);
     }
@@ -473,6 +492,10 @@ export function validate(program, bundle) {
         if (written.has(event.target)) fail('semantic.motion', ea, 'node receives multiple writes');
         written.add(event.target);
       } else fail('syntax.effect', ea, `unsupported effect ${event.effect}`);
+      if (byId.get(event.target)?.importance === 'essential' && ['tween', 'keyframes'].includes(event.effect)) {
+        const final = event.effect === 'tween' ? event.to : event.frames.at(-1).value;
+        if ((final.opacity ?? 1) < .95 || ['scale', 'scaleX', 'scaleY'].some(field => (final[field] ?? 1) < .1)) fail('semantic.visibility', ea, 'essential content must remain visible in the final hold');
+      }
     }
     if (scene.initialState !== scene.resolvedState && !events.length) fail('semantic.state', at, 'state transition requires event');
     if (events.every(e => e.effect !== 'replace')) for (const id of resolvedVisible.filter(id => !initialVisible.includes(id))) {
@@ -491,11 +514,12 @@ function renderText(node) {
   if (node.text !== undefined) return escapeHtml(node.text);
   return node.segments.map(segment => `<span class="fl-tone-${segment.tone || 'foreground'}">${escapeHtml(segment.text)}</span>${segment.breakAfter ? '<br>' : ''}`).join('');
 }
+function verticalChain(profile, rect) { return profile.startsWith('portrait') || Boolean(rect && (PROFILE[profile].width - 2 * PROFILE[profile].insetX) * rect[2] / 1000 < 900); }
 function renderFlow(node, stagger) {
   const hidden = stagger ? ' style="opacity:0"' : '';
   if (node.variant === 'chain') {
     const steps = node.steps.map((step, index) => `<div class="fl-chain-step fl-flow-item" data-flow-order="${index + 1}"${hidden}>${escapeHtml(step)}</div>${index < node.steps.length - 1 ? '<div class="fl-chain-plus" aria-hidden="true">+</div>' : ''}`).join('');
-    return `<div class="fl-chain-steps">${steps}</div><div class="fl-chain-arrow" aria-hidden="true">→</div><div class="fl-chain-outcome fl-flow-item" data-flow-order="${node.steps.length + 1}"${hidden}>${escapeHtml(node.outcome)}</div>`;
+    return `<div class="fl-chain-steps" style="--fl-step-count:${node.steps.length}">${steps}</div><div class="fl-chain-arrow" aria-hidden="true">→</div><div class="fl-chain-outcome fl-flow-item" data-flow-order="${node.steps.length + 1}"${hidden}>${escapeHtml(node.outcome)}</div>`;
   }
   const steps = node.steps.map((step, index) => `<div class="fl-flow-chip fl-flow-item" data-flow-order="${index + 1}"${hidden}>${escapeHtml(step)}</div>`).join('');
   return `<div class="fl-flow-steps">${steps}</div><div class="fl-flow-arrow fl-flow-item" data-flow-order="${node.steps.length + 1}"${hidden} aria-hidden="true">→</div><div class="fl-flow-outcome fl-flow-item" data-flow-order="${node.steps.length + 2}"${hidden}>${escapeHtml(node.outcome)}</div>`;
@@ -518,12 +542,13 @@ function textStyle(node, profile, brand, rect) {
   if (node.style?.case === 'uppercase') css.push('text-transform:uppercase');
   if (node.style?.lineHeight) css.push(`line-height:${{ tight: .98, normal: 1.1, relaxed: 1.3 }[node.style.lineHeight]}`);
   if (node.style?.italic) css.push('font-style:italic');
+  if (node.style?.verticalAlign) css.push(`align-content:${node.style.verticalAlign}`);
   const firstLine = node.segments?.[0]?.text || node.text || '';
   const size = node.style?.size || (node.fit === 'wrapThenShrink' && node.role === 'headline' && rect && rect[2] <= 550 && firstLine.length > 20 ? 'compact' : undefined);
   if (size) {
     const base = node.role === 'headline' ? PROFILE[profile].heading : node.role === 'body' ? PROFILE[profile].body : Math.round(PROFILE[profile].body * .75);
     const factor = { compact: .75, base: 1, large: 1.25, hero: 1.5 }[size];
-    css.push(`font-size:${Math.round(base * factor)}px`);
+    css.push(`font-size:${typeof size === 'number' ? size : Math.round(base * factor)}px`);
   }
   return css.join(';');
 }
@@ -532,8 +557,8 @@ function renderTree(tree, scene, profile, nodes, initial, brand, rect) {
     const node = nodes.get(tree);
     const id = cssId(scene, tree);
     const hidden = initial.includes(tree) ? '' : ' style="opacity:0"';
-    if (node.kind === 'text') { const style = [initial.includes(tree) ? '' : 'opacity:0', textStyle(node, profile, brand, rect)].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-text fl-${node.role}" data-fl-fit="${node.fit}"${style ? ` style="${style}"` : ''}>${renderText(node)}</div>`; }
-    if (node.kind === 'flow') return `<div id="${id}" class="fl-node fl-flow${node.variant === 'chain' ? ' fl-flow-chain' : ''}"${hidden}>${renderFlow(node, scene.events.some(event => event.target === node.id && event.preset === 'stagger'))}</div>`;
+    if (node.kind === 'text') { const style = [initial.includes(tree) ? '' : 'opacity:0', textStyle(node, profile, brand, rect)].filter(Boolean).join(';'); return `<div id="${id}" class="fl-node fl-text fl-${node.role}" data-fl-fit="${node.fit}" data-fl-min-size="${node.style?.minSize ?? 22}"${node.style?.maxLines ? ` data-fl-max-lines="${node.style.maxLines}"` : ''}${style ? ` style="${style}"` : ''}>${renderText(node)}</div>`; }
+    if (node.kind === 'flow') return `<div id="${id}" class="fl-node fl-flow${node.variant === 'chain' ? ' fl-flow-chain' + (verticalChain(profile, rect) ? ' fl-chain-vertical' : '') : ''}"${hidden}>${renderFlow(node, scene.events.some(event => event.target === node.id && event.preset === 'stagger'))}</div>`;
     if (node.kind === 'inputCard') return `<div id="${id}" class="fl-node fl-input-card"${hidden}>${renderInputCard(node)}</div>`;
     if (node.kind === 'videoArtifact') return `<div id="${id}" class="fl-node fl-artifact fl-artifact-${node.phase}${node.density === 'compact' ? ' fl-artifact-compact' : ''}"${hidden}>${renderVideoArtifact(node, scene.events.some(event => event.target === node.id && event.preset === 'reveal'))}</div>`;
     if (node.kind === 'shape') {
@@ -568,11 +593,11 @@ function htmlFor(program, bundle, profile) {
     const tree = scene.layouts[profile] ?? scene.layouts.default;
     const initial = scene.states.find(s => s.id === scene.initialState).visible;
     const start = cursor / program.fps;
-    const duration = (scene.durationFrames - (i === program.scenes.length - 1 ? 0 : 1)) / program.fps;
+    const duration = scene.durationFrames / program.fps;
     const body = renderTree(tree, scene, profile, nodes, initial, bundle.brand);
     const design = scene.design || {};
     const decoration = design.decoration === 'grid-glow' ? '<div class="fl-grid" data-layout-allow-overflow></div><div class="fl-glow" data-layout-allow-overflow></div><div class="fl-rule fl-rule-top"></div><div class="fl-rule fl-rule-bottom"></div>' : design.decoration === 'rules' ? '<div class="fl-rule fl-rule-top"></div><div class="fl-rule fl-rule-bottom"></div>' : '';
-    const chrome = design.chrome === 'editorial' ? `<div class="fl-chrome-top"><span>${escapeHtml(bundle.brand.name.toUpperCase())} / FRAMELANG</span><span>${String(i + 1).padStart(2, '0')} / ${String(program.scenes.length).padStart(2, '0')}</span></div><div class="fl-chrome-bottom"><span>ILLUSTRATIVE VIDEO WORKFLOW</span><span>TYPED SCENE → VIDEO</span></div><div class="fl-progress"><span style="width:${((i + 1) / program.scenes.length * 100).toFixed(3)}%"></span></div>` : '';
+    const chrome = design.chrome === 'editorial' ? `<div class="fl-chrome-top"><span>${escapeHtml(bundle.brand.name.toUpperCase())}</span><span>${String(i + 1).padStart(2, '0')} / ${String(program.scenes.length).padStart(2, '0')}</span></div><div class="fl-chrome-bottom"><span>ILLUSTRATIVE WORKFLOW</span><span>VIDEO FIRST CUT</span></div><div class="fl-progress"><span style="width:${((i + 1) / program.scenes.length * 100).toFixed(3)}%"></span></div>` : '';
     const sceneClass = `fl-scene${design.alignment === 'left' ? ' fl-left' : ''}${design.scale === 'display' ? ' fl-display' : ''}${design.chrome === 'editorial' ? ' fl-chromed' : ''}`;
     clips.push(`<section class="clip" id="fl-${scene.id}" data-start="${start.toFixed(6)}" data-duration="${duration.toFixed(6)}" data-track-index="${i}"${design.background ? ` style="background:${cssPaint(design.background, bundle.brand)}"` : ''}>${decoration}${chrome}<div class="${sceneClass}">${body}</div></section>`);
     if (design.ambient === 'drift') {
@@ -640,7 +665,7 @@ function htmlFor(program, bundle, profile) {
 html,body{margin:0;width:${p.width}px;height:${p.height}px;background:${bundle.brand.background}}
 *{box-sizing:border-box}#root{width:${p.width}px;height:${p.height}px;position:relative;overflow:hidden;background:${bundle.brand.background}}
 .clip{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;isolation:isolate}
-.fl-scene{position:absolute;left:${p.insetX}px;right:${p.insetX}px;top:${p.insetY}px;bottom:${p.insetY}px;display:flex;min-width:0;min-height:0;align-items:center;justify-content:center}
+.fl-scene{position:absolute;z-index:1;left:${p.insetX}px;right:${p.insetX}px;top:${p.insetY}px;bottom:${p.insetY}px;display:flex;min-width:0;min-height:0;align-items:center;justify-content:center}
 .fl-scene.fl-left{justify-content:flex-start;text-align:left}.fl-scene.fl-chromed{top:${p.insetY + 66}px;bottom:${p.insetY + 76}px}.fl-layout{width:100%;height:100%;min-width:0;min-height:0}.fl-stack{display:flex;justify-content:center;align-items:center}.fl-stack.fl-start{align-items:flex-start}.fl-split{display:grid;align-items:center;gap:48px}.fl-canvas{position:relative}.fl-placement{position:absolute;display:flex;min-width:0;min-height:0}.fl-placement-start{align-items:flex-start}.fl-placement-center{align-items:center}.fl-placement-end{align-items:flex-end}.fl-placement>.fl-node{width:100%;height:100%}
 .fl-node{min-width:0;max-width:100%}.fl-text{font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};overflow-wrap:anywhere;line-height:1.05;font-weight:700}
 .fl-headline{font-size:${p.heading}px;letter-spacing:-.045em}.fl-display .fl-headline{font-size:${p.displayHeading}px;line-height:.98}.fl-body{font-size:${p.body}px;line-height:1.2;font-weight:500}.fl-label{font-size:${Math.round(p.body*.75)}px;color:${bundle.brand.accent};text-transform:uppercase;letter-spacing:.08em}.fl-tone-accent{color:${bundle.brand.accent}}.fl-tone-accentBlock{display:inline-block;background:${bundle.brand.accent};color:${bundle.brand.background};padding:0 .12em .06em;margin-left:.12em;white-space:nowrap}
@@ -648,9 +673,9 @@ html,body{margin:0;width:${p.width}px;height:${p.height}px;background:${bundle.b
 .fl-flow-steps{display:flex;flex-wrap:wrap;align-items:center;gap:16px}.fl-flow-chip{border:2px solid ${bundle.brand.foreground}66;padding:18px 25px;background:${bundle.brand.foreground}0d;white-space:nowrap}.fl-flow-arrow{font-size:${p.flow + 14}px;color:${bundle.brand.accent}}.fl-flow-outcome{background:${bundle.brand.accent};color:${bundle.brand.background};padding:20px 30px;white-space:nowrap}
 .fl-canvas .fl-flow{flex-direction:column;align-items:stretch;width:100%;gap:12px}.fl-canvas .fl-flow-steps{flex-direction:column;align-items:stretch;width:100%;gap:11px}.fl-canvas .fl-flow-chip{white-space:normal}.fl-canvas .fl-flow-arrow{transform:rotate(90deg);align-self:center}.fl-canvas .fl-flow-outcome{text-align:center;white-space:normal}
 ${portrait ? '.fl-flow{flex-direction:column;align-items:stretch;width:100%;gap:18px}.fl-flow-steps{flex-direction:column;align-items:stretch;width:100%;gap:13px}.fl-flow-chip{text-align:left;white-space:normal}.fl-flow-arrow{transform:rotate(90deg);align-self:center}.fl-flow-outcome{text-align:center}.fl-chromed .fl-stack{justify-content:space-evenly}' : ''}
-.fl-canvas .fl-flow-chain{display:flex;flex-direction:${portrait ? 'column' : 'row'};align-items:${portrait ? 'stretch' : 'center'};justify-content:center;gap:${portrait ? 17 : 24}px;width:100%;height:100%;font-size:${portrait ? 34 : 32}px}.fl-canvas .fl-chain-steps{display:flex;flex:1;min-width:0;align-items:stretch;gap:${portrait ? 12 : 15}px;flex-direction:${portrait ? 'column' : 'row'}}.fl-chain-step{display:flex;align-items:center;justify-content:center;min-width:0;flex:1;text-align:center;padding:${portrait ? '16px 22px' : '19px 20px'};border:2px solid ${bundle.brand.foreground}77;background:${bundle.brand.foreground}0c;line-height:1.1}.fl-chain-plus,.fl-chain-arrow{display:grid;place-items:center;flex:none;color:${bundle.brand.accent};font-weight:900}.fl-chain-arrow{font-size:${portrait ? 51 : 52}px;transform:${portrait ? 'rotate(90deg)' : 'none'}}.fl-chain-outcome{display:grid;place-items:center;flex:none;text-align:center;padding:${portrait ? '20px 28px' : '20px 36px'};background:${bundle.brand.accent};color:${bundle.brand.background};font-weight:900}.fl-canvas .fl-chain-plus{font-size:${portrait ? 30 : 38}px}
+.fl-canvas .fl-flow-chain{display:flex;flex-direction:${portrait ? 'column' : 'row'};align-items:${portrait ? 'stretch' : 'center'};justify-content:center;gap:${portrait ? 17 : 24}px;width:100%;height:100%;font-size:${portrait ? 34 : 32}px}.fl-canvas .fl-chain-steps{display:flex;flex:${portrait ? '1' : 'var(--fl-step-count,3)'};min-width:0;align-items:stretch;gap:${portrait ? 12 : 15}px;flex-direction:${portrait ? 'column' : 'row'}}.fl-chain-step{display:flex;align-items:center;justify-content:center;min-width:0;flex:1;text-align:center;padding:${portrait ? '16px 22px' : '19px 20px'};border:2px solid ${bundle.brand.foreground}77;background:${bundle.brand.foreground}0c;line-height:1.1}.fl-chain-plus,.fl-chain-arrow{display:grid;place-items:center;flex:none;color:${bundle.brand.accent};font-weight:900}.fl-chain-arrow{font-size:${portrait ? 51 : 52}px;transform:${portrait ? 'rotate(90deg)' : 'none'}}.fl-chain-outcome{display:grid;place-items:center;flex:${portrait ? 'none' : '1.3'};min-width:0;overflow-wrap:anywhere;text-align:center;padding:${portrait ? '20px 28px' : '20px 36px'};background:${bundle.brand.accent};color:${bundle.brand.background};font-weight:900}.fl-canvas .fl-chain-plus{font-size:${portrait ? 30 : 38}px}
 .fl-grid{position:absolute;inset:0;background-image:linear-gradient(90deg,${bundle.brand.foreground}0b 1px,transparent 1px);background-size:160px 100%;pointer-events:none}.fl-glow{position:absolute;width:880px;height:880px;right:-220px;top:-300px;background:radial-gradient(circle,${bundle.brand.accent}22,transparent 65%);pointer-events:none}.fl-rule{position:absolute;left:${p.insetX}px;right:${p.insetX}px;height:2px;background:${bundle.brand.foreground}2a;pointer-events:none}.fl-rule-top{top:${p.insetY}px}.fl-rule-bottom{bottom:${p.insetY}px}
-.fl-chrome-top,.fl-chrome-bottom{position:absolute;left:${p.insetX}px;right:${p.insetX}px;display:flex;align-items:center;justify-content:space-between;font-family:FrameLangInter,sans-serif;font-size:${portrait ? 27 : 25}px;font-weight:700;letter-spacing:.12em;color:${bundle.brand.foreground}a8}.fl-chrome-top{top:${p.insetY + 5}px}.fl-chrome-bottom{bottom:${p.insetY + 15}px}.fl-chrome-top span:first-child{color:${bundle.brand.accent}}.fl-progress{position:absolute;left:${p.insetX}px;right:${p.insetX}px;bottom:${p.insetY - 19}px;height:5px;background:${bundle.brand.foreground}38;overflow:hidden}.fl-progress span{display:block;height:100%;background:${bundle.brand.accent};transform-origin:left}
+.fl-chrome-top,.fl-chrome-bottom{position:absolute;z-index:2;left:${p.insetX}px;right:${p.insetX}px;display:flex;align-items:center;justify-content:space-between;font-family:FrameLangInter,sans-serif;font-size:${portrait ? 27 : 25}px;font-weight:700;letter-spacing:.12em;color:${bundle.brand.foreground}a8}.fl-chrome-top{top:${p.insetY + 5}px}.fl-chrome-bottom{bottom:${p.insetY + 15}px}.fl-chrome-top span:first-child{color:${bundle.brand.accent}}.fl-progress{position:absolute;z-index:2;left:${p.insetX}px;right:${p.insetX}px;bottom:${p.insetY - 19}px;height:5px;background:${bundle.brand.foreground}38;overflow:hidden}.fl-progress span{display:block;height:100%;background:${bundle.brand.accent};transform-origin:left}
 .fl-input-card{width:100%;height:${portrait ? 620 : 400}px;padding:${portrait ? 44 : 38}px;border:2px solid ${bundle.brand.foreground}75;background:#131315;box-shadow:22px 28px 0 ${bundle.brand.accent}26,0 35px 100px #0009;font-family:FrameLangInter,sans-serif;color:${bundle.brand.foreground};display:flex;flex-direction:column;justify-content:space-between}
 .fl-input-top,.fl-input-foot{display:flex;align-items:center;gap:24px;font-size:${portrait ? 28 : 24}px;letter-spacing:.12em;font-weight:700}.fl-input-top{color:${bundle.brand.foreground}9c}.fl-input-dots{display:flex;gap:10px;margin-right:15px}.fl-input-dots i{display:block;width:14px;height:14px;border:2px solid ${bundle.brand.foreground}78;border-radius:50%}.fl-input-index{margin-left:auto;color:${bundle.brand.accent}}.fl-input-label{font-size:${portrait ? 30 : 28}px;font-weight:800;letter-spacing:.12em;color:${bundle.brand.accent}}
 .fl-input-field{display:flex;align-items:center;gap:15px;min-height:${portrait ? 160 : 124}px;padding:20px 24px;border:2px solid ${bundle.brand.accent};background:${bundle.brand.accent}0c;font-size:${portrait ? 48 : 50}px;font-weight:600;letter-spacing:-.035em;box-shadow:inset 0 0 50px ${bundle.brand.accent}12}.fl-input-link{overflow-wrap:anywhere}.fl-input-caret{width:4px;height:1.2em;background:${bundle.brand.accent};flex:none}.fl-input-go{margin-left:auto;display:grid;place-items:center;flex:none;width:${portrait ? 82 : 76}px;height:${portrait ? 82 : 76}px;background:${bundle.brand.accent};color:${bundle.brand.background};font-size:58px;line-height:1}.fl-input-foot{color:${bundle.brand.foreground}9c}.fl-input-rule{flex:1;height:2px;background:${bundle.brand.accent}8c}
@@ -661,8 +686,9 @@ ${portrait ? '.fl-flow{flex-direction:column;align-items:stretch;width:100%;gap:
 .fl-art-bottom{min-height:${portrait ? 75 : 56}px}.fl-art-action{padding:12px 22px;border:2px solid ${bundle.brand.accent};color:${bundle.brand.accent};white-space:nowrap}.fl-art-action-live{background:${bundle.brand.accent};color:${bundle.brand.background}}.fl-art-action b{font-size:1.3em}
 ${portrait ? '.fl-chrome-bottom{font-size:22px}.fl-art-top{flex-wrap:wrap}.fl-input-top{flex-wrap:wrap}.fl-input-field{font-size:44px}.fl-art-screen-label{max-width:80%}' : ''}
 .fl-media{width:100%;height:100%;display:flex;align-items:center;justify-content:center}.fl-media img{display:block;width:100%;height:100%;object-fit:contain}
-.fl-panel{background:${bundle.brand.accent};border-radius:24px;min-height:120px;width:100%}.fl-rule-node{min-height:0;border-radius:0}.fl-circle{border-radius:50%;aspect-ratio:1}.fl-overlay{position:relative}.fl-overlay>.fl-node{width:100%;height:100%}.fl-attachment{position:absolute;inset:0}.fl-attachment>.fl-node{width:100%;height:100%}
-</style></head><body><div id="root" data-composition-id="main" data-start="0" data-width="${p.width}" data-height="${p.height}" data-fps="${program.fps}" data-duration="${total.toFixed(6)}">${clips.join('')}</div><script src="assets/gsap.min.js"></script><script>const tl=gsap.timeline({paused:true});${timeline.join('')}window.__renderReady=false;document.fonts.ready.then(()=>{for(const el of document.querySelectorAll('.fl-placement>.fl-text[data-fl-fit="wrapThenShrink"]')){const original=parseFloat(getComputedStyle(el).fontSize);const min=22;const fits=()=>el.scrollWidth<=el.clientWidth+1&&el.scrollHeight<=el.clientHeight+1;if(!fits()){let lo=min,hi=original;if(lo>hi){window.__framelangFitError=el.id;console.error('FrameLang text fit failed: '+el.id);return}el.style.fontSize=lo+'px';if(!fits()){window.__framelangFitError=el.id;console.error('FrameLang text fit failed: '+el.id);return}for(let i=0;i<14;i++){const mid=(lo+hi)/2;el.style.fontSize=mid+'px';if(fits())lo=mid;else hi=mid}el.style.fontSize=Math.floor(lo*10)/10+'px'}}window.__timelines['main']=tl;window.__renderReady=true}).catch(error=>{window.__framelangFitError=String(error);console.error('FrameLang text fit failed: '+error)});</script></body></html>`;
+.fl-placement>.fl-panel{min-height:0}.fl-panel{background:${bundle.brand.accent};border-radius:24px;min-height:120px;width:100%}.fl-rule-node{min-height:0;border-radius:0}.fl-circle{border-radius:50%;aspect-ratio:1}.fl-overlay{position:relative}.fl-overlay>.fl-node{width:100%;height:100%}.fl-attachment{position:absolute;inset:0}.fl-attachment>.fl-node{width:100%;height:100%}
+.fl-canvas .fl-chain-vertical{flex-direction:column;align-items:stretch;gap:17px}.fl-canvas .fl-chain-vertical .fl-chain-steps{flex-direction:column;flex:1;gap:12px}.fl-chain-vertical .fl-chain-arrow{transform:rotate(90deg)}.fl-chain-vertical .fl-chain-outcome{flex:none;padding:12px 20px}.fl-chain-vertical .fl-chain-step{padding:8px 16px}.fl-canvas .fl-chain-vertical .fl-chain-plus{font-size:22px}.fl-chain-vertical .fl-chain-arrow{font-size:40px;align-self:center;width:48px;height:48px}.fl-canvas .fl-chain-vertical{gap:12px}.fl-canvas .fl-chain-vertical .fl-chain-steps{gap:8px}
+</style></head><body><div id="root" data-composition-id="main" data-start="0" data-width="${p.width}" data-height="${p.height}" data-fps="${program.fps}" data-duration="${total.toFixed(6)}">${clips.join('')}</div><script src="assets/gsap.min.js"></script><script>const tl=gsap.timeline({paused:true});${timeline.join('')}window.__renderReady=false;document.fonts.ready.then(()=>{tl.totalTime(tl.duration(),true);for(const el of document.querySelectorAll('.fl-placement>.fl-text[data-fl-fit="wrapThenShrink"]')){const original=parseFloat(getComputedStyle(el).fontSize);const min=Number(el.dataset.flMinSize);const fits=()=>el.scrollWidth<=el.clientWidth+1&&el.scrollHeight<=el.clientHeight+1&&(!el.dataset.flMaxLines||(()=>{const tops=[];const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let text;while(text=walker.nextNode()){if(!text.textContent.trim())continue;const range=document.createRange();range.selectNodeContents(text);for(const rect of range.getClientRects()){if(rect.width&&rect.height&&!tops.some(top=>Math.abs(top-rect.top)<2))tops.push(rect.top)}}return tops.length<=Number(el.dataset.flMaxLines)})());if(!fits()){let lo=min,hi=original;if(lo>hi){window.__framelangFitError=el.id;console.error('FrameLang text fit failed: '+el.id);return}el.style.fontSize=lo+'px';if(!fits()){window.__framelangFitError=el.id;console.error('FrameLang text fit failed: '+el.id);return}for(let i=0;i<14;i++){const mid=(lo+hi)/2;el.style.fontSize=mid+'px';if(fits())lo=mid;else hi=mid}el.style.fontSize=Math.floor(lo*10)/10+'px'}}for(const el of document.querySelectorAll('.fl-placement>.fl-input-card,.fl-placement>.fl-artifact,.fl-placement>.fl-flow')){if(el.scrollWidth>el.clientWidth+1||el.scrollHeight>el.clientHeight+1){window.__framelangFitError=el.id;console.error('FrameLang component fit failed: '+el.id)}}tl.totalTime(0,true);window.__timelines['main']=tl;window.__renderReady=true}).catch(error=>{window.__framelangFitError=String(error);console.error('FrameLang text fit failed: '+error)});</script></body></html>`;
 }
 
 function verifySvg(bytes, location) {
@@ -673,6 +699,111 @@ function verifySvg(bytes, location) {
   for (const tag of svg.matchAll(/<\/?([a-zA-Z][\w:-]*)\b/g)) if (!allowed.has(tag[1].toLowerCase())) fail('reference.svg', location, `unsupported SVG element ${tag[1]}`);
   const stripped = svg.replace(/xmlns(?:\:[\w-]+)?\s*=\s*["'][^"']*["']/gi, '').replace(/url\(\s*#[a-zA-Z0-9_-]+\s*\)/g, '');
   if (/<!|<\?|&|\bon[a-z]+\s*=|\bhref\s*=|\bstyle\s*=|\b(?:https?|file|data|javascript):|\burl\s*\(|@import/i.test(stripped)) fail('reference.svg', location, 'SVG contains executable or external content');
+}
+
+function creativePaint(value, location) {
+  if (location) paint(typeof value === 'string' && value !== 'none' ? { kind: 'solid', color: value } : value, location);
+  if (typeof value === 'string') return value === 'none' ? value : { kind: 'solid', color: value };
+  if (value?.kind === 'layers' && Array.isArray(value.layers)) return { ...value, layers: value.layers.map(creativePaint).reverse() };
+  return value;
+}
+
+// The compact surface carries design decisions; the expanded IR owns state/timing safety.
+export function expandCreative(authored, bundle) {
+  keys(authored, ['language', 'fps', 'profiles', 'seed', 'scenes'], ['language', 'scenes'], '$');
+  if (authored.language !== 'framelang/creative-v0.1') fail('syntax.version', '$.language', 'expected framelang/creative-v0.1');
+  const scenes = list(authored.scenes, '$.scenes', 1).map((scene, sceneIndex) => {
+    const at = `$.scenes[${sceneIndex}]`;
+    keys(scene, ['id', 'durationFrames', 'design', 'nodes'], ['id', 'durationFrames', 'nodes'], at);
+    int(scene.durationFrames, `${at}.durationFrames`, 48, 288);
+    if (scene.design !== undefined) object(scene.design, `${at}.design`);
+    const content = [], placements = [], portrait = [], events = [], initial = [];
+    for (const [nodeIndex, authoredNode] of list(scene.nodes, `${at}.nodes`, 1).entries()) {
+      const na = `${at}.nodes[${nodeIndex}]`;
+      object(authoredNode, na);
+      const { rect, relative, portrait: portraitPlacement, layer, overlap, motion, ...fields } = authoredNode;
+      const node = { kind: 'text', ...fields };
+      node.importance ??= node.kind === 'shape' ? 'decorative' : node.kind === 'text' && node.role === 'label' ? 'supporting' : 'essential';
+      if (node.kind === 'text') {
+        if (node.style !== undefined) object(node.style, `${na}.style`);
+        node.role ??= 'headline'; node.language ??= 'en'; node.fit ??= 'wrapThenShrink';
+        const floor = node.role === 'headline' ? 64 : node.role === 'body' ? 32 : 24;
+        node.style = { align: 'left', size: node.role === 'headline' ? 'hero' : 'base', minSize: floor, ...node.style };
+        if (node.style.minSize < floor) fail('syntax.text', `${na}.style.minSize`, `creative ${node.role} text must stay at least ${floor}px`);
+      }
+      if (node.kind === 'videoArtifact') node.phase ??= 'preview';
+      if (node.kind === 'shape' && node.fill !== undefined) node.fill = creativePaint(node.fill, node.fill === 'none' ? undefined : `${na}.fill`);
+      content.push(node);
+      const placement = { node: node.id, ...(rect === undefined ? {} : { rect }), ...(relative === undefined ? {} : { relative }), layer: layer ?? (node.kind === 'shape' ? 0 : 1), ...(overlap === undefined ? {} : { overlap }) };
+      placements.push(placement);
+      if (portraitPlacement !== undefined && !Array.isArray(portraitPlacement)) keys(portraitPlacement, ['rect', 'relative', 'layer', 'overlap'], [], `${na}.portrait`);
+      portrait.push(portraitPlacement === undefined ? placement : { node: node.id, layer: placement.layer, ...(Array.isArray(portraitPlacement) ? { rect: portraitPlacement } : portraitPlacement) });
+      if (motion === 'none' || (motion === undefined && node.kind === 'shape')) { initial.push(node.id); continue; }
+      let animation = typeof motion === 'string' ? { preset: motion } : motion ?? {};
+      keys(animation, ['preset', 'atFrame', 'durationFrames', 'frames', 'ease'], [], `${na}.motion`);
+      const atFrame = animation.atFrame ?? Math.min(nodeIndex * 5, 10);
+      const durationFrames = animation.durationFrames ?? 18;
+      if (animation.frames !== undefined) {
+        if (animation.preset !== undefined) fail('syntax.motion', `${na}.motion`, 'keyframes cannot also have an entrance preset');
+        initial.push(node.id);
+        events.push({ atFrame, durationFrames, effect: 'keyframes', target: node.id, frames: animation.frames, ease: animation.ease ?? 'power3.out' });
+      } else {
+        if (animation.ease !== undefined) fail('syntax.motion', `${na}.motion.ease`, 'entrance presets own their easing');
+        events.push({ atFrame, durationFrames, effect: 'appear', target: node.id, preset: animation.preset ?? (node.kind === 'flow' ? 'stagger' : node.kind === 'inputCard' ? 'paste' : node.kind === 'videoArtifact' ? 'reveal' : 'rise') });
+      }
+    }
+    // A bounded panel is an underlay when it wholly contains later, higher content.
+    // Partial intersections and all functional-on-functional collisions still fail lint.
+    const known = new Map(content.map(node => [node.id, node]));
+    for (const children of [placements, portrait]) {
+      const resolved = canvasPlacements({ children }, `${at}.nodes`, known, []);
+      for (const [panelIndex, panel] of resolved.entries()) {
+        if (known.get(panel.placement.node)?.kind !== 'shape' || known.get(panel.placement.node)?.primitive !== 'panel' || known.get(panel.placement.node)?.importance !== 'decorative') continue;
+        const [x, y, w, h] = panel.rect;
+        for (const [otherIndex, other] of resolved.entries()) {
+          if (otherIndex === panelIndex || panel.placement.overlap === 'avoid' || other.placement.overlap === 'avoid') continue;
+          const [ox, oy, ow, oh] = other.rect;
+          const behind = (panel.placement.layer ?? 0) < (other.placement.layer ?? 0) || ((panel.placement.layer ?? 0) === (other.placement.layer ?? 0) && panelIndex < otherIndex);
+          if (behind && ox >= x && oy >= y && ox + ow <= x + w && oy + oh <= y + h) {
+            panel.placement.overlap = 'intentional'; other.placement.overlap = 'intentional';
+            const label = known.get(other.placement.node);
+            if (label?.kind === 'text' && label.role === 'label' && ox === x && oy === y && ow === w && oh === h) label.style.verticalAlign ??= 'center';
+          }
+        }
+      }
+    }
+    return { id: scene.id, role: sceneIndex === 0 ? 'hook' : 'benefit_highlight', blueprint: 'workflow-demo/v1', durationFrames: scene.durationFrames,
+      essential: content.filter(node => node.importance === 'essential').map(node => node.id), content,
+      layouts: { 'landscape-1920x1080': { type: 'canvas', children: placements }, 'portrait-1080x1920': { type: 'canvas', children: portrait } },
+      initialState: events.length ? 'opening' : 'resolved', resolvedState: 'resolved', states: events.length ? [{ id: 'opening', visible: initial }, { id: 'resolved', visible: content.map(node => node.id) }] : [{ id: 'resolved', visible: content.map(node => node.id) }],
+      events: events.sort((a, b) => a.atFrame - b.atFrame), design: { alignment: 'left', scale: 'display', ...scene.design, ...(scene.design?.background === undefined ? {} : { background: creativePaint(scene.design.background, `${at}.design.background`) }) } };
+  });
+  const expanded = { language: 'framelang/v1', fps: authored.fps ?? 24, profiles: authored.profiles ?? Object.keys(PROFILE), seed: authored.seed ?? 47, ...bundleRefs(bundle), verification: { mode: 'allFrames' }, scenes };
+  for (const [sceneIndex, scene] of scenes.entries()) for (const profile of expanded.profiles) {
+    const p = PROFILE[profile]; if (!p) fail('syntax.profile', '$.profiles', 'unsupported profile');
+    const portrait = profile.startsWith('portrait'), byId = new Map(scene.content.map(node => [node.id, node]));
+    const safeHeight = p.height - 2 * p.insetY - (scene.design?.chrome === 'editorial' ? 142 : 0);
+    for (const { placement, rect } of canvasPlacements(scene.layouts[profile], `$.scenes[${sceneIndex}].layouts.${profile}`, byId, [])) {
+      const node = byId.get(placement.node); if (!['inputCard', 'videoArtifact'].includes(node.kind)) continue;
+      const minimum = node.kind === 'inputCard' ? (portrait ? 450 : 280) : node.density === 'compact' ? (portrait ? 360 : 260) : (portrait ? 700 : 450);
+      const nodeIndex = scene.content.indexOf(node), authoredNode = authored.scenes[sceneIndex].nodes[nodeIndex];
+      if (safeHeight * rect[3] / 1000 < minimum) fail('semantic.componentFit', `$.scenes[${sceneIndex}].nodes[${nodeIndex}]${portrait && authoredNode.portrait ? '.portrait' : ''}`, `${node.kind} requires at least ${minimum}px height in ${profile}; enlarge its rectangle${node.kind === 'videoArtifact' ? ' or choose density:compact with at least ' + (portrait ? 360 : 260) + 'px height' : ''}`);
+    }
+  }
+  return expanded;
+}
+export function authoredLocation(location, language, authored, program) {
+  if (language !== 'framelang/creative-v0.1') return location;
+  return location?.replace(/\.content\[(\d+)\]/g, '.nodes[$1]')
+    .replace(/\.layouts\.(landscape-1920x1080|portrait-1080x1920|default)\.children\[(\d+)\]/g, (_, profile, index) => {
+      const sceneIndex = Number(location.match(/\.scenes\[(\d+)\]/)?.[1]);
+      const inherits = authored && !authored.scenes[sceneIndex]?.nodes[index]?.portrait;
+      return `.nodes[${index}]${profile === 'portrait-1080x1920' && !inherits ? '.portrait' : ''}`;
+    }).replace(/^(\$\.scenes\[(\d+)\])\.events\[(\d+)\]/, (match, sceneRoot, sceneIndex, eventIndex) => {
+      const event = program?.scenes[Number(sceneIndex)]?.events[Number(eventIndex)];
+      const index = authored?.scenes[Number(sceneIndex)]?.nodes.findIndex(node => node.id === event?.target);
+      return index >= 0 ? `${sceneRoot}.nodes[${index}].motion` : match;
+    });
 }
 
 export async function loadProgram(programPath) {
@@ -706,12 +837,16 @@ export async function loadProgram(programPath) {
   }
   const bundlePath = path.join(inputDir, 'bundle.json');
   const bundle = JSON.parse(await readFile(bundlePath, 'utf8'));
+  if (authored.language === 'framelang/creative-v0.1') program = expandCreative(authored, bundle);
   return { authored, program, inputDir, recipe, bundle };
 }
 
 export async function compile(programPath, outDir) {
   const { authored, program, inputDir, recipe, bundle } = await loadProgram(programPath);
-  validate(program, bundle);
+  try { validate(program, bundle); } catch (error) {
+    if (error instanceof FrameLangError) throw new FrameLangError(error.code, authoredLocation(error.location, authored.language, authored, program), error.message.split(': ').slice(1).join(': '));
+    throw error;
+  }
   await mkdir(outDir, { recursive: true });
   await rm(path.join(outDir, 'feedback.json'), { force: true });
   const gsapPath = require.resolve('gsap/dist/gsap.min.js');
@@ -743,11 +878,14 @@ export async function compile(programPath, outDir) {
   const sourceMap = Object.fromEntries(program.scenes.flatMap((scene, sceneIndex) =>
     scene.content.map((node, nodeIndex) => [`#${cssId(scene, node.id)}`, {
       sceneId: scene.id, nodeId: node.id,
-      location: `$.scenes[${sceneIndex}].content[${nodeIndex}]`,
+      componentPrefixes: { inputCard: ['.fl-input-'], videoArtifact: ['.fl-art-'], flow: ['.fl-chain-', '.fl-flow-'] }[node.kind] || [],
+      startTime: program.scenes.slice(0, sceneIndex).reduce((sum, item) => sum + item.durationFrames, 0) / program.fps,
+      endTime: program.scenes.slice(0, sceneIndex + 1).reduce((sum, item) => sum + item.durationFrames, 0) / program.fps,
+      location: authoredLocation(`$.scenes[${sceneIndex}].content[${nodeIndex}]`, authored.language),
       layoutLocations: Object.fromEntries(program.profiles.map(profile =>
-        [profile, `$.scenes[${sceneIndex}].layouts.${scene.layouts[profile] ? profile : 'default'}`])),
+        [profile, authored.language === 'framelang/creative-v0.1' ? `$.scenes[${sceneIndex}].nodes[${nodeIndex}]${profile === 'portrait-1080x1920' && authored.scenes[sceneIndex].nodes[nodeIndex].portrait ? '.portrait' : ''}` : `$.scenes[${sceneIndex}].layouts.${scene.layouts[profile] ? profile : 'default'}`])),
     }])));
-  const report = { language: program.language, pilot: true, inputHash: hash(canonical(authored)), expandedHash: hash(canonical(program)), recipe, verification: program.verification ? { ...program.verification, fps: program.fps, totalFrames: program.scenes.reduce((total, scene) => total + scene.durationFrames, 0) } : null, bundleRefs: bundleRefs(bundle), sourceMap, outputs, checked: false, degraded: false };
+  const report = { language: program.language, sourceLanguage: authored.language ?? 'recipe', pilot: true, inputHash: hash(canonical(authored)), expandedHash: hash(canonical(program)), recipe, verification: program.verification ? { ...program.verification, fps: program.fps, totalFrames: program.scenes.reduce((total, scene) => total + scene.durationFrames, 0) } : null, bundleRefs: bundleRefs(bundle), sourceMap, outputs, checked: false, degraded: false };
   await writeFile(path.join(outDir, 'compile-report.json'), `${JSON.stringify(report, null, 2)}\n`);
   return report;
 }

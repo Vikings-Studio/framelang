@@ -1,0 +1,717 @@
+{
+  "study": "creative-authoring-v0.1",
+  "controlledComparison": false,
+  "results": [
+    {
+      "id": "deepseek-v4-1-flash",
+      "name": "DeepSeek V4.1 Flash",
+      "model": "opencode-go/deepseek-v4.1-flash",
+      "selectedAttempt": 8,
+      "attempts": [
+        {
+          "number": 1,
+          "model": "opencode-go/deepseek-v4.1-flash",
+          "status": "lint rejected",
+          "durationMs": 32690,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 7049,
+            "input": 1588,
+            "output": 997,
+            "reasoning": 2672,
+            "cache": {
+              "read": 1792,
+              "write": 0
+            }
+          },
+          "cost": 0.002444976,
+          "formatViolation": false
+        },
+        {
+          "number": 2,
+          "model": "opencode-go/deepseek-v4.1-flash",
+          "status": "lint rejected",
+          "durationMs": 37833,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 8132,
+            "input": 211,
+            "output": 971,
+            "reasoning": 3622,
+            "cache": {
+              "read": 3328,
+              "write": 0
+            }
+          },
+          "cost": 0.002797434,
+          "formatViolation": false
+        },
+        {
+          "number": 3,
+          "model": "opencode-go/deepseek-v4.1-flash",
+          "status": "Rendered",
+          "durationMs": 104122,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 18851,
+            "input": 2319,
+            "output": 921,
+            "reasoning": 12283,
+            "cache": {
+              "read": 3328,
+              "write": 0
+            }
+          },
+          "cost": 0.008280234,
+          "formatViolation": false
+        },
+        {
+          "number": 4,
+          "model": "opencode-go/deepseek-v4.1-flash",
+          "variant": "low",
+          "status": "lint rejected",
+          "durationMs": 101889,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 12370,
+            "input": 1165,
+            "output": 1575,
+            "reasoning": 7838,
+            "cache": {
+              "read": 1792,
+              "write": 0
+            }
+          },
+          "cost": 0.005827926,
+          "formatViolation": false
+        },
+        {
+          "number": 5,
+          "model": "opencode-go/deepseek-v4.1-flash",
+          "variant": "low",
+          "status": "lint rejected",
+          "durationMs": 50929,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 6845,
+            "input": 1898,
+            "output": 1582,
+            "reasoning": 421,
+            "cache": {
+              "read": 2944,
+              "write": 0
+            }
+          },
+          "cost": 0.001495332,
+          "formatViolation": false
+        },
+        {
+          "number": 6,
+          "model": "opencode-go/deepseek-v4.1-flash",
+          "variant": "low",
+          "status": "lint rejected",
+          "durationMs": 21422,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 6795,
+            "input": 3226,
+            "output": 1706,
+            "reasoning": 71,
+            "cache": {
+              "read": 1792,
+              "write": 0
+            }
+          },
+          "cost": 0.001555476,
+          "formatViolation": false
+        },
+        {
+          "number": 7,
+          "model": "opencode-go/deepseek-v4.1-flash",
+          "variant": "low",
+          "status": "check rejected",
+          "durationMs": 46686,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 10972,
+            "input": 2099,
+            "output": 1706,
+            "reasoning": 4223,
+            "cache": {
+              "read": 2944,
+              "write": 0
+            }
+          },
+          "cost": 0.003881082,
+          "formatViolation": false
+        },
+        {
+          "number": 8,
+          "model": "opencode-go/deepseek-v4.1-flash",
+          "variant": "low",
+          "status": "Rendered",
+          "durationMs": 18642,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 6730,
+            "input": 2707,
+            "output": 1657,
+            "reasoning": 318,
+            "cache": {
+              "read": 2048,
+              "write": 0
+            }
+          },
+          "cost": 0.001597194,
+          "formatViolation": false
+        }
+      ],
+      "recordedTokens": 77744,
+      "recordedUSD": 0.027879654,
+      "usageIncomplete": false,
+      "checks": {
+        "landscape-1920x1080": {
+          "requestedFrames": 192,
+          "observedSamples": 210,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            1.625,
+            3.792,
+            5.833,
+            8
+          ],
+          "htmlHash": "sha256:b49bd3623e8ddf0ef4d7188c8f9ad85b21a8fdfb6f516af8e61c246b516d06af"
+        },
+        "portrait-1080x1920": {
+          "requestedFrames": 192,
+          "observedSamples": 210,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            1.625,
+            3.792,
+            5.833,
+            8
+          ],
+          "htmlHash": "sha256:c08fd8de6a4610fb2a2745c7983a5fa7245c0a214a9a64cd8914babc779480d9"
+        }
+      }
+    },
+    {
+      "id": "glm-5-2",
+      "name": "GLM 5.2",
+      "model": "opencode-go/glm-5.2",
+      "selectedAttempt": 2,
+      "attempts": [
+        {
+          "number": 1,
+          "model": "opencode-go/glm-5.2",
+          "status": "lint rejected",
+          "durationMs": 430949,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 26354,
+            "input": 3197,
+            "output": 1723,
+            "reasoning": 21422,
+            "cache": {
+              "read": 12,
+              "write": 0
+            }
+          },
+          "cost": 0.10631692,
+          "formatViolation": false
+        },
+        {
+          "number": 2,
+          "model": "opencode-go/glm-5.2",
+          "status": "Rendered",
+          "durationMs": 466095,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 32556,
+            "input": 3992,
+            "output": 1570,
+            "reasoning": 26984,
+            "cache": {
+              "read": 10,
+              "write": 0
+            }
+          },
+          "cost": 0.131229,
+          "formatViolation": false
+        }
+      ],
+      "recordedTokens": 58910,
+      "recordedUSD": 0.23754592000000002,
+      "usageIncomplete": false,
+      "checks": {
+        "landscape-1920x1080": {
+          "requestedFrames": 192,
+          "observedSamples": 201,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            1.958,
+            3.958,
+            5.917,
+            8
+          ],
+          "htmlHash": "sha256:eaccb207f24e954e4c523e495623745f4b0af68f350045024ffad5b90478c649"
+        },
+        "portrait-1080x1920": {
+          "requestedFrames": 192,
+          "observedSamples": 201,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            1.958,
+            3.958,
+            5.917,
+            8
+          ],
+          "htmlHash": "sha256:a37655f474d3b9181bf7cf966fa9644ed8a0d9062901c6909d11fc486b6fc1ad"
+        }
+      }
+    },
+    {
+      "id": "glm-5-3",
+      "name": "GLM 5.3",
+      "model": "opencode-go/glm-5.3",
+      "selectedAttempt": 7,
+      "attempts": [
+        {
+          "number": 1,
+          "model": "opencode-go/glm-5.3",
+          "status": "lint rejected",
+          "durationMs": 413882,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 28350,
+            "input": 3197,
+            "output": 872,
+            "reasoning": 24269,
+            "cache": {
+              "read": 12,
+              "write": 0
+            }
+          },
+          "cost": 0.11509932,
+          "formatViolation": false
+        },
+        {
+          "number": 2,
+          "model": "opencode-go/glm-5.3",
+          "status": "Harness deadline",
+          "durationMs": 480055,
+          "exitCode": null,
+          "signal": "SIGTERM",
+          "tokens": null,
+          "cost": null
+        },
+        {
+          "number": 3,
+          "model": "opencode-go/glm-5.3",
+          "variant": "low",
+          "status": "Local OpenCode launch failed",
+          "durationMs": 508,
+          "exitCode": 1,
+          "signal": null,
+          "tokens": null,
+          "cost": null,
+          "classificationEvidence": "stderr: FileSystem.open OpenCode log path; no provider events emitted"
+        },
+        {
+          "number": 4,
+          "model": "opencode-go/glm-5.3",
+          "variant": "low",
+          "status": "lint rejected",
+          "durationMs": 30727,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 6574,
+            "input": 5088,
+            "output": 1450,
+            "reasoning": 28,
+            "cache": {
+              "read": 8,
+              "write": 0
+            }
+          },
+          "cost": 0.01362848,
+          "formatViolation": true
+        },
+        {
+          "number": 5,
+          "model": "opencode-go/glm-5.3",
+          "variant": "low",
+          "status": "Rendered",
+          "durationMs": 33029,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 7103,
+            "input": 5331,
+            "output": 1471,
+            "reasoning": 293,
+            "cache": {
+              "read": 8,
+              "write": 0
+            }
+          },
+          "cost": 0.01522708,
+          "formatViolation": true
+        },
+        {
+          "number": 6,
+          "model": "opencode-go/glm-5.3",
+          "variant": "low",
+          "status": "check rejected",
+          "durationMs": 36185,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 6956,
+            "input": 5011,
+            "output": 1749,
+            "reasoning": 188,
+            "cache": {
+              "read": 8,
+              "write": 0
+            }
+          },
+          "cost": 0.01554028,
+          "formatViolation": true
+        },
+        {
+          "number": 7,
+          "model": "opencode-go/glm-5.3",
+          "variant": "low",
+          "status": "check rejected",
+          "durationMs": 40418,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 7223,
+            "input": 5355,
+            "output": 1743,
+            "reasoning": 113,
+            "cache": {
+              "read": 12,
+              "write": 0
+            }
+          },
+          "cost": 0.01566652,
+          "formatViolation": false
+        }
+      ],
+      "recordedTokens": 56206,
+      "recordedUSD": 0.17516168,
+      "usageIncomplete": true,
+      "checks": {
+        "landscape-1920x1080": {
+          "requestedFrames": 192,
+          "observedSamples": 205,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            1.917,
+            3.792,
+            5.875,
+            8
+          ],
+          "htmlHash": "sha256:9a1f136e1447dce6b47290abc6449366281adeb9074b89fe4d1a42127ddfec00"
+        },
+        "portrait-1080x1920": {
+          "requestedFrames": 192,
+          "observedSamples": 205,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            1.917,
+            3.792,
+            5.875,
+            8
+          ],
+          "htmlHash": "sha256:47d5de5f35c2e927cb55e302ac2e0b2627b6817a0e3b7cb10b3ff0cb5996db2d"
+        }
+      }
+    },
+    {
+      "id": "mimo-v2-6-flash",
+      "name": "MiMo V2.6 Flash",
+      "model": "opencode-go/mimo-v2.6-flash",
+      "selectedAttempt": 4,
+      "attempts": [
+        {
+          "number": 1,
+          "model": "opencode-go/mimo-v2.6-flash",
+          "status": "lint rejected",
+          "durationMs": 187386,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 15704,
+            "input": 3284,
+            "output": 1581,
+            "reasoning": 10839,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "cost": 0.00393736,
+          "formatViolation": false
+        },
+        {
+          "number": 2,
+          "model": "opencode-go/mimo-v2.6-flash",
+          "status": "lint rejected",
+          "durationMs": 347228,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 26441,
+            "input": 3512,
+            "output": 2430,
+            "reasoning": 20499,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "cost": 0.0069118,
+          "formatViolation": false
+        },
+        {
+          "number": 3,
+          "model": "opencode-go/mimo-v2.6-flash",
+          "variant": "default",
+          "status": "check rejected",
+          "durationMs": 146811,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 18486,
+            "input": 5607,
+            "output": 4341,
+            "reasoning": 5274,
+            "cache": {
+              "read": 3264,
+              "write": 0
+            }
+          },
+          "cost": 0.0034863192,
+          "formatViolation": false
+        },
+        {
+          "number": 4,
+          "model": "opencode-go/mimo-v2.6-flash",
+          "variant": "default",
+          "status": "check rejected",
+          "durationMs": 58728,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 12657,
+            "input": 6209,
+            "output": 4341,
+            "reasoning": 251,
+            "cache": {
+              "read": 1856,
+              "write": 0
+            }
+          },
+          "cost": 0.0021602168,
+          "formatViolation": false
+        }
+      ],
+      "recordedTokens": 73288,
+      "recordedUSD": 0.016495696,
+      "usageIncomplete": false,
+      "checks": {
+        "landscape-1920x1080": {
+          "requestedFrames": 192,
+          "observedSamples": 226,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            2,
+            3.917,
+            6.083,
+            8
+          ],
+          "htmlHash": "sha256:fc8b85f2387deead676c281d28bf3442f9cfbeaded3b6c5032d32127e6845d1a"
+        },
+        "portrait-1080x1920": {
+          "requestedFrames": 192,
+          "observedSamples": 226,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            2,
+            3.917,
+            6.083,
+            8
+          ],
+          "htmlHash": "sha256:3e2f07f3973fd923064f0fbd691af345961731becc9a9cc4e92d46a703509fe9"
+        }
+      }
+    },
+    {
+      "id": "hy4-preview",
+      "name": "Tencent Hy4 Preview",
+      "model": "opencode-go/hy4-preview",
+      "selectedAttempt": 4,
+      "attempts": [
+        {
+          "number": 1,
+          "model": "opencode-go/hy4-preview",
+          "status": "Rendered",
+          "durationMs": 273454,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 16324,
+            "input": 3292,
+            "output": 1411,
+            "reasoning": 11621,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "cost": 0.03533856,
+          "formatViolation": false
+        },
+        {
+          "number": 2,
+          "model": "opencode-go/hy4-preview",
+          "variant": "none",
+          "status": "lint rejected",
+          "durationMs": 61758,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 5913,
+            "input": 5025,
+            "output": 888,
+            "reasoning": 0,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "cost": 0.006411738,
+          "formatViolation": false
+        },
+        {
+          "number": 3,
+          "model": "opencode-go/hy4-preview",
+          "variant": "none",
+          "status": "lint rejected",
+          "durationMs": 24785,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 6251,
+            "input": 5363,
+            "output": 888,
+            "reasoning": 0,
+            "cache": {
+              "read": 0,
+              "write": 0
+            }
+          },
+          "cost": 0.00669363,
+          "formatViolation": false
+        },
+        {
+          "number": 4,
+          "model": "opencode-go/hy4-preview",
+          "variant": "none",
+          "status": "Rendered",
+          "durationMs": 29014,
+          "exitCode": 0,
+          "signal": null,
+          "tokens": {
+            "total": 6373,
+            "input": 2169,
+            "output": 876,
+            "reasoning": 0,
+            "cache": {
+              "read": 3328,
+              "write": 0
+            }
+          },
+          "cost": 0.004139598,
+          "formatViolation": false
+        }
+      ],
+      "recordedTokens": 34861,
+      "recordedUSD": 0.052583526,
+      "usageIncomplete": false,
+      "checks": {
+        "landscape-1920x1080": {
+          "requestedFrames": 192,
+          "observedSamples": 206,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            1.75,
+            3.833,
+            5.875,
+            8
+          ],
+          "htmlHash": "sha256:1364e07a3a7fc009509b6252f916ba4830d40c2def094da4909669a6068ac055"
+        },
+        "portrait-1080x1920": {
+          "requestedFrames": 192,
+          "observedSamples": 206,
+          "allFramesObserved": true,
+          "geometryFindings": 0,
+          "runtimeFindings": 0,
+          "contrastSamples": [
+            0,
+            1.75,
+            3.833,
+            5.875,
+            8
+          ],
+          "htmlHash": "sha256:ecc8af018a2a539d4f19421aecdfbec9e0aab6a83156a2c07d0b66d6dc1a4643"
+        }
+      }
+    }
+  ]
+}

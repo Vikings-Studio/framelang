@@ -1,0 +1,21 @@
+{
+  "number": 3,
+  "model": "opencode-go/hy4-preview",
+  "variant": "none",
+  "status": "lint rejected",
+  "durationMs": 24785,
+  "exitCode": 0,
+  "signal": null,
+  "tokens": {
+    "total": 6251,
+    "input": 5363,
+    "output": 888,
+    "reasoning": 0,
+    "cache": {
+      "read": 0,
+      "write": 0
+    }
+  },
+  "cost": 0.00669363,
+  "formatViolation": false
+}

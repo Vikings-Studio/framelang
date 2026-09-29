@@ -1,0 +1,374 @@
+{
+  "language": "framelang/creative-v0.1",
+  "profiles": [
+    "landscape-1920x1080",
+    "portrait-1080x1920"
+  ],
+  "scenes": [
+    {
+      "id": "s1",
+      "durationFrames": 96,
+      "design": {
+        "alignment": "left",
+        "scale": "display",
+        "decoration": "grid-glow",
+        "chrome": "none",
+        "ambient": "drift",
+        "background": {
+          "kind": "solid",
+          "color": "background"
+        }
+      },
+      "nodes": [
+        {
+          "id": "s1-kicker",
+          "role": "label",
+          "text": "MakeMyDemo.com",
+          "rect": [
+            80,
+            80,
+            400,
+            44
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              130,
+              500,
+              48
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 24,
+            "weight": 600,
+            "color": "accent",
+            "tracking": "extraWide",
+            "case": "uppercase",
+            "lineHeight": "normal"
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 0,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "s1-headline",
+          "role": "headline",
+          "segments": [
+            {
+              "text": "Paste a public",
+              "breakAfter": true
+            },
+            {
+              "text": "product URL.",
+              "breakAfter": true
+            },
+            {
+              "text": "Get a video",
+              "tone": "accent",
+              "breakAfter": true
+            },
+            {
+              "text": "first cut.",
+              "tone": "accent"
+            }
+          ],
+          "rect": [
+            80,
+            140,
+            880,
+            720
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              240,
+              840,
+              540
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 150,
+            "minSize": 80,
+            "maxLines": 5,
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "foreground"
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 4,
+            "durationFrames": 26
+          }
+        },
+        {
+          "id": "s1-bar",
+          "kind": "shape",
+          "primitive": "panel",
+          "fill": {
+            "kind": "solid",
+            "color": "#18181B"
+          },
+          "stroke": {
+            "color": "#3F3F46",
+            "width": 2
+          },
+          "corner": "pill",
+          "origin": "left",
+          "rect": [
+            80,
+            880,
+            720,
+            80
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              830,
+              700,
+              90
+            ]
+          },
+          "overlap": "intentional",
+          "motion": {
+            "preset": "slide",
+            "atFrame": 20,
+            "durationFrames": 24
+          }
+        },
+        {
+          "id": "s1-dot",
+          "kind": "shape",
+          "primitive": "circle",
+          "fill": {
+            "kind": "solid",
+            "color": "accent"
+          },
+          "rect": [
+            104,
+            924,
+            32,
+            32
+          ],
+          "portrait": {
+            "rect": [
+              112,
+              859,
+              32,
+              32
+            ]
+          },
+          "overlap": "intentional",
+          "motion": {
+            "preset": "pop",
+            "atFrame": 32,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "s1-url",
+          "role": "label",
+          "text": "https://",
+          "rect": [
+            152,
+            922,
+            80,
+            36
+          ],
+          "portrait": {
+            "rect": [
+              168,
+              857,
+              130,
+              36
+            ]
+          },
+          "style": {
+            "align": "left",
+            "size": 24,
+            "weight": 500,
+            "color": "#A1A1AA",
+            "tracking": "normal",
+            "lineHeight": "normal"
+          },
+          "overlap": "intentional",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 36,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "s1-caret",
+          "kind": "shape",
+          "primitive": "rule",
+          "fill": {
+            "kind": "solid",
+            "color": "accent"
+          },
+          "rect": [
+            240,
+            922,
+            4,
+            36
+          ],
+          "portrait": {
+            "rect": [
+              306,
+              857,
+              4,
+              36
+            ]
+          },
+          "overlap": "intentional",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 40,
+            "durationFrames": 14
+          }
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "durationFrames": 96,
+      "design": {
+        "alignment": "center",
+        "scale": "standard",
+        "decoration": "rules",
+        "chrome": "none",
+        "ambient": "none",
+        "background": {
+          "kind": "radial",
+          "center": [
+            50,
+            18
+          ],
+          "stops": [
+            {
+              "at": 0,
+              "color": "#DFE104",
+              "opacity": 8
+            },
+            {
+              "at": 100,
+              "color": "#09090B"
+            }
+          ]
+        }
+      },
+      "nodes": [
+        {
+          "id": "s2-headline",
+          "role": "headline",
+          "segments": [
+            {
+              "text": "Review.",
+              "breakAfter": true
+            },
+            {
+              "text": "Export MP4.",
+              "tone": "accent"
+            }
+          ],
+          "rect": [
+            60,
+            130,
+            880,
+            380
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              130,
+              840,
+              340
+            ]
+          },
+          "style": {
+            "align": "center",
+            "size": 150,
+            "minSize": 96,
+            "maxLines": 3,
+            "weight": 800,
+            "tracking": "tight",
+            "lineHeight": "tight",
+            "color": "foreground"
+          },
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 24
+          }
+        },
+        {
+          "id": "s2-flow",
+          "kind": "flow",
+          "variant": "chain",
+          "steps": [
+            "Paste a public URL",
+            "AI-written script",
+            "Product visuals + music"
+          ],
+          "outcome": "A video first cut, ready to review",
+          "rect": [
+            150,
+            560,
+            700,
+            240
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              515,
+              840,
+              420
+            ]
+          },
+          "motion": {
+            "preset": "stagger",
+            "atFrame": 10,
+            "durationFrames": 40
+          }
+        },
+        {
+          "id": "s2-label",
+          "role": "label",
+          "text": "MakeMyDemo.com",
+          "rect": [
+            330,
+            850,
+            340,
+            44
+          ],
+          "portrait": {
+            "rect": [
+              80,
+              950,
+              840,
+              44
+            ]
+          },
+          "style": {
+            "align": "center",
+            "size": 24,
+            "weight": 600,
+            "color": "#71717A",
+            "tracking": "extraWide",
+            "case": "uppercase",
+            "lineHeight": "normal"
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 32,
+            "durationFrames": 18
+          }
+        }
+      ]
+    }
+  ]
+}

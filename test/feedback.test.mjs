@@ -73,3 +73,19 @@ test('browser text fit feedback points back to authored node', () => {
   assert.equal(feedback.findings[0].nodeId, 'headline');
   assert.match(feedback.findings[0].hint, /Shorten this text/);
 });
+
+
+test('contrast feedback exposes the measured finding and authored location to a repair model', () => {
+  const report = { checked: false, sourceMap: { '#fl-source-label': { sceneId: 'source', nodeId: 'label', location: '$.scenes[0].nodes[2]' } }, checks: { landscape: { ok: false, layoutRan: true, allFramesObserved: true, report: { contrast: { findings: [{ code: 'contrast_aa_failure', severity: 'error', selector: '#fl-source-label', ratio: 1.34, message: 'Low contrast' }] } } } } };
+  const feedback = checkFeedback(report);
+  assert.equal(feedback.findings.length, 1);
+  assert.equal(feedback.findings[0].location, '$.scenes[0].nodes[2]');
+  assert.equal(feedback.findings[0].ratio, 1.34);
+  assert.match(feedback.findings[0].hint, /higher-contrast/);
+});
+
+
+test('component-child diagnostics resolve to the unique active authored node', () => {
+  const report={checked:false,sourceMap:{'#fl-s1-input':{sceneId:'s1',nodeId:'input',location:'$.scenes[0].nodes[2]',componentPrefixes:['.fl-input-'],startTime:0,endTime:4}},checks:{landscape:{ok:false,layoutRan:true,allFramesObserved:true,report:{layout:{findings:[{code:'text_box_overflow',selector:'div.fl-input-foot > span',time:1,message:'Overflow'}]}}}}};
+  assert.equal(checkFeedback(report).findings[0].location,'$.scenes[0].nodes[2]');
+});

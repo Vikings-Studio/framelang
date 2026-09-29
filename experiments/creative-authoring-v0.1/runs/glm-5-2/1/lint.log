@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "nodes": [
+        "s1-bar",
+        "s1-dot"
+      ],
+      "locations": [
+        "$.scenes[0].nodes[2].portrait",
+        "$.scenes[0].nodes[3].portrait"
+      ],
+      "rects": [
+        [
+          80,
+          830,
+          700,
+          90
+        ],
+        [
+          112,
+          859,
+          32,
+          32
+        ]
+      ],
+      "intersection": [
+        112,
+        859,
+        32,
+        32
+      ],
+      "message": "Nodes s1-bar and s1-dot overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection, or declare intentional overlap on both decorative and content placements if the composition requires it."
+    },
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "nodes": [
+        "s1-bar",
+        "s1-url"
+      ],
+      "locations": [
+        "$.scenes[0].nodes[2].portrait",
+        "$.scenes[0].nodes[4].portrait"
+      ],
+      "rects": [
+        [
+          80,
+          830,
+          700,
+          90
+        ],
+        [
+          168,
+          857,
+          190,
+          36
+        ]
+      ],
+      "intersection": [
+        168,
+        857,
+        190,
+        36
+      ],
+      "message": "Nodes s1-bar and s1-url overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection, or declare intentional overlap on both decorative and content placements if the composition requires it."
+    },
+    {
+      "code": "semantic.overlap",
+      "severity": "error",
+      "sceneId": "s1",
+      "profile": "portrait-1080x1920",
+      "nodes": [
+        "s1-bar",
+        "s1-caret"
+      ],
+      "locations": [
+        "$.scenes[0].nodes[2].portrait",
+        "$.scenes[0].nodes[5].portrait"
+      ],
+      "rects": [
+        [
+          80,
+          830,
+          700,
+          90
+        ],
+        [
+          370,
+          857,
+          4,
+          36
+        ]
+      ],
+      "intersection": [
+        370,
+        857,
+        4,
+        36
+      ],
+      "message": "Nodes s1-bar and s1-caret overlap without allowed intent",
+      "hint": "Move or resize a rectangle to remove the intersection, or declare intentional overlap on both decorative and content placements if the composition requires it."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:49265f67c99f22631673022f8a1a2191fdd303cc745a6dff87494fc405805f56"
+}

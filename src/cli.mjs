@@ -4,7 +4,7 @@ import { spawn } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { canonical, compile, FrameLangError, lintProgram, loadProgram } from './compiler.mjs';
+import { authoredLocation, canonical, compile, FrameLangError, lintProgram, loadProgram } from './compiler.mjs';
 import { assessCheck, frameTimes } from './check-policy.mjs';
 import { checkFeedback } from './feedback.mjs';
 
@@ -41,6 +41,10 @@ async function main() {
     if (!first) throw new Error('usage: lint <program.json>');
     const { authored, program, bundle, recipe } = await loadProgram(path.resolve(first));
     const feedback = lintProgram(program, bundle);
+    for (const finding of feedback.findings) {
+      if (finding.location) finding.location = authoredLocation(finding.location, authored.language, authored, program);
+      if (finding.locations) finding.locations = finding.locations.map(location => authoredLocation(location, authored.language, authored, program));
+    }
     feedback.stage = 'static';
     feedback.inputHash = digest(canonical(authored));
     if (recipe) feedback.recipe = recipe.id;
