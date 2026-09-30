@@ -1,0 +1,22 @@
+{
+  "model": "opencode-go/deepseek-v4.1-flash",
+  "arm": "framelang",
+  "number": 2,
+  "variant": "low",
+  "cost": 0.000813432,
+  "tokens": {
+    "total": 6199,
+    "input": 2552,
+    "output": 32,
+    "reasoning": 671,
+    "cache": {
+      "read": 2944,
+      "write": 0
+    }
+  },
+  "durationMs": 12198,
+  "exitCode": 0,
+  "signal": null,
+  "status": "lint rejected",
+  "formatViolation": false
+}

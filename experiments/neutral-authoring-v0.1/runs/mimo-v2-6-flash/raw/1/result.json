@@ -1,0 +1,22 @@
+{
+  "model": "opencode-go/mimo-v2.6-flash",
+  "arm": "raw",
+  "number": 1,
+  "variant": "default",
+  "cost": null,
+  "tokens": {
+    "total": null,
+    "input": null,
+    "output": null,
+    "reasoning": null,
+    "cache": {
+      "read": null,
+      "write": null
+    }
+  },
+  "durationMs": 480005,
+  "exitCode": null,
+  "signal": "SIGTERM",
+  "status": "Harness deadline",
+  "formatViolation": false
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "model": "deepseek-v4-1-flash",
+    "arm": "raw",
+    "attempts": 2,
+    "status": "check rejected",
+    "inferenceUSD": 0.023336742,
+    "costComplete": true,
+    "tokens": 48478,
+    "sourceAttempts": [
+      1,
+      2
+    ]
+  },
+  {
+    "model": "deepseek-v4-1-flash",
+    "arm": "framelang",
+    "attempts": 2,
+    "status": "lint rejected",
+    "inferenceUSD": 0.008449476,
+    "costComplete": true,
+    "tokens": 21706,
+    "sourceAttempts": [
+      1,
+      2
+    ]
+  },
+  {
+    "model": "glm-5-3",
+    "arm": "raw",
+    "attempts": 1,
+    "status": "Rendered",
+    "inferenceUSD": 0.06987952,
+    "costComplete": true,
+    "tokens": 17558,
+    "sourceAttempts": [
+      1
+    ]
+  },
+  {
+    "model": "glm-5-3",
+    "arm": "framelang",
+    "attempts": 1,
+    "status": "Rendered",
+    "inferenceUSD": 0.02754808,
+    "costComplete": true,
+    "tokens": 8243,
+    "sourceAttempts": [
+      1
+    ]
+  }
+]

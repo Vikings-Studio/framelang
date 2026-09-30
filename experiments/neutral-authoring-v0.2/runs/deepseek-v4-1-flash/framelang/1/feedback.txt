@@ -1,0 +1,1 @@
+{"findings":[{"code":"semantic.hold","severity":"error","location":"$.scenes[1]","message":"semantic.hold at $.scenes[1]: resolved state must hold last 15%","hint":"Edit the indicated FrameLang source field and run lint again."}]}

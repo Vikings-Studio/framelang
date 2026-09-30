@@ -1,0 +1,22 @@
+{
+  "model": "opencode-go/mimo-v2.6-flash",
+  "arm": "framelang",
+  "number": 1,
+  "variant": "default",
+  "cost": 0.00390726,
+  "tokens": {
+    "total": 15438,
+    "input": 2967,
+    "output": 2132,
+    "reasoning": 10339,
+    "cache": {
+      "read": 0,
+      "write": 0
+    }
+  },
+  "durationMs": 170101,
+  "exitCode": 0,
+  "signal": null,
+  "status": "Rendered",
+  "formatViolation": false
+}

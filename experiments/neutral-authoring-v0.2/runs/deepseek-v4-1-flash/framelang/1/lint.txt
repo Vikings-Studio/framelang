@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "semantic.hold",
+      "severity": "error",
+      "location": "$.scenes[1]",
+      "message": "semantic.hold at $.scenes[1]: resolved state must hold last 15%",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:61b9ea18e504b64001ead96e1daf5bde848295c0ad323be6f1a759743fc0fa1f"
+}

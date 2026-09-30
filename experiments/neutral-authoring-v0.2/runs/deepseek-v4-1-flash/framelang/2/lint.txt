@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "ok": false,
+  "findings": [
+    {
+      "code": "syntax.integer",
+      "severity": "error",
+      "location": "$.scenes[1].nodes[9].motion.frames[1].atFrame",
+      "message": "syntax.integer at $.scenes[1].events[9].frames[1].atFrame: expected integer 0..36",
+      "hint": "Edit the indicated FrameLang source field and run lint again."
+    }
+  ],
+  "instruction": "Edit the FrameLang source at the reported locations. Preserve the intended content, then rerun lint and check before rendering.",
+  "stage": "static",
+  "inputHash": "sha256:964814f6c898f27844c3084e28b4e2bd615e5800ffc918e972e0b771026aa196"
+}

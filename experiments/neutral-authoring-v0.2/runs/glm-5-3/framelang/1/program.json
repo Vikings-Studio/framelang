@@ -1,0 +1,388 @@
+{
+  "language": "framelang/creative-v0.1",
+  "profiles": [
+    "landscape-1920x1080"
+  ],
+  "styles": {
+    "title": {
+      "size": 104,
+      "weight": 800
+    }
+  },
+  "scenes": [
+    {
+      "id": "scene-paste",
+      "durationFrames": 48,
+      "design": {
+        "background": "#09090B",
+        "decoration": "none",
+        "chrome": "none"
+      },
+      "nodes": [
+        {
+          "id": "accent-dot",
+          "kind": "shape",
+          "primitive": "circle",
+          "rect": [
+            770,
+            170,
+            80,
+            80
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "preset": "pop",
+            "atFrame": 2,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "headline-paste",
+          "rect": [
+            100,
+            300,
+            800,
+            140
+          ],
+          "role": "headline",
+          "style": {
+            "size": 104,
+            "weight": 800,
+            "align": "center",
+            "color": "#FAFAFA",
+            "maxLines": 1
+          },
+          "text": "Paste a product URL.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "url-bar",
+          "kind": "shape",
+          "primitive": "panel",
+          "rect": [
+            150,
+            520,
+            700,
+            120
+          ],
+          "fill": "none",
+          "stroke": {
+            "color": "#DFE104",
+            "width": 3
+          },
+          "corner": "pill",
+          "motion": {
+            "preset": "fade",
+            "atFrame": 4,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "url-bar-text",
+          "rect": [
+            210,
+            552,
+            560,
+            56
+          ],
+          "role": "label",
+          "text": "your public product URL",
+          "style": {
+            "size": 32,
+            "align": "left",
+            "color": "#DFE104",
+            "maxLines": 1
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 6,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "url-cursor",
+          "kind": "shape",
+          "primitive": "circle",
+          "rect": [
+            800,
+            566,
+            24,
+            24
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "preset": "pop",
+            "atFrame": 10,
+            "durationFrames": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-firstcut",
+      "durationFrames": 48,
+      "design": {
+        "background": "#09090B",
+        "decoration": "none",
+        "chrome": "none"
+      },
+      "nodes": [
+        {
+          "id": "headline-firstcut",
+          "rect": [
+            100,
+            260,
+            800,
+            140
+          ],
+          "role": "headline",
+          "style": {
+            "size": 104,
+            "weight": 800,
+            "align": "center",
+            "color": "#FAFAFA",
+            "maxLines": 1
+          },
+          "text": "Get a first cut.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "accent-rule",
+          "kind": "shape",
+          "primitive": "rule",
+          "rect": [
+            430,
+            432,
+            140,
+            8
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "atFrame": 8,
+            "durationFrames": 16,
+            "ease": "power2.out",
+            "frames": [
+              {
+                "atFrame": 0,
+                "value": {
+                  "scaleX": 0
+                }
+              },
+              {
+                "atFrame": 16,
+                "value": {
+                  "scaleX": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "body-firstcut",
+          "rect": [
+            150,
+            480,
+            700,
+            120
+          ],
+          "role": "body",
+          "text": "AI-written script, product visuals and music.",
+          "style": {
+            "size": 40,
+            "align": "center",
+            "color": "#FAFAFA",
+            "lineHeight": "relaxed",
+            "maxLines": 2
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 6,
+            "durationFrames": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-export",
+      "durationFrames": 48,
+      "design": {
+        "background": "#09090B",
+        "decoration": "none",
+        "chrome": "none"
+      },
+      "nodes": [
+        {
+          "id": "headline-export",
+          "rect": [
+            100,
+            360,
+            800,
+            140
+          ],
+          "role": "headline",
+          "style": {
+            "size": 104,
+            "weight": 800,
+            "align": "center",
+            "color": "#FAFAFA",
+            "maxLines": 1
+          },
+          "text": "Review it. Export MP4.",
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "export-pill",
+          "kind": "shape",
+          "primitive": "panel",
+          "rect": [
+            380,
+            570,
+            240,
+            96
+          ],
+          "fill": "none",
+          "stroke": {
+            "color": "#FAFAFA",
+            "width": 2
+          },
+          "corner": "pill",
+          "motion": {
+            "preset": "pop",
+            "atFrame": 6,
+            "durationFrames": 16
+          }
+        },
+        {
+          "id": "export-label",
+          "rect": [
+            430,
+            600,
+            140,
+            40
+          ],
+          "role": "label",
+          "text": "MP4",
+          "style": {
+            "size": 32,
+            "align": "center",
+            "color": "#DFE104",
+            "maxLines": 1
+          },
+          "motion": {
+            "preset": "pop",
+            "atFrame": 6,
+            "durationFrames": 16
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-brand",
+      "durationFrames": 48,
+      "design": {
+        "background": "#09090B",
+        "decoration": "none",
+        "chrome": "none"
+      },
+      "nodes": [
+        {
+          "id": "title-brand",
+          "rect": [
+            100,
+            400,
+            800,
+            140
+          ],
+          "role": "headline",
+          "style": {
+            "size": 104,
+            "weight": 800,
+            "align": "center",
+            "color": "#FAFAFA",
+            "maxLines": 1
+          },
+          "segments": [
+            {
+              "text": "MakeMyDemo"
+            },
+            {
+              "text": ".com",
+              "tone": "accent"
+            }
+          ],
+          "motion": {
+            "preset": "rise",
+            "atFrame": 0,
+            "durationFrames": 18
+          }
+        },
+        {
+          "id": "brand-rule",
+          "kind": "shape",
+          "primitive": "rule",
+          "rect": [
+            400,
+            580,
+            200,
+            8
+          ],
+          "fill": "#DFE104",
+          "motion": {
+            "atFrame": 8,
+            "durationFrames": 16,
+            "ease": "power2.out",
+            "frames": [
+              {
+                "atFrame": 0,
+                "value": {
+                  "scaleX": 0
+                }
+              },
+              {
+                "atFrame": 16,
+                "value": {
+                  "scaleX": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "tagline",
+          "rect": [
+            250,
+            624,
+            500,
+            44
+          ],
+          "role": "label",
+          "text": "Paste a URL. Get a video.",
+          "style": {
+            "size": 32,
+            "align": "center",
+            "color": "#FAFAFA",
+            "tracking": "wide",
+            "maxLines": 1
+          },
+          "motion": {
+            "preset": "fade",
+            "atFrame": 10,
+            "durationFrames": 14
+          }
+        }
+      ]
+    }
+  ]
+}

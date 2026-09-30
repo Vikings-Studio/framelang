@@ -192,7 +192,8 @@ function canvasPlacements(tree, location, known, findings = null, context = {}) 
       if (x < px + pw && x + width > px && y < py + ph && y + height > py) {
         const mutual = placement.overlap === 'intentional' && previous.placement.overlap === 'intentional';
         const decorative = known.get(placement.node).importance === 'decorative' || known.get(previous.placement.node).importance === 'decorative';
-        if (!mutual || !decorative) {
+        const graphicsOnly = [placement, previous.placement].every(item => known.get(item.node).kind === 'shape' && known.get(item.node).importance === 'decorative' && item.overlap !== 'avoid');
+        if ((!mutual || !decorative) && !graphicsOnly) {
           if (!findings) fail('semantic.overlap', at, !mutual ? `overlaps ${previous.placement.node} without mutual intent` : 'intentional overlap requires a decorative node');
           findings.push({
             code: 'semantic.overlap', severity: 'error', ...context,
@@ -501,7 +502,12 @@ export function validate(program, bundle) {
     if (events.every(e => e.effect !== 'replace')) for (const id of resolvedVisible.filter(id => !initialVisible.includes(id))) {
       if (!written.has(id)) fail('semantic.state', at, `unrevealed final node ${id}`);
     }
-    if (events.some(e => e.atFrame + e.durationFrames > Math.floor(scene.durationFrames * .85))) fail('semantic.hold', at, 'resolved state must hold last 15%');
+    for (const [eventIndex, event] of events.entries()) {
+      // Decorative motion need not freeze while readable content holds.
+      if (event.effect !== 'replace' && byId.get(event.target)?.importance === 'decorative') continue;
+      const deadline = Math.floor(scene.durationFrames * .85);
+      if (event.atFrame + event.durationFrames > deadline) fail('semantic.hold', `${at}.events[${eventIndex}]`, `readable content must finish motion by frame ${deadline}; atFrame + durationFrames is ${event.atFrame + event.durationFrames}. If shortening keyframes, also move their final atFrame to the new durationFrames`);
+    }
     if (stateMap.get(scene.initialState).visible.length === 0 && (events[0]?.atFrame ?? Infinity) > 10) fail('semantic.opening', at, 'first visible content arrives after frame 10');
   }
   return true;
@@ -562,7 +568,10 @@ function renderTree(tree, scene, profile, nodes, initial, brand, rect) {
     if (node.kind === 'inputCard') return `<div id="${id}" class="fl-node fl-input-card"${hidden}>${renderInputCard(node)}</div>`;
     if (node.kind === 'videoArtifact') return `<div id="${id}" class="fl-node fl-artifact fl-artifact-${node.phase}${node.density === 'compact' ? ' fl-artifact-compact' : ''}"${hidden}>${renderVideoArtifact(node, scene.events.some(event => event.target === node.id && event.preset === 'reveal'))}</div>`;
     if (node.kind === 'shape') {
+      const viewport = PROFILE[profile];
+      const diameter = node.primitive === 'circle' && rect ? Math.min(rect[2] * (viewport.width - 2 * viewport.insetX) / 1000, rect[3] * (viewport.height - 2 * viewport.insetY - (scene.design?.chrome === 'editorial' ? 142 : 0)) / 1000) : null;
       const style = [
+        diameter !== null ? `width:${diameter}px;height:${diameter}px;flex:none;margin:auto` : '',
         initial.includes(tree) ? '' : 'opacity:0',
         node.fill === 'none' ? 'background:transparent' : node.fill ? `background:${cssPaint(node.fill, brand)}` : '',
         node.stroke ? `border:${node.stroke.width}px solid ${cssColor(node.stroke.color, brand)}` : '',
@@ -710,8 +719,12 @@ function creativePaint(value, location) {
 
 // The compact surface carries design decisions; the expanded IR owns state/timing safety.
 export function expandCreative(authored, bundle) {
-  keys(authored, ['language', 'fps', 'profiles', 'seed', 'scenes'], ['language', 'scenes'], '$');
+  keys(authored, ['language', 'fps', 'profiles', 'seed', 'styles', 'scenes'], ['language', 'scenes'], '$');
   if (authored.language !== 'framelang/creative-v0.1') fail('syntax.version', '$.language', 'expected framelang/creative-v0.1');
+  if (authored.styles !== undefined) {
+    object(authored.styles, '$.styles');
+    for (const [name, style] of Object.entries(authored.styles)) { identifier(name, `$.styles.${name}`); object(style, `$.styles.${name}`); }
+  }
   const scenes = list(authored.scenes, '$.scenes', 1).map((scene, sceneIndex) => {
     const at = `$.scenes[${sceneIndex}]`;
     keys(scene, ['id', 'durationFrames', 'design', 'nodes'], ['id', 'durationFrames', 'nodes'], at);
@@ -725,11 +738,16 @@ export function expandCreative(authored, bundle) {
       const node = { kind: 'text', ...fields };
       node.importance ??= node.kind === 'shape' ? 'decorative' : node.kind === 'text' && node.role === 'label' ? 'supporting' : 'essential';
       if (node.kind === 'text') {
+        const styleLocation = typeof node.style === 'string' ? `$.styles.${node.style}` : `${na}.style`;
+        if (typeof node.style === 'string') {
+          if (!Object.hasOwn(authored.styles ?? {}, node.style)) fail('reference.style', `${na}.style`, 'unknown named style');
+          node.style = { ...authored.styles[node.style] };
+        }
         if (node.style !== undefined) object(node.style, `${na}.style`);
         node.role ??= 'headline'; node.language ??= 'en'; node.fit ??= 'wrapThenShrink';
         const floor = node.role === 'headline' ? 64 : node.role === 'body' ? 32 : 24;
-        node.style = { align: 'left', size: node.role === 'headline' ? 'hero' : 'base', minSize: floor, ...node.style };
-        if (node.style.minSize < floor) fail('syntax.text', `${na}.style.minSize`, `creative ${node.role} text must stay at least ${floor}px`);
+        node.style = { align: 'left', size: 'base', minSize: floor, ...node.style };
+        if (node.style.minSize < floor) fail('syntax.text', `${styleLocation}.minSize`, `creative ${node.role} text must stay at least ${floor}px`);
       }
       if (node.kind === 'videoArtifact') node.phase ??= 'preview';
       if (node.kind === 'shape' && node.fill !== undefined) node.fill = creativePaint(node.fill, node.fill === 'none' ? undefined : `${na}.fill`);
@@ -776,7 +794,7 @@ export function expandCreative(authored, bundle) {
       essential: content.filter(node => node.importance === 'essential').map(node => node.id), content,
       layouts: { 'landscape-1920x1080': { type: 'canvas', children: placements }, 'portrait-1080x1920': { type: 'canvas', children: portrait } },
       initialState: events.length ? 'opening' : 'resolved', resolvedState: 'resolved', states: events.length ? [{ id: 'opening', visible: initial }, { id: 'resolved', visible: content.map(node => node.id) }] : [{ id: 'resolved', visible: content.map(node => node.id) }],
-      events: events.sort((a, b) => a.atFrame - b.atFrame), design: { alignment: 'left', scale: 'display', ...scene.design, ...(scene.design?.background === undefined ? {} : { background: creativePaint(scene.design.background, `${at}.design.background`) }) } };
+      events: events.sort((a, b) => a.atFrame - b.atFrame), design: { alignment: 'left', scale: 'standard', ...scene.design, ...(scene.design?.background === undefined ? {} : { background: creativePaint(scene.design.background, `${at}.design.background`) }) } };
   });
   const expanded = { language: 'framelang/v1', fps: authored.fps ?? 24, profiles: authored.profiles ?? Object.keys(PROFILE), seed: authored.seed ?? 47, ...bundleRefs(bundle), verification: { mode: 'allFrames' }, scenes };
   for (const [sceneIndex, scene] of scenes.entries()) for (const profile of expanded.profiles) {
@@ -803,6 +821,9 @@ export function authoredLocation(location, language, authored, program) {
       const event = program?.scenes[Number(sceneIndex)]?.events[Number(eventIndex)];
       const index = authored?.scenes[Number(sceneIndex)]?.nodes.findIndex(node => node.id === event?.target);
       return index >= 0 ? `${sceneRoot}.nodes[${index}].motion` : match;
+    }).replace(/^(\$\.scenes\[(\d+)\]\.nodes\[(\d+)\])\.style(\..+)$/, (match, nodeRoot, sceneIndex, nodeIndex, suffix) => {
+      const style = authored?.scenes[Number(sceneIndex)]?.nodes[Number(nodeIndex)]?.style;
+      return typeof style === 'string' ? `$.styles.${style}${suffix}` : match;
     });
 }
 

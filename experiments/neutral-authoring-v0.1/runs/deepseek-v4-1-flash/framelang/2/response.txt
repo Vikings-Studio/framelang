@@ -1,0 +1,1 @@
+[{\"op\":\"replace\",\"path\":\"/scenes/2/nodes/1/rect\",\"value\":[420,620,580,6]},{\"op\":\"replace\",\"path\":\"/scenes/2/nodes/3/rect\",\"value\":[400,650,46,46]}]

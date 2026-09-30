@@ -1,0 +1,42 @@
+[
+  {
+    "model": "deepseek-v4-1-flash",
+    "arm": "raw",
+    "attempts": 1,
+    "status": "Rendered",
+    "knownInferenceUSD": 0.006797394,
+    "costComplete": true,
+    "knownTokens": 13744,
+    "tokensComplete": true
+  },
+  {
+    "model": "deepseek-v4-1-flash",
+    "arm": "framelang",
+    "attempts": 2,
+    "status": "Source rejected",
+    "knownInferenceUSD": 0.0060401759999999995,
+    "costComplete": true,
+    "knownTokens": 17647,
+    "tokensComplete": true
+  },
+  {
+    "model": "mimo-v2-6-flash",
+    "arm": "raw",
+    "attempts": 1,
+    "status": "Harness deadline",
+    "knownInferenceUSD": 0,
+    "costComplete": false,
+    "knownTokens": 0,
+    "tokensComplete": false
+  },
+  {
+    "model": "mimo-v2-6-flash",
+    "arm": "framelang",
+    "attempts": 1,
+    "status": "Rendered",
+    "knownInferenceUSD": 0.00390726,
+    "costComplete": true,
+    "knownTokens": 15438,
+    "tokensComplete": true
+  }
+]

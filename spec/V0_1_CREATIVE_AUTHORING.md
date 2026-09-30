@@ -37,7 +37,8 @@ and verified assets.
 ```
 
 Optional document fields: `fps` (24), `seed` (47), `profiles` (landscape and
-portrait by default). Scene duration remains 48–288 frames. Scene fields are
+portrait by default), and `styles` (named typography objects that text nodes
+can reference using `style:"name"`). Scene duration remains 48–288 frames. Scene fields are
 `id`, `durationFrames`, `design`, `nodes`; unknown fields fail.
 
 ## Model-owned choices
@@ -63,8 +64,8 @@ portrait by default). Scene duration remains 48–288 frames. Scene fields are
 
 ## Defaults and guardrails
 
-Text defaults to headline, English, wrapThenShrink, left alignment and hero
-scale. Headlines have a 64px minimum, body32px and labels24px in the compact
+Text defaults to headline, English, wrapThenShrink, left alignment and base
+size; scene scale defaults to standard. Explicit model sizes remain unchanged. Headlines have a 64px minimum, body32px and labels24px in the compact
 surface; a model may increase those floors. The compiler checks requested size
 against its minimum for **each** profile. Measured fitting fails if copy cannot
 fit above that floor or within maxLines; it does not make headlines tiny merely
@@ -73,11 +74,14 @@ to pass a bounds check. Long text must be shortened or its rectangle enlarged.
 Shapes default decorative, static and layer0; functional content defaults
 layer1. A panel that fully contains later/higher content is a background
 underlay, so its decorative overlap is marked explicitly in the expanded IR.
-Partial intersections and functional-on-functional overlaps still fail lint.
+Decorative shape intersections (such as a progress track, fill and handle)
+are permitted unless either placement explicitly avoids overlap. Functional-on-
+functional and shape-on-text intersections still fail lint.
 Explicit `overlap:"avoid"` prevents underlay inference. Raised opaque panels
 cannot use this rule to hide text. Labels sharing the exact panel rectangle
 default to vertical centering; an explicit verticalAlign keeps model intent. Directly positioned shapes have no inherited
-120px minimum height; their authored rectangles own their size.
+120px minimum height; their authored rectangles own their size. Circles fit a physical square inside
+their rectangle; they do not stretch into ellipses on landscape profiles.
 
 Narrow landscape chains (under900px) reflow vertically. Horizontal chains share
 space across the steps and outcome, so long outcomes cannot squeeze the steps.
@@ -94,7 +98,10 @@ measure the actual content and motion; small decorative rectangles cannot be
 used as undersized rich components.
 
 Default entrances are staggered by node index, beginning within ten frames.
-The existing opening and final-hold rules, semantic coverage checks, safe-canvas
+Readable content must complete motion by `floor(scene.durationFrames * .85)`;
+decorative shapes can continue moving through that hold. Timing feedback points
+to the exact motion and explains coupled keyframe endpoint edits. The existing
+opening rules, semantic coverage checks, safe-canvas
 bounds, lint overlap diagnostics and local hashed asset verification apply.
 Expansion always enables allFrames verification. Rendering remains gated on
 all profile checks; any sampled geometry collision blocks it, including brief
@@ -125,3 +132,10 @@ No language can guarantee provider availability, a valid answer, renderer
 availability or good taste. The guarantee here is deterministic validation and
 a render gate for the failures it measures. Failed attempts remain visible;
 there is no silent clipping, omitted essential copy or unlabeled fallback.
+
+## Small repairs
+
+`src/repair-patch.mjs` provides bounded add/remove/replace JSON Patch transport
+for feedback-driven retries. It rejects prototype keys, invalid pointers and
+more than16operations; it clones the input before applying changes. A patch is
+not approval: rerun lint, compile and every-frame check before rendering.
