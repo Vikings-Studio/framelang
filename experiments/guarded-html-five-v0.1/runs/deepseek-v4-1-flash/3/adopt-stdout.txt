@@ -1,0 +1,47 @@
+{
+  "language": "framelang/trusted-hyperframes-v0.1",
+  "sourceLanguage": "hyperframes/html",
+  "pilot": true,
+  "guarantees": "source-preserving, measured frame checks; trusted JavaScript, no deterministic or security guarantee",
+  "inputHash": "sha256:8f3c8b1eea0d3add4176e883e99577b5dae2a76acf8e9b4a1785364574a38c68",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "sourceMap": {
+    "#root": {
+      "nodeId": "root",
+      "location": "index.html:336"
+    },
+    "#scene-1": {
+      "nodeId": "scene-1",
+      "location": "index.html:345"
+    },
+    "#scene-2": {
+      "nodeId": "scene-2",
+      "location": "index.html:374"
+    },
+    "#scene-3": {
+      "nodeId": "scene-3",
+      "location": "index.html:413"
+    },
+    "#scene-4": {
+      "nodeId": "scene-4",
+      "location": "index.html:454"
+    }
+  },
+  "outputs": {
+    "source-1920x1080": {
+      "directory": "source-1920x1080",
+      "htmlHash": "sha256:8f3c8b1eea0d3add4176e883e99577b5dae2a76acf8e9b4a1785364574a38c68",
+      "assetHashes": {
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false,
+  "verificationPin": "sha256:d2ee6be8c24b1c8b7dc1e252f46d9690e8974da19911bb7257d9be0de39003e6"
+}

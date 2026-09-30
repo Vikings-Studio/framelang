@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:7d93ea4a0f866f1f978f891e5418e989ccc237f75964ec29da6e9a8fbab7fdc1",
+  "recipe": null,
+  "ok": false,
+  "findings": [
+    {
+      "code": "container_overflow",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "selector": "div.fv-shape.a",
+      "relatedSelector": null,
+      "message": "Element extends outside a clipping layout container.",
+      "firstTime": 3.5,
+      "lastTime": 4.042,
+      "occurrences": 15,
+      "bbox": {
+        "x": 1389.87,
+        "y": 568.08,
+        "width": 125.53,
+        "height": 125.53
+      },
+      "hint": "Inspect the affected scene in source-1920x1080; revise its FrameLang layout and rerun check."
+    },
+    {
+      "code": "container_overflow",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "selector": "div.fv-shape.b",
+      "relatedSelector": null,
+      "message": "Element extends outside a clipping layout container.",
+      "firstTime": 3.583,
+      "lastTime": 4.154,
+      "occurrences": 16,
+      "bbox": {
+        "x": 1645.36,
+        "y": 343.43,
+        "width": 159.19,
+        "height": 159.19
+      },
+      "hint": "Inspect the affected scene in source-1920x1080; revise its FrameLang layout and rerun check."
+    },
+    {
+      "code": "contrast_aa_failure",
+      "severity": "error",
+      "message": "Contrast is 4.33:1; WCAG AA requires 4.5:1.",
+      "text": "AI-written script · Product visuals · Music",
+      "fg": "rgb(117,117,119)",
+      "bg": "rgb(9,9,11)",
+      "ratio": 4.33,
+      "requiredRatio": 4.5,
+      "suggestedColor": "rgb(120,120,122)",
+      "large": false,
+      "selector": "div > section:nth-of-type(4) > div > div:nth-of-type(3)",
+      "dataAttributes": {},
+      "sourceFile": "index.html",
+      "bbox": {
+        "x": 723.515625,
+        "y": 636.5,
+        "width": 472.953125,
+        "height": 26
+      },
+      "time": 7.958,
+      "profile": "source-1920x1080",
+      "hint": "Choose a higher-contrast text color or change the underlying paint; preserve the design, then compile and check again."
+    }
+  ],
+  "instruction": "Revise the FrameLang source using these findings, then compile and check again. Do not render until every profile passes."
+}

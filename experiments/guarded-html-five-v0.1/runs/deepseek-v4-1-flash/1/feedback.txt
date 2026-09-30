@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:4a68bbaaae12c22f0ba95948c1a3680d38877c1fc74f1370a1ab1fa1b02c7a40",
+  "recipe": null,
+  "ok": false,
+  "findings": [
+    {
+      "code": "gsap_non_transform_motion",
+      "severity": "error",
+      "message": "GSAP tween on \".s3-play\" uses motion that snaps to integer device pixels: left. Layout and text-reflow properties snap during browser layout; roundProps rounds the tween value. Slow motion or an ease-out tail then stutters under the seek-by-frame capture engine — animate transforms (x/y/scale/opacity) instead.",
+      "selector": ".s3-play",
+      "dataAttributes": {},
+      "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/1/compiled/source-1920x1080/index.html",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "time": 0,
+      "fixHint": "replace left with the transform equivalent (x) — e.g. tl.fromTo(\".s3-play\", { x: -1300 }, { x: 0, ...yourAnimation }). Transforms interpolate sub-pixel and stay smooth at any speed.",
+      "profile": "source-1920x1080",
+      "hint": "Revise the indicated source field and rerun check."
+    },
+    {
+      "code": "verification.missingFrames",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "message": "Not every requested frame timestamp was checked",
+      "hint": "Rerun check and inspect the browser checker output."
+    },
+    {
+      "code": "verification.noLayout",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "message": "Browser layout audit did not run",
+      "hint": "Rerun check and inspect the browser checker output."
+    }
+  ],
+  "instruction": "Revise the FrameLang source using these findings, then compile and check again. Do not render until every profile passes."
+}

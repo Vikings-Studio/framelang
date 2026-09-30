@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MakeMyDemo.com — Motion Teaser</title>
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('assets/Inter.ttf');
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: #09090B;
+    overflow: hidden;
+  }
+
+  #root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    background: #09090B;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    color: #FAFAFA;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+  }
+
+  /* ---------- backdrop ---------- */
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(250,250,250,.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(250,250,250,.035) 1px, transparent 1px);
+    background-size: 96px 96px;
+    background-position: 120px 96px;
+  }
+  .bg-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 1500px 760px at 50% 8%, rgba(223,225,4,.10), rgba(223,225,4,0) 62%),
+      radial-gradient(ellipse 1000px 560px at 84% 92%, rgba(250,250,250,.055), rgba(250,250,250,0) 68%);
+  }
+
+  /* ---------- scenes ---------- */
+  .scene {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+  #scene-1 { opacity: 1; visibility: visible; }
+
+  /* ---------- shared type ---------- */
+  .brand {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: .01em;
+    color: #FAFAFA;
+  }
+  .brand .dot {
+    width: 13px;
+    height: 13px;
+    background: #DFE104;
+    display: block;
+  }
+
+  .kicker {
+    position: absolute;
+    left: 120px;
+    right: 120px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: .36em;
+    text-transform: uppercase;
+    color: #DFE104;
+  }
+
+  .headline {
+    position: absolute;
+    left: 120px;
+    right: 120px;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: -.025em;
+    line-height: 1.06;
+    color: #FAFAFA;
+  }
+
+  .rule {
+    position: absolute;
+    height: 3px;
+    background: #DFE104;
+    transform-origin: left center;
+  }
+
+  .sub {
+    position: absolute;
+    left: 120px;
+    right: 120px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: .005em;
+    color: #8B8B96;
+  }
+
+  /* ---------- scene 1 ---------- */
+  #s1brand { left: 120px; top: 96px; }
+  #s1kick  { top: 268px; }
+  #s1head  { top: 320px; font-size: 76px; }
+
+  #s1pill {
+    position: absolute;
+    left: 460px;
+    top: 505px;
+    width: 1000px;
+    height: 108px;
+    border-radius: 54px;
+    background: #141417;
+    border: 1px solid #2A2A30;
+    overflow: hidden;
+    transform-origin: center center;
+  }
+  .pill-inner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 106px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-left: 40px;
+  }
+  .lock { width: 26px; height: 26px; flex: none; color: #6E6E7A; }
+  #s1ph {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: .005em;
+    color: #8B8B96;
+    white-space: nowrap;
+  }
+  #s1cur {
+    display: inline-block;
+    width: 3px;
+    height: 38px;
+    background: #DFE104;
+    flex: none;
+  }
+  #s1ul {
+    position: absolute;
+    left: 40px;
+    bottom: 0;
+    width: 400px;
+    height: 3px;
+    background: #DFE104;
+    transform-origin: left center;
+  }
+  #s1sup { top: 672px; }
+
+  /* ---------- scene 2 ---------- */
+  #s2kick { top: 250px; }
+  #s2head { top: 300px; font-size: 76px; }
+  #s2rule { top: 420px; left: 720px; width: 480px; }
+
+  #scene-2 .s2card {
+    position: absolute;
+    top: 450px;
+    width: 440px;
+    height: 350px;
+    border-radius: 20px;
+    background: #111114;
+    border: 1px solid #26262C;
+  }
+  #scene-2 .s2card.c1 { left: 240px; }
+  #scene-2 .s2card.c2 { left: 740px; }
+  #scene-2 .s2card.c3 { left: 1240px; }
+
+  #scene-2 .s2idx {
+    position: absolute;
+    right: 36px;
+    top: 34px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    color: #55555F;
+  }
+  #scene-2 .s2icon {
+    position: absolute;
+    left: 40px;
+    top: 46px;
+    width: 68px;
+    height: 68px;
+    color: #DFE104;
+  }
+  #scene-2 .s2label {
+    position: absolute;
+    left: 40px;
+    bottom: 66px;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: #FAFAFA;
+  }
+  #scene-2 .s2bar {
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    width: 360px;
+    height: 4px;
+    background: #26262C;
+    transform-origin: left center;
+  }
+  #scene-2 .s2bar span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 360px;
+    height: 4px;
+    background: #DFE104;
+    transform-origin: left center;
+    transform: scaleX(0);
+    display: block;
+  }
+
+  /* ---------- scene 3 ---------- */
+  #s3kick { top: 264px; }
+  #s3head { top: 320px; font-size: 80px; }
+  #s3rule { top: 452px; left: 780px; width: 360px; }
+
+  #s3btn {
+    position: absolute;
+    left: 740px;
+    top: 520px;
+    width: 440px;
+    height: 100px;
+    border-radius: 50px;
+    background: #DFE104;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    transform-origin: center center;
+  }
+  #s3btn .lbl {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    color: #09090B;
+  }
+  #s3arrow { width: 30px; height: 30px; color: #09090B; display: block; }
+  #s3ring {
+    position: absolute;
+    left: 740px;
+    top: 520px;
+    width: 440px;
+    height: 100px;
+    border-radius: 50px;
+    border: 2px solid #DFE104;
+    opacity: 0;
+    transform-origin: center center;
+    pointer-events: none;
+  }
+  #s3sup { top: 676px; }
+
+  #s3brand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 856px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -.015em;
+    color: #FAFAFA;
+  }
+  #s3brand .dot {
+    width: 15px;
+    height: 15px;
+    background: #DFE104;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-fps="24" data-duration="8">
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- ================= SCENE 01 : PASTE ================= -->
+  <section id="scene-1" class="scene" data-start="0" data-duration="2.6" data-track-index="0">
+    <div class="brand" id="s1brand"><span class="dot"></span>MakeMyDemo.com</div>
+
+    <div class="kicker" id="s1kick">Step 01</div>
+
+    <h1 class="headline" id="s1head">Paste a URL.<br>Get a first cut.</h1>
+
+    <div id="s1pill">
+      <div class="pill-inner">
+        <svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4.5" y="10" width="15" height="10.5" rx="2.5"></rect>
+          <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+        </svg>
+        <span id="s1ph">public product URL</span>
+        <span id="s1cur"></span>
+      </div>
+      <span id="s1ul"></span>
+    </div>
+
+    <p class="sub" id="s1sup">Script, visuals and music &mdash; next.</p>
+  </section>
+
+  <!-- ================= SCENE 02 : FIRST CUT ================= -->
+  <section id="scene-2" class="scene" data-start="2.6" data-duration="2.8" data-track-index="1">
+    <div class="kicker" id="s2kick">Step 02</div>
+
+    <h1 class="headline" id="s2head">Your first cut.</h1>
+
+    <span class="rule" id="s2rule"></span>
+
+    <div class="s2card c1">
+      <span class="s2idx">01</span>
+      <svg class="s2icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 3h8l4 4v14H6z"></path>
+        <path d="M14 3v4h4"></path>
+        <path d="M9 12.5h6"></path>
+        <path d="M9 16.5h6"></path>
+      </svg>
+      <div class="s2label">AI&#8209;written script</div>
+      <div class="s2bar"><span></span></div>
+    </div>
+
+    <div class="s2card c2">
+      <span class="s2idx">02</span>
+      <svg class="s2icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="14" rx="2.5"></rect>
+        <circle cx="8.5" cy="10" r="1.6"></circle>
+        <path d="M4.5 17.5l4.5-4.5 3.5 3.5 2.5-2 4.5 4"></path>
+      </svg>
+      <div class="s2label">Product visuals</div>
+      <div class="s2bar"><span></span></div>
+    </div>
+
+    <div class="s2card c3">
+      <span class="s2idx">03</span>
+      <svg class="s2icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 17.5V5.5l10-2v12"></path>
+        <ellipse cx="6.5" cy="17.8" rx="2.6" ry="2.3"></ellipse>
+        <ellipse cx="16.5" cy="15.8" rx="2.6" ry="2.3"></ellipse>
+      </svg>
+      <div class="s2label">Music</div>
+      <div class="s2bar"><span></span></div>
+    </div>
+  </section>
+
+  <!-- ================= SCENE 03 : REVIEW & EXPORT ================= -->
+  <section id="scene-3" class="scene" data-start="5.4" data-duration="2.6" data-track-index="2">
+    <div class="kicker" id="s3kick">Step 03</div>
+
+    <h1 class="headline" id="s3head">Review and export MP4.</h1>
+
+    <span class="rule" id="s3rule"></span>
+
+    <span id="s3ring"></span>
+    <div id="s3btn">
+      <span class="lbl">Export MP4</span>
+      <svg id="s3arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4v11"></path>
+        <path d="M7 11l5 5 5-5"></path>
+        <path d="M5 20h14"></path>
+      </svg>
+    </div>
+
+    <p class="sub" id="s3sup">Review the cut first, then export.</p>
+
+    <div id="s3brand"><span class="dot"></span>MakeMyDemo.com</div>
+  </section>
+
+</div>
+
+<script src="assets/gsap.min.js"></script>
+<script>
+(function () {
+  window.__timelines = window.__timelines || {};
+
+  function q(sel) { return document.querySelector(sel); }
+
+  function build() {
+    var root = document.getElementById('root');
+    var s1 = document.getElementById('scene-1');
+    var s2 = document.getElementById('scene-2');
+    var s3 = document.getElementById('scene-3');
+
+    gsap.set([s2, s3], { autoAlpha: 0 });
+    gsap.set(s1, { autoAlpha: 1 });
+
+    var tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+
+    /* ---------- SCENE 01 : 0.00 - 2.60 ---------- */
+    tl.fromTo('#s1brand', { autoAlpha: 0, y: -14 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.05);
+    tl.fromTo('#s1kick',  { autoAlpha: 0, y: 14 },  { autoAlpha: 1, y: 0, duration: 0.5 }, 0.16);
+    tl.fromTo('#s1head',  { autoAlpha: 0, y: 36 },  { autoAlpha: 1, y: 0, duration: 0.75 }, 0.24);
+    tl.fromTo('#s1pill',  { autoAlpha: 0, y: 30, scaleX: 0.97 },
+                          { autoAlpha: 1, y: 0, scaleX: 1, duration: 0.65 }, 0.62);
+    tl.fromTo('#s1ul',    { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.inOut' }, 1.00);
+    tl.fromTo('#s1ph',    { clipPath: 'inset(0px 900px 0px 0px)' },
+                          { clipPath: 'inset(0px 0px 0px 0px)', duration: 0.95, ease: 'none' }, 1.05);
+    tl.fromTo('#s1cur',   { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.15, ease: 'none' }, 1.05);
+    tl.to('#s1cur',       { autoAlpha: 0, duration: 0.25, ease: 'none' }, 2.10);
+    tl.fromTo('#s1sup',   { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 1.78);
+    tl.to(s1,             { autoAlpha: 0, duration: 0.2, ease: 'power1.in' }, 2.40);
+
+    /* ---------- SCENE 02 : 2.60 - 5.40 ---------- */
+    tl.fromTo(s2, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01, ease: 'none' }, 2.55);
+    tl.fromTo('#s2kick', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 2.70);
+    tl.fromTo('#s2head', { autoAlpha: 0, y: 32 }, { autoAlpha: 1, y: 0, duration: 0.65 }, 2.78);
+    tl.fromTo('#s2rule', { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: 'power2.inOut' }, 3.05);
+    tl.fromTo('#scene-2 .s2card', { autoAlpha: 0, y: 46 },
+                                  { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.16 }, 3.12);
+    tl.fromTo('#scene-2 .s2icon', { autoAlpha: 0, scale: 0.82 },
+                                  { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.16 }, 3.34);
+    tl.fromTo('#scene-2 .s2bar span', { scaleX: 0 },
+                                      { scaleX: 1, duration: 0.7, ease: 'power2.inOut', stagger: 0.16 }, 3.62);
+    tl.to(s2, { autoAlpha: 0, duration: 0.2, ease: 'power1.in' }, 5.20);
+
+    /* ---------- SCENE 03 : 5.40 - 8.00 ---------- */
+    tl.fromTo(s3, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.01, ease: 'none' }, 5.35);
+    tl.fromTo('#s3kick', { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 5.48);
+    tl.fromTo('#s3head', { autoAlpha: 0, y: 36 }, { autoAlpha: 1, y: 0, duration: 0.7 }, 5.56);
+    tl.fromTo('#s3rule', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, 5.90);
+    tl.fromTo('#s3btn',  { autoAlpha: 0, y: 26, scale: 0.96 },
+                          { autoAlpha: 1, y: 0, scale: 1, duration: 0.55 }, 6.10);
+    tl.fromTo('#s3arrow', { autoAlpha: 0, y: -12 }, { autoAlpha: 1, y: 0, duration: 0.4 }, 6.44);
+    tl.set('#s3ring', { autoAlpha: 0.5, scale: 1 }, 6.46);
+    tl.to('#s3ring', { autoAlpha: 0, scale: 1.16, duration: 0.9, ease: 'power2.out' }, 6.46);
+    tl.fromTo('#s3sup', { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 6.62);
+    tl.fromTo('#s3brand', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 6.94);
+
+    /* full 8s span, final state holds */
+    tl.to({ v: 0 }, { v: 1, duration: 8, ease: 'none' }, 0);
+
+    tl.seek(0);
+
+    window.__timelines['main'] = tl;
+    window.__renderReady = true;
+  }
+
+  if (document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function') {
+    document.fonts.ready.then(build, build);
+  } else {
+    build();
+  }
+})();
+</script>
+</body>
+</html>

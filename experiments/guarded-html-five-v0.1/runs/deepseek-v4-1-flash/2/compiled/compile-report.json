@@ -1,0 +1,1931 @@
+{
+  "language": "framelang/trusted-hyperframes-v0.1",
+  "sourceLanguage": "hyperframes/html",
+  "pilot": true,
+  "guarantees": "source-preserving, measured frame checks; trusted JavaScript, no deterministic or security guarantee",
+  "inputHash": "sha256:7d93ea4a0f866f1f978f891e5418e989ccc237f75964ec29da6e9a8fbab7fdc1",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "sourceMap": {
+    "#root": {
+      "nodeId": "root",
+      "location": "index.html:326"
+    },
+    "#scene-1": {
+      "nodeId": "scene-1",
+      "location": "index.html:335"
+    },
+    "#scene-2": {
+      "nodeId": "scene-2",
+      "location": "index.html:364"
+    },
+    "#scene-3": {
+      "nodeId": "scene-3",
+      "location": "index.html:403"
+    },
+    "#scene-4": {
+      "nodeId": "scene-4",
+      "location": "index.html:443"
+    }
+  },
+  "outputs": {
+    "source-1920x1080": {
+      "directory": "source-1920x1080",
+      "htmlHash": "sha256:7d93ea4a0f866f1f978f891e5418e989ccc237f75964ec29da6e9a8fbab7fdc1",
+      "assetHashes": {
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false,
+  "verificationPin": "sha256:d2ee6be8c24b1c8b7dc1e252f46d9690e8974da19911bb7257d9be0de39003e6",
+  "checks": {
+    "source-1920x1080": {
+      "ok": false,
+      "exitCode": 0,
+      "layoutRan": true,
+      "allFramesObserved": true,
+      "geometryClear": false,
+      "runtimeClear": true,
+      "hardWarnings": [],
+      "report": {
+        "ok": true,
+        "strict": false,
+        "lint": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 8,
+          "infoCount": 0,
+          "findings": [
+            {
+              "code": "timed_element_missing_clip_class",
+              "severity": "warning",
+              "message": "<section id=\"scene-1\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+              "selector": "#scene-1",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/2/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+            },
+            {
+              "code": "timed_element_missing_clip_class",
+              "severity": "warning",
+              "message": "<section id=\"scene-2\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+              "selector": "#scene-2",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/2/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+            },
+            {
+              "code": "timed_element_missing_clip_class",
+              "severity": "warning",
+              "message": "<section id=\"scene-3\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+              "selector": "#scene-3",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/2/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+            },
+            {
+              "code": "timed_element_missing_clip_class",
+              "severity": "warning",
+              "message": "<section id=\"scene-4\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+              "selector": "#scene-4",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/2/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"scene-1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#scene-1",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/2/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"scene-1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"scene-2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#scene-2",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/2/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"scene-2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"scene-3\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#scene-3",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/2/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"scene-3\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"scene-4\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#scene-4",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/2/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"scene-4\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            }
+          ],
+          "filesScanned": 1
+        },
+        "runtime": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": []
+        },
+        "layout": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 13,
+          "infoCount": 18,
+          "findings": [
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.5,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1389.87,
+                "top": 568.08,
+                "right": 1515.39,
+                "bottom": 693.6,
+                "width": 125.53,
+                "height": 125.53
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.7,
+                "top": 381.21,
+                "right": 1776.72,
+                "bottom": 666.79,
+                "width": 370.02,
+                "height": 285.57
+              },
+              "overflow": {
+                "left": 16.83,
+                "bottom": 26.81
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1389.87,
+                "y": 568.08,
+                "width": 125.53,
+                "height": 125.53
+              },
+              "firstSeen": 3.5,
+              "lastSeen": 3.52,
+              "occurrences": 2,
+              "heldMs": 20.000000000000018
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.6,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1383.34,
+                "top": 561.85,
+                "right": 1521.59,
+                "bottom": 700.09,
+                "width": 138.24,
+                "height": 138.24
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.48,
+                "top": 381.04,
+                "right": 1776.94,
+                "bottom": 666.96,
+                "width": 370.47,
+                "height": 285.91
+              },
+              "overflow": {
+                "left": 23.14,
+                "bottom": 33.13
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1383.34,
+                "y": 561.85,
+                "width": 138.24,
+                "height": 138.24
+              },
+              "firstSeen": 3.6,
+              "lastSeen": 3.625,
+              "occurrences": 2,
+              "heldMs": 24.99999999999991
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.6,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1645.36,
+                "top": 343.43,
+                "right": 1804.56,
+                "bottom": 502.63,
+                "width": 159.19,
+                "height": 159.19
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.48,
+                "top": 381.04,
+                "right": 1776.94,
+                "bottom": 666.96,
+                "width": 370.47,
+                "height": 285.91
+              },
+              "overflow": {
+                "right": 27.62,
+                "top": 37.61
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1645.36,
+                "y": 343.43,
+                "width": 159.19,
+                "height": 159.19
+              },
+              "firstSeen": 3.6,
+              "lastSeen": 3.625,
+              "occurrences": 2,
+              "heldMs": 24.99999999999991
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.667,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1380.73,
+                "top": 559.31,
+                "right": 1524.11,
+                "bottom": 702.69,
+                "width": 143.39,
+                "height": 143.39
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 25.69,
+                "bottom": 35.69
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1380.73,
+                "y": 559.31,
+                "width": 143.39,
+                "height": 143.39
+              },
+              "firstSeen": 3.667,
+              "lastSeen": 3.68,
+              "occurrences": 2,
+              "heldMs": 13.000000000000345
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.667,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1639.6,
+                "top": 337.6,
+                "right": 1810.4,
+                "bottom": 508.4,
+                "width": 170.79,
+                "height": 170.79
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 33.4,
+                "top": 43.4
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1639.6,
+                "y": 337.6,
+                "width": 170.79,
+                "height": 170.79
+              },
+              "firstSeen": 3.667,
+              "lastSeen": 3.68,
+              "occurrences": 2,
+              "heldMs": 13.000000000000345
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.708,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1379.82,
+                "top": 558.4,
+                "right": 1525.02,
+                "bottom": 703.6,
+                "width": 145.2,
+                "height": 145.2
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 26.6,
+                "bottom": 36.6
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1379.82,
+                "y": 558.4,
+                "width": 145.2,
+                "height": 145.2
+              },
+              "firstSeen": 3.708,
+              "lastSeen": 3.73,
+              "occurrences": 2,
+              "heldMs": 21.999999999999797
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.708,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1637.42,
+                "top": 335.42,
+                "right": 1812.58,
+                "bottom": 510.58,
+                "width": 175.16,
+                "height": 175.16
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 35.58,
+                "top": 45.58
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1637.42,
+                "y": 335.42,
+                "width": 175.16,
+                "height": 175.16
+              },
+              "firstSeen": 3.708,
+              "lastSeen": 3.73,
+              "occurrences": 2,
+              "heldMs": 21.999999999999797
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.78,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1378.58,
+                "top": 557.16,
+                "right": 1526.27,
+                "bottom": 704.84,
+                "width": 147.69,
+                "height": 147.69
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 27.84,
+                "bottom": 37.84
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1378.58,
+                "y": 557.16,
+                "width": 147.69,
+                "height": 147.69
+              },
+              "firstSeen": 3.78,
+              "lastSeen": 3.792,
+              "occurrences": 2,
+              "heldMs": 12.00000000000001
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.78,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1634.19,
+                "top": 332.19,
+                "right": 1815.81,
+                "bottom": 513.81,
+                "width": 181.62,
+                "height": 181.62
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 38.81,
+                "top": 48.81
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1634.19,
+                "y": 332.19,
+                "width": 181.62,
+                "height": 181.62
+              },
+              "firstSeen": 3.78,
+              "lastSeen": 3.792,
+              "occurrences": 2,
+              "heldMs": 12.00000000000001
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.805,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1378.18,
+                "top": 556.76,
+                "right": 1526.66,
+                "bottom": 705.24,
+                "width": 148.48,
+                "height": 148.48
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 28.24,
+                "bottom": 38.24
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1378.18,
+                "y": 556.76,
+                "width": 148.48,
+                "height": 148.48
+              },
+              "firstSeen": 3.805,
+              "lastSeen": 3.833,
+              "occurrences": 3,
+              "heldMs": 28.000000000000025
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 3.805,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1633.04,
+                "top": 331.04,
+                "right": 1816.96,
+                "bottom": 514.96,
+                "width": 183.92,
+                "height": 183.92
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 39.96,
+                "top": 49.96
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1633.04,
+                "y": 331.04,
+                "width": 183.92,
+                "height": 183.92
+              },
+              "firstSeen": 3.805,
+              "lastSeen": 3.833,
+              "occurrences": 3,
+              "heldMs": 28.000000000000025
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 4.042,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1377.42,
+                "top": 556,
+                "right": 1527.42,
+                "bottom": 706,
+                "width": 150,
+                "height": 150
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 29,
+                "bottom": 39
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1377.42,
+                "y": 556,
+                "width": 150,
+                "height": 150
+              },
+              "firstSeen": 4.042,
+              "lastSeen": 6.75,
+              "occurrences": 92,
+              "heldMs": 2708
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 4.154,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1630,
+                "top": 328,
+                "right": 1820,
+                "bottom": 518,
+                "width": 190,
+                "height": 190
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 43,
+                "top": 53
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1630,
+                "y": 328,
+                "width": 190,
+                "height": 190
+              },
+              "firstSeen": 4.154,
+              "lastSeen": 6.75,
+              "occurrences": 89,
+              "heldMs": 2596
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.542,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1387.27,
+                "top": 565.62,
+                "right": 1517.83,
+                "bottom": 696.18,
+                "width": 130.56,
+                "height": 130.56
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.59,
+                "top": 381.13,
+                "right": 1776.83,
+                "bottom": 666.87,
+                "width": 370.24,
+                "height": 285.74
+              },
+              "overflow": {
+                "left": 19.32,
+                "bottom": 29.31
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1387.27,
+                "y": 565.62,
+                "width": 130.56,
+                "height": 130.56
+              },
+              "firstSeen": 3.542,
+              "lastSeen": 3.542,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.583,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1385.11,
+                "top": 563.56,
+                "right": 1519.88,
+                "bottom": 698.33,
+                "width": 134.77,
+                "height": 134.77
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.51,
+                "top": 381.07,
+                "right": 1776.91,
+                "bottom": 666.93,
+                "width": 370.39,
+                "height": 285.86
+              },
+              "overflow": {
+                "left": 21.4,
+                "bottom": 31.4
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1385.11,
+                "y": 563.56,
+                "width": 134.77,
+                "height": 134.77
+              },
+              "firstSeen": 3.583,
+              "lastSeen": 3.583,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.583,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1649.07,
+                "top": 347.18,
+                "right": 1800.8,
+                "bottom": 498.92,
+                "width": 151.73,
+                "height": 151.73
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.51,
+                "top": 381.07,
+                "right": 1776.91,
+                "bottom": 666.93,
+                "width": 370.39,
+                "height": 285.86
+              },
+              "overflow": {
+                "right": 23.89,
+                "top": 33.89
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1649.07,
+                "y": 347.18,
+                "width": 151.73,
+                "height": 151.73
+              },
+              "firstSeen": 3.583,
+              "lastSeen": 3.583,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.75,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1379.12,
+                "top": 557.7,
+                "right": 1525.73,
+                "bottom": 704.3,
+                "width": 146.61,
+                "height": 146.61
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 27.3,
+                "bottom": 37.3
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1379.12,
+                "y": 557.7,
+                "width": 146.61,
+                "height": 146.61
+              },
+              "firstSeen": 3.75,
+              "lastSeen": 3.75,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.75,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1635.63,
+                "top": 333.63,
+                "right": 1814.37,
+                "bottom": 512.37,
+                "width": 178.73,
+                "height": 178.73
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 37.37,
+                "top": 47.37
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1635.63,
+                "y": 333.63,
+                "width": 178.73,
+                "height": 178.73
+              },
+              "firstSeen": 3.75,
+              "lastSeen": 3.75,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.875,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1377.7,
+                "top": 556.28,
+                "right": 1527.14,
+                "bottom": 705.72,
+                "width": 149.44,
+                "height": 149.45
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 28.72,
+                "bottom": 38.72
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1377.7,
+                "y": 556.28,
+                "width": 149.44,
+                "height": 149.45
+              },
+              "firstSeen": 3.875,
+              "lastSeen": 3.875,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.875,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1631.46,
+                "top": 329.46,
+                "right": 1818.54,
+                "bottom": 516.54,
+                "width": 187.07,
+                "height": 187.07
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 41.54,
+                "top": 51.54
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1631.46,
+                "y": 329.46,
+                "width": 187.07,
+                "height": 187.07
+              },
+              "firstSeen": 3.875,
+              "lastSeen": 3.875,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.917,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1377.57,
+                "top": 556.15,
+                "right": 1527.27,
+                "bottom": 705.85,
+                "width": 149.7,
+                "height": 149.7
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 28.85,
+                "bottom": 38.85
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1377.57,
+                "y": 556.15,
+                "width": 149.7,
+                "height": 149.7
+              },
+              "firstSeen": 3.917,
+              "lastSeen": 3.917,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.917,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1630.96,
+                "top": 328.96,
+                "right": 1819.04,
+                "bottom": 517.04,
+                "width": 188.08,
+                "height": 188.08
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 42.04,
+                "top": 52.04
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1630.96,
+                "y": 328.96,
+                "width": 188.08,
+                "height": 188.08
+              },
+              "firstSeen": 3.917,
+              "lastSeen": 3.917,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.958,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1377.5,
+                "top": 556.08,
+                "right": 1527.35,
+                "bottom": 705.92,
+                "width": 149.85,
+                "height": 149.85
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 28.92,
+                "bottom": 38.92
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1377.5,
+                "y": 556.08,
+                "width": 149.85,
+                "height": 149.85
+              },
+              "firstSeen": 3.958,
+              "lastSeen": 3.958,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.958,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1630.6,
+                "top": 328.6,
+                "right": 1819.4,
+                "bottom": 517.4,
+                "width": 188.8,
+                "height": 188.8
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 42.4,
+                "top": 52.4
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1630.6,
+                "y": 328.6,
+                "width": 188.8,
+                "height": 188.8
+              },
+              "firstSeen": 3.958,
+              "lastSeen": 3.958,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.992,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1377.45,
+                "top": 556.03,
+                "right": 1527.39,
+                "bottom": 705.97,
+                "width": 149.94,
+                "height": 149.94
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 28.97,
+                "bottom": 38.97
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1377.45,
+                "y": 556.03,
+                "width": 149.94,
+                "height": 149.94
+              },
+              "firstSeen": 3.992,
+              "lastSeen": 3.992,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 3.992,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1630.35,
+                "top": 328.35,
+                "right": 1819.65,
+                "bottom": 517.65,
+                "width": 189.3,
+                "height": 189.3
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 42.65,
+                "top": 52.65
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1630.35,
+                "y": 328.35,
+                "width": 189.3,
+                "height": 189.3
+              },
+              "firstSeen": 3.992,
+              "lastSeen": 3.992,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 4,
+              "selector": "div.fv-shape.a",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1377.43,
+                "top": 556.01,
+                "right": 1527.41,
+                "bottom": 705.99,
+                "width": 149.98,
+                "height": 149.98
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "left": 28.99,
+                "bottom": 38.99
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1377.43,
+                "y": 556.01,
+                "width": 149.98,
+                "height": 149.98
+              },
+              "firstSeen": 4,
+              "lastSeen": 4,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 4,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1630.19,
+                "top": 328.19,
+                "right": 1819.81,
+                "bottom": 517.81,
+                "width": 189.62,
+                "height": 189.62
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 42.81,
+                "top": 52.81
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1630.19,
+                "y": 328.19,
+                "width": 189.62,
+                "height": 189.62
+              },
+              "firstSeen": 4,
+              "lastSeen": 4,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 4.042,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1630.09,
+                "top": 328.1,
+                "right": 1819.91,
+                "bottom": 517.91,
+                "width": 189.81,
+                "height": 189.81
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 42.91,
+                "top": 52.9
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1630.09,
+                "y": 328.1,
+                "width": 189.81,
+                "height": 189.81
+              },
+              "firstSeen": 4.042,
+              "lastSeen": 4.042,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 4.083,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1630.04,
+                "top": 328.04,
+                "right": 1819.96,
+                "bottom": 517.96,
+                "width": 189.92,
+                "height": 189.92
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 42.96,
+                "top": 52.96
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1630.04,
+                "y": 328.04,
+                "width": 189.92,
+                "height": 189.92
+              },
+              "firstSeen": 4.083,
+              "lastSeen": 4.083,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 4.125,
+              "selector": "div.fv-shape.b",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 1630.01,
+                "top": 328.01,
+                "right": 1819.99,
+                "bottom": 517.99,
+                "width": 189.98,
+                "height": 189.98
+              },
+              "containerSelector": "div.fv-panel",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 1406.42,
+                "top": 381,
+                "right": 1777,
+                "bottom": 667,
+                "width": 370.58,
+                "height": 286
+              },
+              "overflow": {
+                "right": 42.99,
+                "top": 52.99
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 1630.01,
+                "y": 328.01,
+                "width": 189.98,
+                "height": 189.98
+              },
+              "firstSeen": 4.125,
+              "lastSeen": 4.125,
+              "occurrences": 1,
+              "heldMs": 0
+            }
+          ],
+          "duration": 8,
+          "samples": [
+            0,
+            0.042,
+            0.083,
+            0.125,
+            0.15,
+            0.167,
+            0.208,
+            0.25,
+            0.292,
+            0.325,
+            0.333,
+            0.375,
+            0.417,
+            0.458,
+            0.5,
+            0.542,
+            0.583,
+            0.625,
+            0.667,
+            0.708,
+            0.725,
+            0.75,
+            0.792,
+            0.833,
+            0.875,
+            0.917,
+            0.95,
+            0.958,
+            1,
+            1.042,
+            1.05,
+            1.075,
+            1.083,
+            1.1,
+            1.125,
+            1.15,
+            1.167,
+            1.2,
+            1.208,
+            1.25,
+            1.292,
+            1.333,
+            1.375,
+            1.41,
+            1.417,
+            1.458,
+            1.5,
+            1.542,
+            1.583,
+            1.62,
+            1.625,
+            1.66,
+            1.667,
+            1.7,
+            1.708,
+            1.75,
+            1.792,
+            1.8,
+            1.825,
+            1.833,
+            1.85,
+            1.875,
+            1.917,
+            1.958,
+            1.96,
+            2,
+            2.042,
+            2.07,
+            2.083,
+            2.085,
+            2.1,
+            2.125,
+            2.167,
+            2.208,
+            2.25,
+            2.292,
+            2.3,
+            2.333,
+            2.375,
+            2.417,
+            2.458,
+            2.5,
+            2.52,
+            2.54,
+            2.542,
+            2.583,
+            2.6,
+            2.625,
+            2.66,
+            2.667,
+            2.69,
+            2.708,
+            2.72,
+            2.75,
+            2.792,
+            2.833,
+            2.86,
+            2.875,
+            2.917,
+            2.958,
+            3,
+            3.04,
+            3.042,
+            3.08,
+            3.083,
+            3.1,
+            3.12,
+            3.125,
+            3.167,
+            3.2,
+            3.208,
+            3.25,
+            3.28,
+            3.292,
+            3.32,
+            3.333,
+            3.36,
+            3.375,
+            3.38,
+            3.4,
+            3.417,
+            3.458,
+            3.46,
+            3.5,
+            3.52,
+            3.542,
+            3.583,
+            3.6,
+            3.625,
+            3.667,
+            3.68,
+            3.708,
+            3.73,
+            3.75,
+            3.78,
+            3.792,
+            3.805,
+            3.83,
+            3.833,
+            3.875,
+            3.917,
+            3.958,
+            3.992,
+            4,
+            4.042,
+            4.083,
+            4.125,
+            4.154,
+            4.167,
+            4.177,
+            4.2,
+            4.208,
+            4.25,
+            4.292,
+            4.333,
+            4.375,
+            4.417,
+            4.458,
+            4.475,
+            4.5,
+            4.542,
+            4.583,
+            4.625,
+            4.667,
+            4.708,
+            4.75,
+            4.77,
+            4.79,
+            4.792,
+            4.825,
+            4.833,
+            4.86,
+            4.875,
+            4.88,
+            4.9,
+            4.917,
+            4.958,
+            5,
+            5.025,
+            5.042,
+            5.083,
+            5.125,
+            5.15,
+            5.167,
+            5.208,
+            5.25,
+            5.292,
+            5.305,
+            5.333,
+            5.375,
+            5.417,
+            5.458,
+            5.46,
+            5.48,
+            5.5,
+            5.542,
+            5.575,
+            5.583,
+            5.625,
+            5.65,
+            5.667,
+            5.708,
+            5.75,
+            5.785,
+            5.792,
+            5.833,
+            5.875,
+            5.917,
+            5.92,
+            5.958,
+            6,
+            6.042,
+            6.07,
+            6.083,
+            6.125,
+            6.167,
+            6.208,
+            6.22,
+            6.25,
+            6.26,
+            6.292,
+            6.3,
+            6.333,
+            6.35,
+            6.375,
+            6.4,
+            6.417,
+            6.458,
+            6.5,
+            6.542,
+            6.575,
+            6.583,
+            6.625,
+            6.667,
+            6.708,
+            6.75,
+            6.77,
+            6.79,
+            6.792,
+            6.805,
+            6.82,
+            6.833,
+            6.875,
+            6.917,
+            6.935,
+            6.958,
+            7,
+            7.042,
+            7.05,
+            7.083,
+            7.125,
+            7.167,
+            7.2,
+            7.208,
+            7.25,
+            7.292,
+            7.31,
+            7.333,
+            7.375,
+            7.417,
+            7.42,
+            7.458,
+            7.485,
+            7.5,
+            7.542,
+            7.55,
+            7.583,
+            7.6,
+            7.625,
+            7.65,
+            7.667,
+            7.708,
+            7.75,
+            7.792,
+            7.833,
+            7.875,
+            7.917,
+            7.958
+          ],
+          "transitionSamples": [
+            0.15,
+            0.325,
+            0.5,
+            0.725,
+            0.95,
+            1,
+            1.05,
+            1.075,
+            1.1,
+            1.15,
+            1.2,
+            1.41,
+            1.62,
+            1.66,
+            1.7,
+            1.75,
+            1.8,
+            1.825,
+            1.85,
+            1.96,
+            2.07,
+            2.085,
+            2.1,
+            2.3,
+            2.5,
+            2.52,
+            2.54,
+            2.6,
+            2.66,
+            2.69,
+            2.72,
+            2.86,
+            3,
+            3.04,
+            3.08,
+            3.1,
+            3.12,
+            3.2,
+            3.28,
+            3.32,
+            3.36,
+            3.38,
+            3.4,
+            3.46,
+            3.52,
+            3.6,
+            3.68,
+            3.73,
+            3.78,
+            3.805,
+            3.83,
+            3.992,
+            4.154,
+            4.177,
+            4.2,
+            4.475,
+            4.75,
+            4.77,
+            4.79,
+            4.825,
+            4.86,
+            4.88,
+            4.9,
+            5.025,
+            5.15,
+            5.305,
+            5.46,
+            5.48,
+            5.5,
+            5.575,
+            5.65,
+            5.785,
+            5.92,
+            6.07,
+            6.22,
+            6.26,
+            6.3,
+            6.35,
+            6.4,
+            6.575,
+            6.75,
+            6.77,
+            6.79,
+            6.805,
+            6.82,
+            6.935,
+            7.05,
+            7.125,
+            7.2,
+            7.31,
+            7.42,
+            7.485,
+            7.55,
+            7.6,
+            7.65
+          ],
+          "transitionSamplesDropped": 0,
+          "tolerance": 2,
+          "totalIssueCount": 31,
+          "truncated": false
+        },
+        "motion": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "enabled": false,
+          "samples": 0
+        },
+        "contrast": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 1,
+          "infoCount": 0,
+          "findings": [
+            {
+              "code": "contrast_aa_failure",
+              "severity": "warning",
+              "message": "Contrast is 4.33:1; WCAG AA requires 4.5:1.",
+              "text": "AI-written script · Product visuals · Music",
+              "fg": "rgb(117,117,119)",
+              "bg": "rgb(9,9,11)",
+              "ratio": 4.33,
+              "requiredRatio": 4.5,
+              "suggestedColor": "rgb(120,120,122)",
+              "large": false,
+              "selector": "div > section:nth-of-type(4) > div > div:nth-of-type(3)",
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 723.515625,
+                "y": 636.5,
+                "width": 472.953125,
+                "height": 26
+              },
+              "time": 7.958
+            }
+          ],
+          "enabled": true,
+          "samples": [
+            0,
+            2.085,
+            3.833,
+            5.917,
+            7.958
+          ],
+          "checked": 11,
+          "passed": 10
+        },
+        "hdr": {
+          "autoPromotion": null,
+          "inspection": "available"
+        },
+        "snapshots": {
+          "enabled": false,
+          "files": [],
+          "times": [],
+          "findingFiles": []
+        },
+        "_meta": {
+          "version": "0.8.92",
+          "latestVersion": "0.8.92",
+          "updateAvailable": false
+        }
+      }
+    }
+  }
+}

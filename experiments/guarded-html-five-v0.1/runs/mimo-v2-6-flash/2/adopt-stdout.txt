@@ -1,0 +1,119 @@
+{
+  "language": "framelang/trusted-hyperframes-v0.1",
+  "sourceLanguage": "hyperframes/html",
+  "pilot": true,
+  "guarantees": "source-preserving, measured frame checks; trusted JavaScript, no deterministic or security guarantee",
+  "inputHash": "sha256:efe8777b06a1ac97690d608599d20b7a4380617211aa727abf1e3d4870694074",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "sourceMap": {
+    "#root": {
+      "nodeId": "root",
+      "location": "index.html:307"
+    },
+    "#scene-1": {
+      "nodeId": "scene-1",
+      "location": "index.html:313"
+    },
+    "#s1brand": {
+      "nodeId": "s1brand",
+      "location": "index.html:314"
+    },
+    "#s1kick": {
+      "nodeId": "s1kick",
+      "location": "index.html:316"
+    },
+    "#s1head": {
+      "nodeId": "s1head",
+      "location": "index.html:318"
+    },
+    "#s1pill": {
+      "nodeId": "s1pill",
+      "location": "index.html:320"
+    },
+    "#s1ph": {
+      "nodeId": "s1ph",
+      "location": "index.html:326"
+    },
+    "#s1cur": {
+      "nodeId": "s1cur",
+      "location": "index.html:327"
+    },
+    "#s1ul": {
+      "nodeId": "s1ul",
+      "location": "index.html:329"
+    },
+    "#s1sup": {
+      "nodeId": "s1sup",
+      "location": "index.html:332"
+    },
+    "#scene-2": {
+      "nodeId": "scene-2",
+      "location": "index.html:336"
+    },
+    "#s2kick": {
+      "nodeId": "s2kick",
+      "location": "index.html:337"
+    },
+    "#s2head": {
+      "nodeId": "s2head",
+      "location": "index.html:339"
+    },
+    "#s2rule": {
+      "nodeId": "s2rule",
+      "location": "index.html:341"
+    },
+    "#scene-3": {
+      "nodeId": "scene-3",
+      "location": "index.html:379"
+    },
+    "#s3kick": {
+      "nodeId": "s3kick",
+      "location": "index.html:380"
+    },
+    "#s3head": {
+      "nodeId": "s3head",
+      "location": "index.html:382"
+    },
+    "#s3rule": {
+      "nodeId": "s3rule",
+      "location": "index.html:384"
+    },
+    "#s3ring": {
+      "nodeId": "s3ring",
+      "location": "index.html:386"
+    },
+    "#s3btn": {
+      "nodeId": "s3btn",
+      "location": "index.html:387"
+    },
+    "#s3arrow": {
+      "nodeId": "s3arrow",
+      "location": "index.html:389"
+    },
+    "#s3sup": {
+      "nodeId": "s3sup",
+      "location": "index.html:396"
+    },
+    "#s3brand": {
+      "nodeId": "s3brand",
+      "location": "index.html:398"
+    }
+  },
+  "outputs": {
+    "source-1920x1080": {
+      "directory": "source-1920x1080",
+      "htmlHash": "sha256:efe8777b06a1ac97690d608599d20b7a4380617211aa727abf1e3d4870694074",
+      "assetHashes": {
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false,
+  "verificationPin": "sha256:d2ee6be8c24b1c8b7dc1e252f46d9690e8974da19911bb7257d9be0de39003e6"
+}

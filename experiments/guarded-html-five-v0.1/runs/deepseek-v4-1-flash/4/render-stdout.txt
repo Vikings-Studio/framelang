@@ -1,0 +1,67 @@
+
+◆  Rendering source-1920x1080 → /private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/4/compiled/renders/source-1920x1080/video.mp4
+   24fps · draft · auto workers (10 cores detected)
+   GPU: browser GPU (auto-detect)
+
+[?25l│
+◒  Checking browser[1G[J◇  Browser: cache
+[?25h
+  Lint: 0 error(s), 8 warning(s) — run with --lint-verbose for full output.
+  Continuing render despite lint issues. Use --strict to block errors.
+
+  █░░░░░░░░░░░░░░░░░░░░░░░░  5%  Compiling composition
+  ██░░░░░░░░░░░░░░░░░░░░░░░  10%  Extracting video frames
+  █████░░░░░░░░░░░░░░░░░░░░  20%  Processing audio tracks
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting frame capture
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Checking browser GPU
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Measuring capture speed
+[BrowserManager] Browser launched (HeadlessChrome/152.0.7977.30, screenshot, gl=--use-gl=angle --use-angle=metal, headlessShell=true, platform=darwin)
+[initSession:screenshot] page.goto start (0ms)
+[HyperFrames] render runtime fps {"canonicalFps":24,"source":"render-options","rawFpsSource":"render-options","rawFps":24}
+[initSession:screenshot] page.goto complete (297ms)
+[initSession:screenshot] GSAP proxy flush complete (307ms)
+[initSession:screenshot] pollHfReady complete (307ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (309ms)
+[initSession:screenshot] applyVideoMetadataHints complete (309ms)
+[initSession:screenshot] media + fonts + tailwind ready (310ms)
+[initSession:screenshot] timeline at-risk predictor: 0/192 frames (0%) (383ms)
+[initSession:screenshot] static-frame dedup: 26/26 predicted frame(s) reusable (outcome=verified, runs=4/4, screenshots=22, seeks=23, elapsedMs=1767) (2461ms)
+[initSession:screenshot] drawElement self-verify armed: 4 ground-truth frame(s) @ [48, 96, 144, 182] of 192 (3054ms)
+[initSession:drawelement] drawElement canvas injected (3056ms)
+[initSession:drawelement] screenshot fallback: 14 clip-boundary frame(s) (3057ms)
+[initSession:drawelement] drawElement worker encode initialized (3064ms)
+[BrowserManager] Browser launched (HeadlessChrome/152.0.7977.30, screenshot, gl=--use-gl=angle --use-angle=metal, headlessShell=true, platform=darwin)
+[initSession:screenshot] page.goto start (0ms)
+[HyperFrames] render runtime fps {"canonicalFps":24,"source":"render-options","rawFpsSource":"render-options","rawFps":24}
+[initSession:screenshot] page.goto complete (255ms)
+[initSession:screenshot] GSAP proxy flush complete (259ms)
+[initSession:screenshot] pollHfReady complete (260ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (262ms)
+[initSession:screenshot] applyVideoMetadataHints complete (262ms)
+[initSession:screenshot] media + fonts + tailwind ready (263ms)
+[initSession:screenshot] timeline at-risk predictor: 0/192 frames (0%) (280ms)
+[initSession:screenshot] static-frame dedup: 26/26 predicted frame(s) reusable (outcome=verified, runs=4/4, screenshots=22, seeks=23, elapsedMs=916) (1515ms)
+[initSession:screenshot] drawElement self-verify armed: 4 ground-truth frame(s) @ [48, 96, 144, 182] of 192 (1884ms)
+[initSession:drawelement] drawElement canvas injected (1885ms)
+[initSession:drawelement] screenshot fallback: 14 clip-boundary frame(s) (1887ms)
+[initSession:drawelement] drawElement worker encode initialized (1889ms)
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Streaming frame 1/192
+  ███████░░░░░░░░░░░░░░░░░░  30%  Streaming frame 17/192
+  ████████░░░░░░░░░░░░░░░░░  34%  Streaming frame 33/192
+  █████████░░░░░░░░░░░░░░░░  39%  Streaming frame 49/192
+  ███████████░░░░░░░░░░░░░░  44%  Streaming frame 68/192
+  ████████████░░░░░░░░░░░░░  48%  Streaming frame 80/192
+  ████████████░░░░░░░░░░░░░  50%  Streaming frame 88/192
+  ██████████████░░░░░░░░░░░  57%  Streaming frame 113/192
+  ███████████████░░░░░░░░░░  61%  Streaming frame 125/192
+  ████████████████░░░░░░░░░  66%  Streaming frame 142/192
+  █████████████████░░░░░░░░  71%  Streaming frame 161/192
+  ██████████████████░░░░░░░  75%  Streaming frame 174/192
+  ████████████████████░░░░░  80%  Streaming frame 192/192
+[static-dedup] reused 23/215 frame(s) (11%), est. ~368ms saved (avg 16ms/frame)
+  ██████████████████████░░░  90%  Assembling final video
+  █████████████████████████  100%  Render complete
+
+◇  /private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/deepseek-v4-1-flash/4/compiled/renders/source-1920x1080/video.mp4
+   456.7 KB · 8.0s video · rendered in 10.2s
+   drawelement capture · hardware gpu · compile 0.1s · extract 0.0s · audio 0.0s · probe 0.0s · setup 4.0s · capture 6.0s · encode (during capture) 6.0s · assemble 0.0s

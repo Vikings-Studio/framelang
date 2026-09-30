@@ -1,0 +1,2 @@
+[StaticGuard] Invalid HyperFrame contract: GSAP tween on ".s3-play" uses motion that snaps to integer device pixels: left. Layout and text-reflow properties snap during browser layout; roundProps rounds the tween value. Slow motion or an ease-out tail then stutters under the seek-by-frame capture engine — animate transforms (x/y/scale/opacity) instead.
+{"code":"operation.failed","message":"one or more HyperFrames profile checks failed; see feedback.json"}
