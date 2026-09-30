@@ -1,0 +1,187 @@
+{
+  "language": "framelang/trusted-hyperframes-v0.1",
+  "sourceLanguage": "hyperframes/html",
+  "pilot": true,
+  "guarantees": "source-preserving, measured frame checks; trusted JavaScript, no deterministic or security guarantee",
+  "inputHash": "sha256:ddd3f10fb65fe0e5b6a42d1c0540115438466d9b596dffe69c8dd926986466cd",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "sourceMap": {
+    "#root": {
+      "nodeId": "root",
+      "location": "index.html:149"
+    },
+    "#s1": {
+      "nodeId": "s1",
+      "location": "index.html:158"
+    },
+    "#s1-glow": {
+      "nodeId": "s1-glow",
+      "location": "index.html:164"
+    },
+    "#s1-eyebrow": {
+      "nodeId": "s1-eyebrow",
+      "location": "index.html:167"
+    },
+    "#s1-rule": {
+      "nodeId": "s1-rule",
+      "location": "index.html:168"
+    },
+    "#s1-h1": {
+      "nodeId": "s1-h1",
+      "location": "index.html:169"
+    },
+    "#s1-sub": {
+      "nodeId": "s1-sub",
+      "location": "index.html:172"
+    },
+    "#s2": {
+      "nodeId": "s2",
+      "location": "index.html:179"
+    },
+    "#s2-eyebrow": {
+      "nodeId": "s2-eyebrow",
+      "location": "index.html:183"
+    },
+    "#s2-url": {
+      "nodeId": "s2-url",
+      "location": "index.html:184"
+    },
+    "#s2-urltext": {
+      "nodeId": "s2-urltext",
+      "location": "index.html:186"
+    },
+    "#s2-arrow": {
+      "nodeId": "s2-arrow",
+      "location": "index.html:188"
+    },
+    "#s2-card": {
+      "nodeId": "s2-card",
+      "location": "index.html:189"
+    },
+    "#s2-frame": {
+      "nodeId": "s2-frame",
+      "location": "index.html:190"
+    },
+    "#s2-scan": {
+      "nodeId": "s2-scan",
+      "location": "index.html:191"
+    },
+    "#s2-l1": {
+      "nodeId": "s2-l1",
+      "location": "index.html:194"
+    },
+    "#s2-s1": {
+      "nodeId": "s2-s1",
+      "location": "index.html:195"
+    },
+    "#s2-l2": {
+      "nodeId": "s2-l2",
+      "location": "index.html:198"
+    },
+    "#s2-s2": {
+      "nodeId": "s2-s2",
+      "location": "index.html:199"
+    },
+    "#s3": {
+      "nodeId": "s3",
+      "location": "index.html:206"
+    },
+    "#s3-eyebrow": {
+      "nodeId": "s3-eyebrow",
+      "location": "index.html:210"
+    },
+    "#s3-h2": {
+      "nodeId": "s3-h2",
+      "location": "index.html:211"
+    },
+    "#s3-c1": {
+      "nodeId": "s3-c1",
+      "location": "index.html:214"
+    },
+    "#s3-c2": {
+      "nodeId": "s3-c2",
+      "location": "index.html:219"
+    },
+    "#s3-c3": {
+      "nodeId": "s3-c3",
+      "location": "index.html:224"
+    },
+    "#s3-out": {
+      "nodeId": "s3-out",
+      "location": "index.html:229"
+    },
+    "#s3-outtext": {
+      "nodeId": "s3-outtext",
+      "location": "index.html:230"
+    },
+    "#s3-outrule": {
+      "nodeId": "s3-outrule",
+      "location": "index.html:231"
+    },
+    "#s4": {
+      "nodeId": "s4",
+      "location": "index.html:237"
+    },
+    "#s4-glow": {
+      "nodeId": "s4-glow",
+      "location": "index.html:241"
+    },
+    "#s4-eyebrow": {
+      "nodeId": "s4-eyebrow",
+      "location": "index.html:244"
+    },
+    "#s4-h2": {
+      "nodeId": "s4-h2",
+      "location": "index.html:245"
+    },
+    "#s4-chip1": {
+      "nodeId": "s4-chip1",
+      "location": "index.html:248"
+    },
+    "#s4-chip2": {
+      "nodeId": "s4-chip2",
+      "location": "index.html:249"
+    },
+    "#s4-chip3": {
+      "nodeId": "s4-chip3",
+      "location": "index.html:250"
+    },
+    "#s4-cta": {
+      "nodeId": "s4-cta",
+      "location": "index.html:251"
+    },
+    "#s4-ctafill": {
+      "nodeId": "s4-ctafill",
+      "location": "index.html:252"
+    },
+    "#s4-ctatext": {
+      "nodeId": "s4-ctatext",
+      "location": "index.html:253"
+    },
+    "#s4-mark": {
+      "nodeId": "s4-mark",
+      "location": "index.html:255"
+    },
+    "#s4-tag": {
+      "nodeId": "s4-tag",
+      "location": "index.html:258"
+    }
+  },
+  "outputs": {
+    "source-1920x1080": {
+      "directory": "source-1920x1080",
+      "htmlHash": "sha256:ddd3f10fb65fe0e5b6a42d1c0540115438466d9b596dffe69c8dd926986466cd",
+      "assetHashes": {
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false,
+  "verificationPin": "sha256:d2ee6be8c24b1c8b7dc1e252f46d9690e8974da19911bb7257d9be0de39003e6"
+}

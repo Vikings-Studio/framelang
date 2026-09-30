@@ -1,0 +1,96 @@
+
+◆  Rendering source-1920x1080 → /private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/glm-5-2/2/compiled/renders/source-1920x1080/video.mp4
+   24fps · draft · auto workers (10 cores detected)
+   GPU: browser GPU (auto-detect)
+
+[?25l│
+◒  Checking browser[1G[J◇  Browser: cache
+[?25h
+  Lint: 0 error(s), 9 warning(s) — run with --lint-verbose for full output.
+  Continuing render despite lint issues. Use --strict to block errors.
+
+  █░░░░░░░░░░░░░░░░░░░░░░░░  5%  Compiling composition
+  ██░░░░░░░░░░░░░░░░░░░░░░░  10%  Extracting video frames
+  █████░░░░░░░░░░░░░░░░░░░░  20%  Processing audio tracks
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting frame capture
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Checking browser GPU
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Measuring capture speed
+[BrowserManager] Browser launched (HeadlessChrome/152.0.7977.30, screenshot, gl=--use-gl=angle --use-angle=metal, headlessShell=true, platform=darwin)
+[initSession:screenshot] page.goto start (0ms)
+[HyperFrames] render runtime fps {"canonicalFps":24,"source":"render-options","rawFpsSource":"render-options","rawFps":24}
+[initSession:screenshot] page.goto complete (298ms)
+[initSession:screenshot] GSAP proxy flush complete (312ms)
+[initSession:screenshot] pollHfReady complete (421ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (423ms)
+[initSession:screenshot] applyVideoMetadataHints complete (423ms)
+[initSession:screenshot] media + fonts + tailwind ready (425ms)
+[initSession:screenshot] timeline at-risk predictor: 15/192 frames (8%) (478ms)
+[engine] fast capture: falling back to screenshot capture — 15/192 frames animate a compositor-incompatible prop (blend/3D/clip/mask); drawElementImage drops these mid-animation (deterministic timeline gate; see fast-capture-limitations.md Lim 7)
+[initSession:screenshot] static-frame dedup: 9/9 predicted frame(s) reusable (outcome=verified, runs=1/1, screenshots=8, seeks=9, elapsedMs=382) (1156ms)
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting browsers (0/5 ready)
+[BrowserManager] Browser launched (HeadlessChrome/152.0.7977.30, screenshot, gl=--use-gl=angle --use-angle=metal, headlessShell=true, platform=darwin)
+[initSession:screenshot] page.goto start (0ms)
+[initSession:screenshot] page.goto start (0ms)
+[initSession:screenshot] page.goto start (0ms)
+[initSession:screenshot] page.goto start (0ms)
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting browsers (0/5 ready)
+[initSession:screenshot] page.goto start (0ms)
+[HyperFrames] render runtime fps {"canonicalFps":24,"source":"render-options","rawFpsSource":"render-options","rawFps":24}
+[initSession:screenshot] page.goto complete (431ms)
+[HyperFrames] render runtime fps {"canonicalFps":24,"source":"render-options","rawFpsSource":"render-options","rawFps":24}
+[initSession:screenshot] page.goto complete (430ms)
+[HyperFrames] render runtime fps {"canonicalFps":24,"source":"render-options","rawFpsSource":"render-options","rawFps":24}
+[initSession:screenshot] page.goto complete (432ms)
+[initSession:screenshot] GSAP proxy flush complete (440ms)
+[initSession:screenshot] GSAP proxy flush complete (437ms)
+[HyperFrames] render runtime fps {"canonicalFps":24,"source":"render-options","rawFpsSource":"render-options","rawFps":24}
+[initSession:screenshot] GSAP proxy flush complete (435ms)
+[initSession:screenshot] pollHfReady complete (436ms)
+[initSession:screenshot] pollHfReady complete (441ms)
+[initSession:screenshot] pollHfReady complete (439ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (438ms)
+[initSession:screenshot] applyVideoMetadataHints complete (438ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (443ms)
+[initSession:screenshot] applyVideoMetadataHints complete (443ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (440ms)
+[initSession:screenshot] applyVideoMetadataHints complete (440ms)
+[initSession:screenshot] media + fonts + tailwind ready (440ms)
+[initSession:screenshot] media + fonts + tailwind ready (445ms)
+[initSession:screenshot] media + fonts + tailwind ready (442ms)
+[initSession:screenshot] page.goto complete (441ms)
+[initSession:screenshot] GSAP proxy flush complete (448ms)
+[HyperFrames] render runtime fps {"canonicalFps":24,"source":"render-options","rawFpsSource":"render-options","rawFps":24}
+[initSession:screenshot] page.goto complete (344ms)
+[initSession:screenshot] GSAP proxy flush complete (355ms)
+[initSession:screenshot] pollHfReady complete (659ms)
+[initSession:screenshot] pollHfReady complete (583ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (747ms)
+[initSession:screenshot] applyVideoMetadataHints complete (747ms)
+[initSession:screenshot] pollSubCompositionTimelines complete (ready) (593ms)
+[initSession:screenshot] applyVideoMetadataHints complete (593ms)
+[initSession:screenshot] media + fonts + tailwind ready (749ms)
+[initSession:screenshot] media + fonts + tailwind ready (594ms)
+[initSession:screenshot] static-frame dedup: 9/9 predicted frame(s) reusable (outcome=verified, runs=1/1, screenshots=8, seeks=9, elapsedMs=524) (1285ms)
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Starting browsers (1/5 ready)
+  ██████░░░░░░░░░░░░░░░░░░░  25%  Capturing frame 1/192 (5 workers)
+[initSession:screenshot] static-frame dedup: 9/9 predicted frame(s) reusable (outcome=verified, runs=1/1, screenshots=8, seeks=9, elapsedMs=380) (1378ms)
+[initSession:screenshot] static-frame dedup: 9/9 predicted frame(s) reusable (outcome=verified, runs=1/1, screenshots=8, seeks=9, elapsedMs=392) (1391ms)
+[initSession:screenshot] static-frame dedup: 9/9 predicted frame(s) reusable (outcome=verified, runs=1/1, screenshots=8, seeks=9, elapsedMs=408) (1536ms)
+[initSession:screenshot] static-frame dedup: 9/9 predicted frame(s) reusable (outcome=verified, runs=1/1, screenshots=8, seeks=9, elapsedMs=392) (1415ms)
+  ███████░░░░░░░░░░░░░░░░░░  28%  Capturing frame 14/192 (5 workers)
+  ████████░░░░░░░░░░░░░░░░░  34%  Capturing frame 39/192 (5 workers)
+  █████████░░░░░░░░░░░░░░░░  39%  Capturing frame 60/192 (5 workers)
+  ███████████░░░░░░░░░░░░░░  44%  Capturing frame 79/192 (5 workers)
+  ████████████░░░░░░░░░░░░░  51%  Capturing frame 109/192 (5 workers)
+  ██████████████░░░░░░░░░░░  56%  Capturing frame 134/192 (5 workers)
+  ███████████████░░░░░░░░░░  62%  Capturing frame 157/192 (5 workers)
+[static-dedup] reused 9/39 frame(s) (23%), est. ~522ms saved (avg 58ms/frame)
+  ████████████████░░░░░░░░░  67%  Capturing frame 178/192 (5 workers)
+  █████████████████░░░░░░░░  70%  Capturing frame 192/192 (5 workers)
+  ██████████████████░░░░░░░  75%  Encoding video
+  ██████████████████████░░░  90%  Assembling final video
+  █████████████████████████  100%  Render complete
+
+◇  /private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/glm-5-2/2/compiled/renders/source-1920x1080/video.mp4
+   516.5 KB · 8.0s video · rendered in 6.7s
+   screenshot capture · hardware gpu · compile 0.1s · extract 0.0s · audio 0.0s · probe 0.0s · setup 2.2s · capture 3.9s · encode 0.4s · assemble 0.0s

@@ -1,0 +1,111 @@
+{
+  "language": "framelang/trusted-hyperframes-v0.1",
+  "sourceLanguage": "hyperframes/html",
+  "pilot": true,
+  "guarantees": "source-preserving, measured frame checks; trusted JavaScript, no deterministic or security guarantee",
+  "inputHash": "sha256:65ba8160381675874bc2a939c3a3c248fc9b57e5102c09bef30e29a449c1cef7",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "sourceMap": {
+    "#root": {
+      "nodeId": "root",
+      "location": "index.html:43"
+    },
+    "#s1": {
+      "nodeId": "s1",
+      "location": "index.html:45"
+    },
+    "#s1-eyebrow": {
+      "nodeId": "s1-eyebrow",
+      "location": "index.html:46"
+    },
+    "#urlbar": {
+      "nodeId": "urlbar",
+      "location": "index.html:51"
+    },
+    "#urltext": {
+      "nodeId": "urltext",
+      "location": "index.html:52"
+    },
+    "#caret": {
+      "nodeId": "caret",
+      "location": "index.html:53"
+    },
+    "#pastechip": {
+      "nodeId": "pastechip",
+      "location": "index.html:54"
+    },
+    "#s2": {
+      "nodeId": "s2",
+      "location": "index.html:58"
+    },
+    "#s2-eyebrow": {
+      "nodeId": "s2-eyebrow",
+      "location": "index.html:59"
+    },
+    "#row1": {
+      "nodeId": "row1",
+      "location": "index.html:65"
+    },
+    "#row2": {
+      "nodeId": "row2",
+      "location": "index.html:72"
+    },
+    "#row3": {
+      "nodeId": "row3",
+      "location": "index.html:80"
+    },
+    "#s3": {
+      "nodeId": "s3",
+      "location": "index.html:91"
+    },
+    "#s3-eyebrow": {
+      "nodeId": "s3-eyebrow",
+      "location": "index.html:92"
+    },
+    "#editor": {
+      "nodeId": "editor",
+      "location": "index.html:96"
+    },
+    "#track": {
+      "nodeId": "track",
+      "location": "index.html:97"
+    },
+    "#playhead": {
+      "nodeId": "playhead",
+      "location": "index.html:100"
+    },
+    "#mp4chip": {
+      "nodeId": "mp4chip",
+      "location": "index.html:102"
+    },
+    "#s4": {
+      "nodeId": "s4",
+      "location": "index.html:105"
+    },
+    "#mark": {
+      "nodeId": "mark",
+      "location": "index.html:106"
+    },
+    "#tagline": {
+      "nodeId": "tagline",
+      "location": "index.html:112"
+    }
+  },
+  "outputs": {
+    "source-1920x1080": {
+      "directory": "source-1920x1080",
+      "htmlHash": "sha256:65ba8160381675874bc2a939c3a3c248fc9b57e5102c09bef30e29a449c1cef7",
+      "assetHashes": {
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false,
+  "verificationPin": "sha256:d2ee6be8c24b1c8b7dc1e252f46d9690e8974da19911bb7257d9be0de39003e6"
+}

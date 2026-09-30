@@ -1,0 +1,22 @@
+{
+  "model": "opencode-go/hy4-preview",
+  "arm": "framelang-html",
+  "number": 5,
+  "variant": "none",
+  "cost": 0.019263865,
+  "tokens": {
+    "total": 14258,
+    "input": 6059,
+    "output": 5639,
+    "reasoning": 0,
+    "cache": {
+      "read": 2560,
+      "write": 0
+    }
+  },
+  "durationMs": 91247,
+  "exitCode": 0,
+  "signal": null,
+  "status": "Rendered",
+  "formatViolation": true
+}

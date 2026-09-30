@@ -1,0 +1,1268 @@
+{
+  "language": "framelang/trusted-hyperframes-v0.1",
+  "sourceLanguage": "hyperframes/html",
+  "pilot": true,
+  "guarantees": "source-preserving, measured frame checks; trusted JavaScript, no deterministic or security guarantee",
+  "inputHash": "sha256:efae532598b71ed426dee9b322cabdfb904140b5a203466c6b1ef22370ae4924",
+  "verification": {
+    "mode": "allFrames",
+    "fps": 24,
+    "totalFrames": 192
+  },
+  "sourceMap": {
+    "#root": {
+      "nodeId": "root",
+      "location": "index.html:149"
+    },
+    "#s1": {
+      "nodeId": "s1",
+      "location": "index.html:158"
+    },
+    "#s1-glow": {
+      "nodeId": "s1-glow",
+      "location": "index.html:164"
+    },
+    "#s1-eyebrow": {
+      "nodeId": "s1-eyebrow",
+      "location": "index.html:167"
+    },
+    "#s1-rule": {
+      "nodeId": "s1-rule",
+      "location": "index.html:168"
+    },
+    "#s1-h1": {
+      "nodeId": "s1-h1",
+      "location": "index.html:169"
+    },
+    "#s1-sub": {
+      "nodeId": "s1-sub",
+      "location": "index.html:172"
+    },
+    "#s2": {
+      "nodeId": "s2",
+      "location": "index.html:179"
+    },
+    "#s2-eyebrow": {
+      "nodeId": "s2-eyebrow",
+      "location": "index.html:183"
+    },
+    "#s2-url": {
+      "nodeId": "s2-url",
+      "location": "index.html:184"
+    },
+    "#s2-urltext": {
+      "nodeId": "s2-urltext",
+      "location": "index.html:186"
+    },
+    "#s2-arrow": {
+      "nodeId": "s2-arrow",
+      "location": "index.html:188"
+    },
+    "#s2-card": {
+      "nodeId": "s2-card",
+      "location": "index.html:189"
+    },
+    "#s2-frame": {
+      "nodeId": "s2-frame",
+      "location": "index.html:190"
+    },
+    "#s2-scan": {
+      "nodeId": "s2-scan",
+      "location": "index.html:191"
+    },
+    "#s2-l1": {
+      "nodeId": "s2-l1",
+      "location": "index.html:194"
+    },
+    "#s2-s1": {
+      "nodeId": "s2-s1",
+      "location": "index.html:195"
+    },
+    "#s2-l2": {
+      "nodeId": "s2-l2",
+      "location": "index.html:198"
+    },
+    "#s2-s2": {
+      "nodeId": "s2-s2",
+      "location": "index.html:199"
+    },
+    "#s3": {
+      "nodeId": "s3",
+      "location": "index.html:206"
+    },
+    "#s3-eyebrow": {
+      "nodeId": "s3-eyebrow",
+      "location": "index.html:210"
+    },
+    "#s3-h2": {
+      "nodeId": "s3-h2",
+      "location": "index.html:211"
+    },
+    "#s3-c1": {
+      "nodeId": "s3-c1",
+      "location": "index.html:214"
+    },
+    "#s3-c2": {
+      "nodeId": "s3-c2",
+      "location": "index.html:219"
+    },
+    "#s3-c3": {
+      "nodeId": "s3-c3",
+      "location": "index.html:224"
+    },
+    "#s3-out": {
+      "nodeId": "s3-out",
+      "location": "index.html:229"
+    },
+    "#s3-outtext": {
+      "nodeId": "s3-outtext",
+      "location": "index.html:230"
+    },
+    "#s3-outrule": {
+      "nodeId": "s3-outrule",
+      "location": "index.html:231"
+    },
+    "#s4": {
+      "nodeId": "s4",
+      "location": "index.html:237"
+    },
+    "#s4-glow": {
+      "nodeId": "s4-glow",
+      "location": "index.html:241"
+    },
+    "#s4-eyebrow": {
+      "nodeId": "s4-eyebrow",
+      "location": "index.html:244"
+    },
+    "#s4-h2": {
+      "nodeId": "s4-h2",
+      "location": "index.html:245"
+    },
+    "#s4-chip1": {
+      "nodeId": "s4-chip1",
+      "location": "index.html:248"
+    },
+    "#s4-chip2": {
+      "nodeId": "s4-chip2",
+      "location": "index.html:249"
+    },
+    "#s4-chip3": {
+      "nodeId": "s4-chip3",
+      "location": "index.html:250"
+    },
+    "#s4-cta": {
+      "nodeId": "s4-cta",
+      "location": "index.html:251"
+    },
+    "#s4-ctafill": {
+      "nodeId": "s4-ctafill",
+      "location": "index.html:252"
+    },
+    "#s4-ctatext": {
+      "nodeId": "s4-ctatext",
+      "location": "index.html:253"
+    },
+    "#s4-mark": {
+      "nodeId": "s4-mark",
+      "location": "index.html:255"
+    },
+    "#s4-tag": {
+      "nodeId": "s4-tag",
+      "location": "index.html:258"
+    }
+  },
+  "outputs": {
+    "source-1920x1080": {
+      "directory": "source-1920x1080",
+      "htmlHash": "sha256:efae532598b71ed426dee9b322cabdfb904140b5a203466c6b1ef22370ae4924",
+      "assetHashes": {
+        "Inter.ttf": "sha256:29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+        "gsap.min.js": "sha256:92bb9a96476f983d212a2bc4f54c889039c1696dd4461d40a736860938570fbb"
+      }
+    }
+  },
+  "checked": false,
+  "degraded": false,
+  "verificationPin": "sha256:d2ee6be8c24b1c8b7dc1e252f46d9690e8974da19911bb7257d9be0de39003e6",
+  "checks": {
+    "source-1920x1080": {
+      "ok": false,
+      "exitCode": 0,
+      "layoutRan": true,
+      "allFramesObserved": true,
+      "geometryClear": false,
+      "runtimeClear": true,
+      "hardWarnings": [],
+      "report": {
+        "ok": true,
+        "strict": false,
+        "lint": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 9,
+          "infoCount": 0,
+          "findings": [
+            {
+              "code": "overlapping_gsap_tweens",
+              "severity": "warning",
+              "message": "GSAP tweens overlap on \"#s2-scan\" for opacity between 3.70s and 3.85s.",
+              "selector": "#s2-scan",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Shorten the earlier tween, move the later tween, or add `overwrite: \"auto\"`."
+            },
+            {
+              "code": "timed_element_missing_clip_class",
+              "severity": "warning",
+              "message": "<section id=\"s1\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+              "selector": "#s1",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+            },
+            {
+              "code": "timed_element_missing_clip_class",
+              "severity": "warning",
+              "message": "<section id=\"s2\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+              "selector": "#s2",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+            },
+            {
+              "code": "timed_element_missing_clip_class",
+              "severity": "warning",
+              "message": "<section id=\"s3\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+              "selector": "#s3",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+            },
+            {
+              "code": "timed_element_missing_clip_class",
+              "severity": "warning",
+              "message": "<section id=\"s4\"> has timing attributes but no class=\"clip\". The runtime still hides it outside its time range, but Studio and the GSAP clip-ownership rules use .clip to recognise a clip, so leaving it off makes the element harder to edit and to lint.",
+              "selector": "#s4",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Add class=\"clip\" to the element so Studio and the linter can recognise it as a clip."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"s1\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#s1",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"s1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"s2\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#s2",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"s2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"s3\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#s3",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"s3\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            },
+            {
+              "code": "nested_structure_needs_subcomposition",
+              "severity": "warning",
+              "message": "<section id=\"s4\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+              "selector": "#s4",
+              "dataAttributes": {},
+              "sourceFile": "/private/tmp/framelang/experiments/guarded-html-five-v0.1/runs/hy4-preview/3/compiled/source-1920x1080/index.html",
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 0,
+                "height": 0
+              },
+              "time": 0,
+              "fixHint": "Move <section id=\"s4\"> and its contents into a sub-composition file and mount it with data-composition-src."
+            }
+          ],
+          "filesScanned": 1
+        },
+        "runtime": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": []
+        },
+        "layout": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 2,
+          "infoCount": 8,
+          "findings": [
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 2.4,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 100,
+                "top": 216,
+                "right": 1140,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 20
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 100,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.4,
+              "lastSeen": 2.417,
+              "occurrences": 2,
+              "heldMs": 16.999999999999904
+            },
+            {
+              "code": "container_overflow",
+              "severity": "warning",
+              "time": 2.6,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 116,
+                "top": 216,
+                "right": 1156,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 4
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 116,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.6,
+              "lastSeen": 2.625,
+              "occurrences": 2,
+              "heldMs": 24.99999999999991
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 2.292,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 89.33,
+                "top": 216,
+                "right": 1129.33,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 30.67
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 89.33,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.292,
+              "lastSeen": 2.292,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 2.333,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 92,
+                "top": 216,
+                "right": 1132,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 28
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 92,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.333,
+              "lastSeen": 2.333,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 2.35,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 94.67,
+                "top": 216,
+                "right": 1134.67,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 25.33
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 94.67,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.35,
+              "lastSeen": 2.35,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 2.375,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 97.33,
+                "top": 216,
+                "right": 1137.33,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 22.67
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 97.33,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.375,
+              "lastSeen": 2.375,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 2.458,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 102.67,
+                "top": 216,
+                "right": 1142.67,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 17.33
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 102.67,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.458,
+              "lastSeen": 2.458,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 2.5,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 108,
+                "top": 216,
+                "right": 1148,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 12
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 108,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.5,
+              "lastSeen": 2.5,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 2.542,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 110.67,
+                "top": 216,
+                "right": 1150.67,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 9.33
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 110.67,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.542,
+              "lastSeen": 2.542,
+              "occurrences": 1,
+              "heldMs": 0
+            },
+            {
+              "code": "container_overflow",
+              "severity": "info",
+              "time": 2.583,
+              "selector": "#s2-url",
+              "message": "Element extends outside a clipping layout container.",
+              "rect": {
+                "left": 113.33,
+                "top": 216,
+                "right": 1153.33,
+                "bottom": 292,
+                "width": 1040,
+                "height": 76
+              },
+              "containerSelector": "div.safe",
+              "fixHint": "Resize/reposition the child or container, or mark intentional overflow with data-layout-allow-overflow.",
+              "containerRect": {
+                "left": 120,
+                "top": 96,
+                "right": 1800,
+                "bottom": 984,
+                "width": 1680,
+                "height": 888
+              },
+              "overflow": {
+                "left": 6.67
+              },
+              "dataAttributes": {},
+              "sourceFile": "index.html",
+              "bbox": {
+                "x": 113.33,
+                "y": 216,
+                "width": 1040,
+                "height": 76
+              },
+              "firstSeen": 2.583,
+              "lastSeen": 2.583,
+              "occurrences": 1,
+              "heldMs": 0
+            }
+          ],
+          "duration": 8,
+          "samples": [
+            0,
+            0.042,
+            0.05,
+            0.083,
+            0.1,
+            0.125,
+            0.15,
+            0.167,
+            0.2,
+            0.208,
+            0.225,
+            0.25,
+            0.292,
+            0.3,
+            0.333,
+            0.35,
+            0.375,
+            0.417,
+            0.425,
+            0.458,
+            0.5,
+            0.542,
+            0.583,
+            0.625,
+            0.667,
+            0.675,
+            0.708,
+            0.75,
+            0.792,
+            0.833,
+            0.85,
+            0.875,
+            0.9,
+            0.917,
+            0.958,
+            1,
+            1.025,
+            1.042,
+            1.083,
+            1.125,
+            1.15,
+            1.167,
+            1.208,
+            1.25,
+            1.275,
+            1.292,
+            1.333,
+            1.375,
+            1.4,
+            1.417,
+            1.45,
+            1.458,
+            1.5,
+            1.542,
+            1.575,
+            1.583,
+            1.625,
+            1.65,
+            1.667,
+            1.708,
+            1.75,
+            1.792,
+            1.825,
+            1.833,
+            1.875,
+            1.917,
+            1.958,
+            2,
+            2.025,
+            2.042,
+            2.05,
+            2.083,
+            2.1,
+            2.125,
+            2.15,
+            2.167,
+            2.208,
+            2.25,
+            2.292,
+            2.333,
+            2.35,
+            2.375,
+            2.4,
+            2.417,
+            2.458,
+            2.5,
+            2.542,
+            2.583,
+            2.6,
+            2.625,
+            2.65,
+            2.667,
+            2.7,
+            2.708,
+            2.75,
+            2.792,
+            2.825,
+            2.833,
+            2.875,
+            2.9,
+            2.917,
+            2.925,
+            2.95,
+            2.958,
+            3,
+            3.042,
+            3.05,
+            3.083,
+            3.1,
+            3.125,
+            3.15,
+            3.167,
+            3.175,
+            3.2,
+            3.208,
+            3.225,
+            3.25,
+            3.275,
+            3.292,
+            3.3,
+            3.333,
+            3.35,
+            3.375,
+            3.4,
+            3.417,
+            3.425,
+            3.45,
+            3.458,
+            3.5,
+            3.542,
+            3.55,
+            3.583,
+            3.6,
+            3.625,
+            3.65,
+            3.667,
+            3.675,
+            3.7,
+            3.708,
+            3.75,
+            3.792,
+            3.8,
+            3.825,
+            3.833,
+            3.85,
+            3.875,
+            3.9,
+            3.917,
+            3.95,
+            3.958,
+            4,
+            4.025,
+            4.042,
+            4.05,
+            4.083,
+            4.1,
+            4.125,
+            4.15,
+            4.167,
+            4.208,
+            4.25,
+            4.275,
+            4.292,
+            4.333,
+            4.375,
+            4.4,
+            4.417,
+            4.45,
+            4.458,
+            4.5,
+            4.542,
+            4.575,
+            4.583,
+            4.625,
+            4.65,
+            4.667,
+            4.7,
+            4.708,
+            4.75,
+            4.775,
+            4.792,
+            4.8,
+            4.833,
+            4.875,
+            4.917,
+            4.95,
+            4.958,
+            5,
+            5.042,
+            5.05,
+            5.075,
+            5.083,
+            5.1,
+            5.125,
+            5.15,
+            5.167,
+            5.2,
+            5.208,
+            5.225,
+            5.25,
+            5.292,
+            5.333,
+            5.375,
+            5.417,
+            5.458,
+            5.5,
+            5.525,
+            5.542,
+            5.55,
+            5.583,
+            5.6,
+            5.625,
+            5.65,
+            5.667,
+            5.708,
+            5.75,
+            5.792,
+            5.833,
+            5.85,
+            5.875,
+            5.917,
+            5.925,
+            5.958,
+            6,
+            6.025,
+            6.042,
+            6.05,
+            6.083,
+            6.1,
+            6.125,
+            6.15,
+            6.167,
+            6.175,
+            6.2,
+            6.208,
+            6.25,
+            6.292,
+            6.3,
+            6.333,
+            6.375,
+            6.4,
+            6.417,
+            6.45,
+            6.458,
+            6.5,
+            6.542,
+            6.56,
+            6.583,
+            6.62,
+            6.625,
+            6.667,
+            6.68,
+            6.708,
+            6.74,
+            6.745,
+            6.75,
+            6.792,
+            6.825,
+            6.833,
+            6.875,
+            6.9,
+            6.917,
+            6.95,
+            6.958,
+            7,
+            7.01,
+            7.02,
+            7.035,
+            7.042,
+            7.05,
+            7.083,
+            7.095,
+            7.125,
+            7.14,
+            7.145,
+            7.15,
+            7.167,
+            7.208,
+            7.225,
+            7.25,
+            7.292,
+            7.3,
+            7.325,
+            7.333,
+            7.35,
+            7.375,
+            7.417,
+            7.45,
+            7.458,
+            7.5,
+            7.542,
+            7.55,
+            7.575,
+            7.583,
+            7.6,
+            7.625,
+            7.667,
+            7.675,
+            7.708,
+            7.75,
+            7.792,
+            7.833,
+            7.875,
+            7.917,
+            7.958
+          ],
+          "transitionSamples": [
+            0,
+            0.05,
+            0.1,
+            0.15,
+            0.2,
+            0.225,
+            0.25,
+            0.3,
+            0.35,
+            0.425,
+            0.5,
+            0.675,
+            0.85,
+            0.875,
+            0.9,
+            1.025,
+            1.15,
+            1.275,
+            1.4,
+            1.45,
+            1.5,
+            1.575,
+            1.65,
+            1.825,
+            2,
+            2.025,
+            2.05,
+            2.1,
+            2.15,
+            2.25,
+            2.35,
+            2.375,
+            2.4,
+            2.5,
+            2.6,
+            2.625,
+            2.65,
+            2.7,
+            2.75,
+            2.825,
+            2.9,
+            2.925,
+            2.95,
+            3,
+            3.05,
+            3.1,
+            3.15,
+            3.175,
+            3.2,
+            3.225,
+            3.25,
+            3.275,
+            3.3,
+            3.35,
+            3.4,
+            3.425,
+            3.45,
+            3.5,
+            3.55,
+            3.6,
+            3.65,
+            3.675,
+            3.7,
+            3.75,
+            3.8,
+            3.825,
+            3.85,
+            3.875,
+            3.9,
+            3.95,
+            4,
+            4.025,
+            4.05,
+            4.1,
+            4.15,
+            4.275,
+            4.4,
+            4.45,
+            4.5,
+            4.575,
+            4.65,
+            4.7,
+            4.75,
+            4.775,
+            4.8,
+            4.875,
+            4.95,
+            5,
+            5.05,
+            5.075,
+            5.1,
+            5.15,
+            5.2,
+            5.225,
+            5.25,
+            5.375,
+            5.5,
+            5.525,
+            5.55,
+            5.6,
+            5.65,
+            5.75,
+            5.85,
+            5.925,
+            6,
+            6.025,
+            6.05,
+            6.1,
+            6.15,
+            6.175,
+            6.2,
+            6.3,
+            6.4,
+            6.45,
+            6.5,
+            6.56,
+            6.62,
+            6.68,
+            6.74,
+            6.745,
+            6.75,
+            6.825,
+            6.9,
+            6.95,
+            7,
+            7.01,
+            7.02,
+            7.035,
+            7.05,
+            7.095,
+            7.14,
+            7.145,
+            7.15,
+            7.225,
+            7.3,
+            7.325,
+            7.35,
+            7.45,
+            7.55,
+            7.575,
+            7.6,
+            7.675,
+            7.75
+          ],
+          "transitionSamplesDropped": 0,
+          "tolerance": 2,
+          "totalIssueCount": 10,
+          "truncated": false
+        },
+        "motion": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "enabled": false,
+          "samples": 0
+        },
+        "contrast": {
+          "ok": true,
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0,
+          "findings": [],
+          "enabled": true,
+          "samples": [
+            0,
+            2.208,
+            4.042,
+            6.1,
+            7.958
+          ],
+          "checked": 12,
+          "passed": 12
+        },
+        "hdr": {
+          "autoPromotion": null,
+          "inspection": "available"
+        },
+        "snapshots": {
+          "enabled": false,
+          "files": [],
+          "times": [],
+          "findingFiles": []
+        },
+        "_meta": {
+          "version": "0.8.92",
+          "latestVersion": "0.8.92",
+          "updateAvailable": false
+        }
+      }
+    }
+  }
+}

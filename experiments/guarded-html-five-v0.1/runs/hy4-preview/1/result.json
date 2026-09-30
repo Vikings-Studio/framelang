@@ -1,0 +1,22 @@
+{
+  "model": "opencode-go/hy4-preview",
+  "arm": "framelang-html",
+  "number": 1,
+  "variant": "none",
+  "cost": 0.016235685,
+  "tokens": {
+    "total": 8212,
+    "input": 2581,
+    "output": 5631,
+    "reasoning": 0,
+    "cache": {
+      "read": 0,
+      "write": 0
+    }
+  },
+  "durationMs": 96203,
+  "exitCode": 0,
+  "signal": null,
+  "status": "check rejected",
+  "formatViolation": true
+}

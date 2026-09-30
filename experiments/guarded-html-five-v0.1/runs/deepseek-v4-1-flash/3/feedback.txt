@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:8f3c8b1eea0d3add4176e883e99577b5dae2a76acf8e9b4a1785364574a38c68",
+  "recipe": null,
+  "ok": false,
+  "findings": [
+    {
+      "code": "text_occluded",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "selector": "span.btn-t.s3-btn-t",
+      "relatedSelector": null,
+      "message": "Text is hidden beneath an opaque element.",
+      "firstTime": 5.875,
+      "lastTime": 5.875,
+      "occurrences": 1,
+      "bbox": {
+        "x": 163,
+        "y": 635.67,
+        "width": 134.28,
+        "height": 30
+      },
+      "hint": "Inspect the affected scene in source-1920x1080; revise its FrameLang layout and rerun check."
+    },
+    {
+      "code": "content_overlap",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "selector": "span.btn-t.s3-btn-t",
+      "relatedSelector": null,
+      "message": "Two text blocks overlap and may render unreadable.",
+      "firstTime": 6.042,
+      "lastTime": 6.042,
+      "occurrences": 1,
+      "bbox": {
+        "x": 163,
+        "y": 635.67,
+        "width": 134.28,
+        "height": 30
+      },
+      "hint": "Inspect the affected scene in source-1920x1080; revise its FrameLang layout and rerun check."
+    }
+  ],
+  "instruction": "Revise the FrameLang source using these findings, then compile and check again. Do not render until every profile passes."
+}

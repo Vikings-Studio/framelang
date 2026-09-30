@@ -1,0 +1,11 @@
+{
+  "src/cli.mjs": "3866369181926aee0fe56acc7b7b00f935c0232485ff085b24d457625a1fa6a5",
+  "src/adopt.mjs": "0f4f1bbdf1638553aa05e69803ebf2bf94895b61724dc7822a6afeb7ce162e37",
+  "src/provenance.mjs": "2e3187d8606e261b17b82a40bbda9e3fa08ed86da45627d44eac8d6e5ec4e8d5",
+  "src/check-policy.mjs": "50d9dde891c182bc817efd1f45bc62ddded643a73027c7952e79859835ab3061",
+  "src/feedback.mjs": "fb56ba842751dcaf2e10b63d3d2afa94d5f8fc9f1e6aef5c4f740684e7c0978d",
+  "package-lock.json": "62ed71396e331fb283ccadb797907873c91305f0e9aed9dde005a0e7f4164102",
+  "brief.txt": "b4e4fd8d53480e0f48bd149226e4c16d8eedbcf12c9391f15dd2ea1c499808ae",
+  "grammar.txt": "53df8ac80351cb06d955f7999ff56562d269c24c7a48a421d78ccf22e858726c",
+  "run.mjs": "aae846813f6db9e0c38c9a6662bdbee3e4370deb19b8cf5913e4bb48534a4858"
+}

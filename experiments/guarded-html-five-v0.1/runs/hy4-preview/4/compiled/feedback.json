@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:ab0bb31b1ffd9bd887c2e33fedbc3ebfab5ea471bc84db61dfa742798d71ea64",
+  "recipe": null,
+  "ok": false,
+  "findings": [
+    {
+      "code": "container_overflow",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "nodeId": "s2-url",
+      "location": "index.html:184",
+      "selector": "#s2-url",
+      "relatedSelector": null,
+      "message": "Element extends outside a clipping layout container.",
+      "firstTime": 2.292,
+      "lastTime": 2.6,
+      "occurrences": 10,
+      "bbox": {
+        "x": 100,
+        "y": 216,
+        "width": 1000,
+        "height": 76
+      },
+      "hint": "Revise index.html:184 for source-1920x1080; rerun check. Keep required content visible and inside the safe canvas."
+    }
+  ],
+  "instruction": "Revise the FrameLang source using these findings, then compile and check again. Do not render until every profile passes."
+}

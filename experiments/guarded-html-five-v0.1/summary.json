@@ -1,0 +1,401 @@
+[
+  {
+    "id": "deepseek-v4-1-flash",
+    "label": "DeepSeek V4.1 Flash",
+    "opencode": "opencode-go/deepseek-v4.1-flash",
+    "license": "MIT",
+    "source": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+    "attempts": [
+      {
+        "model": "opencode-go/deepseek-v4.1-flash",
+        "arm": "framelang-html",
+        "number": 1,
+        "variant": "low",
+        "cost": 0.016393776,
+        "tokens": {
+          "total": 29742,
+          "input": 848,
+          "output": 5753,
+          "reasoning": 21349,
+          "cache": {
+            "read": 1792,
+            "write": 0
+          }
+        },
+        "durationMs": 185127,
+        "exitCode": 0,
+        "signal": null,
+        "status": "check rejected",
+        "formatViolation": false
+      },
+      {
+        "model": "opencode-go/deepseek-v4.1-flash",
+        "arm": "framelang-html",
+        "number": 2,
+        "variant": "low",
+        "cost": 0.00667008,
+        "tokens": {
+          "total": 18536,
+          "input": 6496,
+          "output": 5797,
+          "reasoning": 3683,
+          "cache": {
+            "read": 2560,
+            "write": 0
+          }
+        },
+        "durationMs": 62256,
+        "exitCode": 0,
+        "signal": null,
+        "status": "check rejected",
+        "formatViolation": false
+      },
+      {
+        "model": "opencode-go/deepseek-v4.1-flash",
+        "arm": "framelang-html",
+        "number": 3,
+        "variant": "low",
+        "cost": 0.00758778,
+        "tokens": {
+          "total": 20265,
+          "input": 6762,
+          "output": 5914,
+          "reasoning": 5029,
+          "cache": {
+            "read": 2560,
+            "write": 0
+          }
+        },
+        "durationMs": 78747,
+        "exitCode": 0,
+        "signal": null,
+        "status": "check rejected",
+        "formatViolation": false
+      },
+      {
+        "model": "opencode-go/deepseek-v4.1-flash",
+        "arm": "framelang-html",
+        "number": 4,
+        "variant": "low",
+        "cost": 0.00525303,
+        "tokens": {
+          "total": 16211,
+          "input": 6545,
+          "output": 5824,
+          "reasoning": 1282,
+          "cache": {
+            "read": 2560,
+            "write": 0
+          }
+        },
+        "durationMs": 43149,
+        "exitCode": 0,
+        "signal": null,
+        "status": "Rendered",
+        "formatViolation": false
+      }
+    ],
+    "accepted": {
+      "directory": "runs/deepseek-v4-1-flash/4/compiled",
+      "number": 4,
+      "replay": false
+    },
+    "costComplete": true,
+    "inferenceUSD": 0.035904666,
+    "tokensComplete": true,
+    "totalTokens": 84754
+  },
+  {
+    "id": "glm-5-2",
+    "label": "GLM 5.2",
+    "opencode": "opencode-go/glm-5.2",
+    "license": "MIT",
+    "source": "https://huggingface.co/zai-org/GLM-5.2",
+    "attempts": [
+      {
+        "model": "opencode-go/glm-5.2",
+        "arm": "framelang-html",
+        "number": 1,
+        "variant": "default",
+        "cost": null,
+        "tokens": {
+          "total": null,
+          "input": null,
+          "output": null,
+          "reasoning": null,
+          "cache": {
+            "read": null,
+            "write": null
+          }
+        },
+        "durationMs": 480031,
+        "exitCode": null,
+        "signal": "SIGTERM",
+        "status": "Harness deadline",
+        "formatViolation": false
+      },
+      {
+        "model": "opencode-go/glm-5.2",
+        "arm": "framelang-html",
+        "number": 2,
+        "variant": "default",
+        "cost": 0.118283,
+        "tokens": {
+          "total": 28645,
+          "input": 2585,
+          "output": 3067,
+          "reasoning": 22993,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "durationMs": 412806,
+        "exitCode": 0,
+        "signal": null,
+        "status": "Rendered",
+        "formatViolation": true
+      }
+    ],
+    "accepted": {
+      "directory": "runs/glm-5-2/2/compiled",
+      "number": 2,
+      "replay": false
+    },
+    "costComplete": false,
+    "inferenceUSD": 0.118283,
+    "tokensComplete": false,
+    "totalTokens": 28645
+  },
+  {
+    "id": "glm-5-3",
+    "label": "GLM 5.3",
+    "opencode": "opencode-go/glm-5.3",
+    "license": "GLM-5.3 custom",
+    "source": "https://huggingface.co/zai-org/GLM-5.3",
+    "attempts": [
+      {
+        "model": "opencode-go/glm-5.3",
+        "arm": "raw",
+        "number": 1,
+        "variant": "low",
+        "cost": 0.03440132,
+        "tokens": {
+          "total": 9550,
+          "input": 2523,
+          "output": 2097,
+          "reasoning": 4918,
+          "cache": {
+            "read": 12,
+            "write": 0
+          }
+        },
+        "durationMs": 116106,
+        "exitCode": 0,
+        "signal": null,
+        "status": "Prior source rejected → unchanged replay rendered",
+        "formatViolation": true,
+        "replay": true
+      }
+    ],
+    "accepted": {
+      "directory": "../guarded-html-v0.1/replay/glm-5-3",
+      "number": 1,
+      "replay": true
+    },
+    "costComplete": true,
+    "inferenceUSD": 0.03440132,
+    "tokensComplete": true,
+    "totalTokens": 9550
+  },
+  {
+    "id": "mimo-v2-6-flash",
+    "label": "MiMo V2.6 Flash",
+    "opencode": "opencode-go/mimo-v2.6-flash",
+    "license": "MIT",
+    "source": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL",
+    "attempts": [
+      {
+        "model": "opencode-go/mimo-v2.6-flash",
+        "arm": "framelang-html",
+        "number": 1,
+        "variant": "default",
+        "cost": null,
+        "tokens": {
+          "total": null,
+          "input": null,
+          "output": null,
+          "reasoning": null,
+          "cache": {
+            "read": null,
+            "write": null
+          }
+        },
+        "durationMs": 480044,
+        "exitCode": null,
+        "signal": "SIGTERM",
+        "status": "Harness deadline",
+        "formatViolation": false
+      },
+      {
+        "model": "opencode-go/mimo-v2.6-flash",
+        "arm": "framelang-html",
+        "number": 2,
+        "variant": "default",
+        "cost": 0.00573188,
+        "tokens": {
+          "total": 21776,
+          "input": 2610,
+          "output": 5503,
+          "reasoning": 13663,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "durationMs": 237790,
+        "exitCode": 0,
+        "signal": null,
+        "status": "Rendered",
+        "formatViolation": false
+      }
+    ],
+    "accepted": {
+      "directory": "runs/mimo-v2-6-flash/2/compiled",
+      "number": 2,
+      "replay": false
+    },
+    "costComplete": false,
+    "inferenceUSD": 0.00573188,
+    "tokensComplete": false,
+    "totalTokens": 21776
+  },
+  {
+    "id": "hy4-preview",
+    "label": "Tencent Hy4 Preview",
+    "opencode": "opencode-go/hy4-preview",
+    "license": "Apache-2.0",
+    "source": "https://huggingface.co/tencent/Hy4-preview",
+    "attempts": [
+      {
+        "model": "opencode-go/hy4-preview",
+        "arm": "framelang-html",
+        "number": 1,
+        "variant": "none",
+        "cost": 0.016235685,
+        "tokens": {
+          "total": 8212,
+          "input": 2581,
+          "output": 5631,
+          "reasoning": 0,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "durationMs": 96203,
+        "exitCode": 0,
+        "signal": null,
+        "status": "check rejected",
+        "formatViolation": true
+      },
+      {
+        "model": "opencode-go/hy4-preview",
+        "arm": "framelang-html",
+        "number": 2,
+        "variant": "none",
+        "cost": 0.01931557,
+        "tokens": {
+          "total": 14314,
+          "input": 6112,
+          "output": 5642,
+          "reasoning": 0,
+          "cache": {
+            "read": 2560,
+            "write": 0
+          }
+        },
+        "durationMs": 91559,
+        "exitCode": 0,
+        "signal": null,
+        "status": "check rejected",
+        "formatViolation": true
+      },
+      {
+        "model": "opencode-go/hy4-preview",
+        "arm": "framelang-html",
+        "number": 3,
+        "variant": "none",
+        "cost": 0.0195149,
+        "tokens": {
+          "total": 14561,
+          "input": 6363,
+          "output": 5638,
+          "reasoning": 0,
+          "cache": {
+            "read": 2560,
+            "write": 0
+          }
+        },
+        "durationMs": 90472,
+        "exitCode": 0,
+        "signal": null,
+        "status": "check rejected",
+        "formatViolation": true
+      },
+      {
+        "model": "opencode-go/hy4-preview",
+        "arm": "framelang-html",
+        "number": 4,
+        "variant": "none",
+        "cost": 0.019144601,
+        "tokens": {
+          "total": 14111,
+          "input": 5910,
+          "output": 5641,
+          "reasoning": 0,
+          "cache": {
+            "read": 2560,
+            "write": 0
+          }
+        },
+        "durationMs": 96995,
+        "exitCode": 0,
+        "signal": null,
+        "status": "check rejected",
+        "formatViolation": true
+      },
+      {
+        "model": "opencode-go/hy4-preview",
+        "arm": "framelang-html",
+        "number": 5,
+        "variant": "none",
+        "cost": 0.019263865,
+        "tokens": {
+          "total": 14258,
+          "input": 6059,
+          "output": 5639,
+          "reasoning": 0,
+          "cache": {
+            "read": 2560,
+            "write": 0
+          }
+        },
+        "durationMs": 91247,
+        "exitCode": 0,
+        "signal": null,
+        "status": "Rendered",
+        "formatViolation": true
+      }
+    ],
+    "accepted": {
+      "directory": "runs/hy4-preview/5/compiled",
+      "number": 5,
+      "replay": false
+    },
+    "costComplete": true,
+    "inferenceUSD": 0.09347462100000001,
+    "tokensComplete": true,
+    "totalTokens": 65456
+  }
+]

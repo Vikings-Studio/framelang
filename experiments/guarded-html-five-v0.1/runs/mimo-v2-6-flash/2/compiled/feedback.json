@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:efe8777b06a1ac97690d608599d20b7a4380617211aa727abf1e3d4870694074",
+  "recipe": null,
+  "ok": true,
+  "findings": [
+    {
+      "code": "contrast_aa_failure",
+      "severity": "error",
+      "message": "Contrast is 2.56:1; WCAG AA requires 4.5:1.",
+      "text": "01",
+      "fg": "rgb(85,85,95)",
+      "bg": "rgb(17,17,20)",
+      "ratio": 2.56,
+      "requiredRatio": 4.5,
+      "suggestedColor": "rgb(124,124,131)",
+      "large": false,
+      "selector": "div > section:nth-of-type(2) > div:nth-of-type(2) > span",
+      "dataAttributes": {},
+      "sourceFile": "index.html",
+      "bbox": {
+        "x": 620.015625,
+        "y": 485,
+        "width": 22.984375,
+        "height": 20
+      },
+      "time": 3.792,
+      "profile": "source-1920x1080",
+      "hint": "Choose a higher-contrast text color or change the underlying paint; preserve the design, then compile and check again."
+    },
+    {
+      "code": "contrast_aa_failure",
+      "severity": "error",
+      "message": "Contrast is 2.56:1; WCAG AA requires 4.5:1.",
+      "text": "02",
+      "fg": "rgb(85,85,95)",
+      "bg": "rgb(17,17,20)",
+      "ratio": 2.56,
+      "requiredRatio": 4.5,
+      "suggestedColor": "rgb(124,124,131)",
+      "large": false,
+      "selector": "div > section:nth-of-type(2) > div:nth-of-type(3) > span",
+      "dataAttributes": {},
+      "sourceFile": "index.html",
+      "bbox": {
+        "x": 1116.8125,
+        "y": 485.05859375,
+        "width": 26.1875,
+        "height": 20
+      },
+      "time": 3.792,
+      "profile": "source-1920x1080",
+      "hint": "Choose a higher-contrast text color or change the underlying paint; preserve the design, then compile and check again."
+    },
+    {
+      "code": "contrast_aa_failure",
+      "severity": "error",
+      "message": "Contrast is 2.56:1; WCAG AA requires 4.5:1.",
+      "text": "03",
+      "fg": "rgb(85,85,95)",
+      "bg": "rgb(17,17,20)",
+      "ratio": 2.56,
+      "requiredRatio": 4.5,
+      "suggestedColor": "rgb(124,124,131)",
+      "large": false,
+      "selector": "div > section:nth-of-type(2) > div:nth-of-type(4) > span",
+      "dataAttributes": {},
+      "sourceFile": "index.html",
+      "bbox": {
+        "x": 1616.578125,
+        "y": 486.981201171875,
+        "width": 26.421875,
+        "height": 20
+      },
+      "time": 3.792,
+      "profile": "source-1920x1080",
+      "hint": "Choose a higher-contrast text color or change the underlying paint; preserve the design, then compile and check again."
+    }
+  ],
+  "instruction": "Browser layout checks passed. Render may proceed."
+}

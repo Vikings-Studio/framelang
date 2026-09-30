@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "stage": "browser-check",
+  "inputHash": "sha256:c8200585df513dc249d4dac642b5bf7e5f3f2145945984a4e8ead2660bc894c5",
+  "recipe": null,
+  "ok": false,
+  "findings": [
+    {
+      "code": "container_overflow",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "nodeId": "s1-glow",
+      "location": "index.html:170",
+      "selector": "#s1-glow",
+      "relatedSelector": null,
+      "message": "Element extends outside a clipping layout container.",
+      "firstTime": 0.75,
+      "lastTime": 1.4,
+      "occurrences": 19,
+      "bbox": {
+        "x": 1156.25,
+        "y": 236.25,
+        "width": 787.5,
+        "height": 787.5
+      },
+      "hint": "Revise index.html:170 for source-1920x1080; rerun check. Keep required content visible and inside the safe canvas."
+    },
+    {
+      "code": "container_overflow",
+      "severity": "error",
+      "profile": "source-1920x1080",
+      "nodeId": "s4-glow",
+      "location": "index.html:254",
+      "selector": "#s4-glow",
+      "relatedSelector": null,
+      "message": "Element extends outside a clipping layout container.",
+      "firstTime": 6.5,
+      "lastTime": 7,
+      "occurrences": 13,
+      "bbox": {
+        "x": 1270,
+        "y": 370,
+        "width": 660,
+        "height": 660
+      },
+      "hint": "Revise index.html:254 for source-1920x1080; rerun check. Keep required content visible and inside the safe canvas."
+    }
+  ],
+  "instruction": "Revise the FrameLang source using these findings, then compile and check again. Do not render until every profile passes."
+}
