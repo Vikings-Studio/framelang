@@ -1,14 +1,29 @@
 name: Portable pilot
+# Runs only when flagged, to save Actions minutes:
+#   - pull request labelled `ci` (or `release`)
+#   - manual: Actions -> Portable pilot -> Run workflow
+# Plain pushes and unlabelled pull requests start no jobs.
+# The macOS/Windows legs are the point of this portability smoke test, so the matrix is kept.
 on:
-  push:
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}${{ ((github.event.action == 'labeled' && github.event.label.name != 'ci' && github.event.label.name != 'release') || (github.event_name == 'push' && !contains(github.event.head_commit.message, '[release]') && !contains(github.event.head_commit.message, '[deploy]'))) && format('-noop-{0}', github.run_id) || '' }}
+  cancel-in-progress: true
+
 jobs:
   smoke:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && (contains(github.event.head_commit.message, '[release]') || contains(github.event.head_commit.message, '[deploy]'))) ||
+      (github.event_name == 'pull_request' && (contains(github.event.pull_request.labels.*.name, 'ci') || contains(github.event.pull_request.labels.*.name, 'release')) && (github.event.action != 'labeled' || github.event.label.name == 'ci' || github.event.label.name == 'release'))
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-2022]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
